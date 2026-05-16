@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro'
+import { getCollection } from 'astro:content'
+
+const all = await getCollection('projects')
+const projects = all.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+
+const statusBadge: Record<string, string> = {
+  active: '● active',
+  shipped: '◉ shipped',
+  experimental: '◇ experimental',
+  abandoned: '○ abandoned',
+}
+---
+<Base title="Projects · Ashish Kshirsagar">
+  <main>
+    <p class="mono" style="font-size: var(--small);"><a href="/">← home</a></p>
+    <header style="margin-top: 2rem; margin-bottom: 2.5rem;">
+      <h1>projects</h1>
+      <p class="mono muted" style="font-size: var(--small); margin-top: 0.5rem;">
+        what i'm building, what i've shipped, what i've buried. honest about all three.
+      </p>
+    </header>
+    <div class="project-grid">
+      {projects.map((p) => (
+        <a href={`/projects/${p.slug}`} class="project-card">
+          <div class="project-header">
+            <span class={`project-status status-${p.data.status} mono`}>{statusBadge[p.data.status]}</span>
+            {p.data.tags && p.data.tags[0] && (
+              <span class="project-tag mono faint">#{p.data.tags[0]}</span>
+            )}
+          </div>
+          <h2 class="project-title">{p.data.title}</h2>
+          <p class="project-desc muted">{p.data.description}</p>
+        </a>
+      ))}
+    </div>
+    <hr />
+    <footer class="mono" style="font-size: var(--tiny); color: var(--fg-faint); text-align: center;">
+      <a href="/">home</a> · <a href="/writing">writing</a> · <a href="/feed">feed</a> · <a href="/now">now</a> · <a href="/uses">uses</a>
+    </footer>
+  </main>
+  <style>
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+    .project-card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 1.25rem;
+      background-image: none !important;
+      transition: border-color var(--t-normal) var(--ease);
+    }
+    .project-card:hover { border-color: var(--accent); }
+    .project-header { display: flex; justify-content: space-between; align-items: center; font-size: var(--tiny); margin-bottom: 0.5rem; }
+    .project-status.status-active { color: var(--success); }
+    .project-status.status-shipped { color: var(--accent); }
+    .project-status.status-experimental { color: var(--fg-muted); }
+    .project-status.status-abandoned { color: var(--fg-faint); }
+    .project-title { font-size: 1.1rem; margin: 0.5rem 0; }
+    .project-desc { font-size: var(--small); line-height: 1.5; }
+  </style>
+</Base>

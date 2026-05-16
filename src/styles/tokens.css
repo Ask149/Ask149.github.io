@@ -1,0 +1,68 @@
+:root {
+  /* Typography */
+  --font-serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Color — light mode (default) */
+  --accent: #C26644;        /* warm copper */
+  --bg: #F5F1EA;            /* warm cream */
+  --fg: #1A1A1A;
+  --fg-muted: #5C5C5C;
+  --fg-faint: #A8A39C;
+  --surface: rgba(255, 255, 255, 0.6);
+  --rule: #D7D1C5;
+  --success: #5B8C5A;       /* online pulse */
+
+  /* Type scale */
+  --h1: 3rem;
+  --h2: 1.75rem;
+  --h3: 1.25rem;
+  --body: 1rem;
+  --small: 0.875rem;
+  --tiny: 0.75rem;
+
+  /* Layout */
+  --content-width: 720px;
+  --grid-width: 960px;
+  --feed-width: 1100px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 150ms;
+  --t-normal: 200ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #E4855E;
+    --bg: #0E0E0E;
+    --fg: #E8E4DD;
+    --fg-muted: #9A968F;
+    --fg-faint: #5C5852;
+    --surface: #1A1A1A;
+    --rule: #2B2A27;
+    --success: #7BA67A;
+  }
+}
+
+[data-theme='dark'] {
+  --accent: #E4855E;
+  --bg: #0E0E0E;
+  --fg: #E8E4DD;
+  --fg-muted: #9A968F;
+  --fg-faint: #5C5852;
+  --surface: #1A1A1A;
+  --rule: #2B2A27;
+  --success: #7BA67A;
+}
+
+[data-theme='light'] {
+  --accent: #C26644;
+  --bg: #F5F1EA;
+  --fg: #1A1A1A;
+  --fg-muted: #5C5C5C;
+  --fg-faint: #A8A39C;
+  --surface: rgba(255, 255, 255, 0.6);
+  --rule: #D7D1C5;
+  --success: #5B8C5A;
+}

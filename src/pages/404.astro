@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro'
+---
+<Base title="404 · Ashish Kshirsagar">
+  <main style="text-align: left;">
+    <pre class="json-404"><code>{`{
+  "error": "page_not_found",
+  "model": "Ask149.brain",
+  "tokens_used": 0,
+  "suggestion": "try / or /feed",
+  "links": {
+    "home": "/",
+    "writing": "/writing",
+    "projects": "/projects",
+    "feed": "/feed",
+    "now": "/now",
+    "uses": "/uses"
+  },
+  "easter_eggs": [
+    "/sudo",
+    "/agents",
+    "/cost"
+  ]
+}`}</code></pre>
+  </main>
+  <style>
+    .json-404 {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--fg);
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 2rem;
+      margin: 4rem auto;
+      max-width: 520px;
+    }
+    .json-404 code { color: var(--accent); }
+  </style>
+</Base>

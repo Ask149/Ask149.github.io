@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro'
+
+const tiers = [
+  {
+    name: 'tier 1 — primary',
+    agents: [
+      ['orchestrator', 'default entry; decomposes goals; dispatches subagents'],
+      ['architect', 'design exploration, planning, risk analysis'],
+      ['coder', 'implementation, refactoring, focused diffs'],
+      ['deployer', 'deployment, infra, CI/CD'],
+      ['growth', 'marketing, content strategy, distribution'],
+      ['scout', 'market + external research'],
+    ],
+  },
+  {
+    name: 'tier 2 — technical subagents',
+    agents: [
+      ['researcher', 'internal codebase tracing + external docs via context7/deepwiki'],
+      ['reviewer', 'code review for quality + correctness'],
+      ['security-reviewer', 'OWASP, secrets, auth, dependency scans'],
+      ['tester', 'TDD, coverage, regressions'],
+      ['doc-writer', 'READMEs, API docs, changelogs'],
+      ['ui-reviewer', 'WCAG, usability heuristics'],
+      ['web-designer', 'one-shot website builds'],
+      ['gws-concierge', 'Google Workspace I/O across 4 accounts'],
+      ['jules', 'Google Jules wrapper (readonly mode)'],
+    ],
+  },
+  {
+    name: 'tier 3 — business personas',
+    agents: [
+      ['strategist', 'vision, scope cuts, kill/keep'],
+      ['founder', 'product-market fit, MVP'],
+      ['ceo', 'portfolio-level allocation'],
+      ['pm', 'specs, user stories, prioritization'],
+      ['investor', 'fundability, TAM, unit economics'],
+      ['cto', 'tech strategy, build-vs-buy'],
+    ],
+  },
+  {
+    name: 'tier 4 — creative personas',
+    agents: [
+      ['creative-director', 'visual identity, brand, mood'],
+      ['music-advisor', 'audio direction, sound branding'],
+      ['user-advocate', 'end-user empathy, journey friction'],
+      ['fashion-advisor', 'wardrobe, fragrance, personal style'],
+    ],
+  },
+  {
+    name: 'tier 5 — life-admin (time-bounded)',
+    agents: [
+      ['relocation-coordinator', 'Seattle → Pune logistics, sunset Jul 27 2026'],
+      ['tax-strategist', 'US/India dual-jurisdiction tax'],
+      ['wedding-ops', 'June 27 2026 wedding logistics'],
+    ],
+  },
+]
+const total = tiers.reduce((n, t) => n + t.agents.length, 0)
+---
+<Base title="agents · ask149">
+  <main>
+    <p class="mono" style="font-size: var(--small);"><a href="/">← home</a></p>
+    <h1 style="margin-top: 2rem;">/agents</h1>
+    <p class="mono muted" style="font-size: var(--small);">
+      {total} OpenCode agents on this laptop. each has its own system prompt, tool set, and named capabilities.
+    </p>
+    {tiers.map((tier) => (
+      <section style="margin-top: 2rem;">
+        <h2 class="mono accent" style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.06em;">{tier.name}</h2>
+        <table class="agents">
+          {tier.agents.map(([name, desc]) => (
+            <tr><td class="mono accent">@{name}</td><td class="muted">{desc}</td></tr>
+          ))}
+        </table>
+      </section>
+    ))}
+  </main>
+  <style>
+    .agents { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+    .agents td { padding: 0.4rem 0.75rem; border-bottom: 1px solid var(--rule); font-size: var(--small); vertical-align: top; }
+    .agents td:first-child { width: 16rem; }
+  </style>
+</Base>

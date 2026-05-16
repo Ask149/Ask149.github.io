@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro'
+import { getCollection } from 'astro:content'
+
+const essays = (await getCollection('essays', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+
+function fmt(d: Date): string {
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
+}
+---
+<Base title="Writing · Ashish Kshirsagar">
+  <main>
+    <p class="mono" style="font-size: var(--small);"><a href="/">← home</a></p>
+    <header style="margin-top: 2rem; margin-bottom: 2.5rem;">
+      <h1>writing</h1>
+      <p class="mono muted" style="font-size: var(--small); margin-top: 0.5rem;">
+        essays. mostly about agents + indie shipping + working with AI without losing your taste.
+      </p>
+    </header>
+    <ul class="essay-list">
+      {essays.map((e) => (
+        <li class="essay-item">
+          <a href={`/writing/${e.slug}`}>
+            <span class="essay-date mono">{fmt(e.data.date)}</span>
+            <span class="essay-title">{e.data.title}</span>
+            {e.data.description && <span class="essay-desc muted">{e.data.description}</span>}
+          </a>
+        </li>
+      ))}
+      {essays.length === 0 && <li class="muted">no essays yet — first one in the oven.</li>}
+    </ul>
+    <hr />
+    <footer class="mono" style="font-size: var(--tiny); color: var(--fg-faint); text-align: center;">
+      <a href="/">home</a> · <a href="/projects">projects</a> · <a href="/feed">feed</a> · <a href="/now">now</a> · <a href="/uses">uses</a>
+    </footer>
+  </main>
+  <style>
+    .essay-list { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
+    .essay-item a {
+      display: grid;
+      grid-template-columns: 7rem 1fr;
+      gap: 0.5rem 1rem;
+      background: none;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .essay-item a:hover { background: var(--surface); padding-left: 0.5rem; padding-right: 0.5rem; }
+    .essay-date { color: var(--fg-faint); font-size: var(--small); padding-top: 0.2em; }
+    .essay-title { font-size: 1.2rem; font-weight: 600; }
+    .essay-desc { grid-column: 2; font-size: var(--small); margin-top: 0.25rem; line-height: 1.5; }
+    @media (max-width: 600px) {
+      .essay-item a { grid-template-columns: 1fr; }
+      .essay-desc { grid-column: 1; }
+    }
+  </style>
+</Base>

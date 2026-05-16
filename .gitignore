@@ -1,2 +1,21 @@
-_site/
+# Node
+node_modules/
+dist/
+.astro/
 
+# Cloudflare
+.wrangler/
+worker/.dev.vars
+worker/node_modules/
+worker/dist/
+
+# Local
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+
+# Editor
+.vscode/
+.idea/

@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local development. Never commit .dev.vars.
+AGENT_KEYS_JSON={"manual":"dev-token-1234","dev":"dev-token-5678"}
+ADMIN_TOKEN=dev-admin-token
+ENVIRONMENT=dev

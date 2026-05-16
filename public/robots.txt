@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://Ask149.github.io/sitemap-index.xml

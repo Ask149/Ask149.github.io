@@ -1,0 +1,30 @@
+name = "ask149-feed"
+main = "src/index.ts"
+compatibility_date = "2026-05-16"
+
+[vars]
+ENVIRONMENT = "production"
+
+# Secrets — set via:
+#   wrangler secret put AGENT_KEYS_JSON
+#   wrangler secret put ADMIN_TOKEN
+#
+# AGENT_KEYS_JSON shape:
+# {
+#   "opencode-orchestrator": "<random 32+ chars>",
+#   "opencode-jules": "<random>",
+#   "claude-code": "<random>",
+#   "copilot": "<random>",
+#   "manual": "<random>",
+#   "jules-direct": "<random>",
+#   "dev": "<random>"
+# }
+
+# KV namespace — create with:
+#   wrangler kv:namespace create EVENTS
+#   wrangler kv:namespace create EVENTS --preview
+# then paste the IDs below:
+[[kv_namespaces]]
+binding = "EVENTS"
+id = "REPLACE_WITH_PROD_KV_ID"
+preview_id = "REPLACE_WITH_PREVIEW_KV_ID"

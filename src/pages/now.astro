@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro'
+const updated = '2026-05-16'
+---
+<Base title="Now · Ashish Kshirsagar">
+  <main>
+    <p class="mono" style="font-size: var(--small);"><a href="/">← home</a></p>
+    <header style="margin-top: 2rem;">
+      <h1>now</h1>
+      <p class="mono muted" style="font-size: var(--small);">
+        updated {updated} · <a href="https://nownownow.com/about" target="_blank" rel="noopener">what is a now page?</a>
+      </p>
+    </header>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>working on</h2>
+      <ul>
+        <li><strong>Portfolio v2</strong> — rebuilding ask149.github.io as an Astro static site with a live agent activity feed. The ticker at the top of this site is the receipt of this very build.</li>
+        <li><strong>Microsoft → India transfer</strong> — confirmation due May 10; final decision day May 22. Locations: Hyderabad or Bangalore.</li>
+        <li><strong>Active job pipeline</strong> — Stripe, Cloudflare, PayPal, Postman. Decision May 22, hard departure to India June 1.</li>
+        <li><strong>IODevz exploration</strong> — three-founder collective; my tentative July direction is an MCP Gateway in Go.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>learning</h2>
+      <ul>
+        <li>How to structure an OpenCode setup with 28 agents without it becoming a committee. Current count: orchestrator + 6 Tier-1 + 9 Tier-2 + 6 Tier-3 + 4 Tier-4 + 3 Tier-5. Mostly happy with the boundaries.</li>
+        <li>How Cloudflare KV's TTL semantics compose with index keys. (Short answer: TTL on data keys + capped LRU on index keys = a clean rolling-window event store with no cron.)</li>
+        <li>Hindustani classical for context — not playing, just listening. Building taste.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>avoiding</h2>
+      <ul>
+        <li>Any new pipeline interview after May 18. Capacity, not story problem.</li>
+        <li>Pre-departure logistics slipping past May 28. Flight is sacred.</li>
+        <li>Letting agents merge their own PRs without my diff review.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>life</h2>
+      <ul>
+        <li>Wedding: June 27, Pune. The biggest fixed point on the calendar.</li>
+        <li>Seattle → Pune permanent move: flight booked for June 1.</li>
+        <li>Mom + Dad's anniversaries this week — quiet day.</li>
+      </ul>
+    </section>
+
+    <hr />
+    <footer class="mono" style="font-size: var(--tiny); color: var(--fg-faint); text-align: center;">
+      <a href="/">home</a> · <a href="/writing">writing</a> · <a href="/projects">projects</a> · <a href="/feed">feed</a> · <a href="/uses">uses</a>
+    </footer>
+  </main>
+  <style>
+    main ul { padding-left: 1.5rem; }
+    main li { margin: 0.5rem 0; line-height: 1.6; }
+    main strong { color: var(--accent); }
+  </style>
+</Base>

@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro'
+---
+<Base title="sudo · ask149">
+  <main>
+    <p class="mono" style="font-size: var(--small);"><a href="/">← home</a></p>
+    <h1 style="margin-top: 2rem;">/sudo</h1>
+    <p class="mono muted" style="font-size: var(--small);">
+      the autonomy contract my orchestrator agent operates under. excerpt from <code>~/.config/opencode/AGENTS.md</code>.
+    </p>
+    <section style="margin-top: 2rem;">
+      <h2>proceed without asking</h2>
+      <ul>
+        <li>Routing decisions (use Confidence Gate)</li>
+        <li>Quality gate loops (reviewer ↔ coder, up to 3 iterations)</li>
+        <li>Reading files and running read-only commands for context</li>
+        <li>Dispatching agents per workflow templates and routing table</li>
+        <li>Synthesizing multi-agent results into user-facing answers</li>
+        <li>Low-risk implementation: typo fixes, test additions, doc updates, lint fixes</li>
+      </ul>
+      <h2>stop and ask</h2>
+      <ul>
+        <li>High-risk operations: production deploys, schema migrations, data deletion, secret rotation, force-push</li>
+        <li>Scope expansion: user asked for X, but X requires Y — confirm before starting Y</li>
+        <li>Confidence below 60% (ask ONE clarifying question, then proceed)</li>
+        <li>Quality gate loop hit 3 iterations without converging</li>
+      </ul>
+      <h2>never (hard constraints)</h2>
+      <ul>
+        <li>Commit or push (user commits manually)</li>
+        <li>Run destructive commands</li>
+        <li>Self-answer domain questions a specialist should handle</li>
+        <li>Dispatch without context (always include What/Why/Where/Constraints)</li>
+        <li>Serialize what can parallelize</li>
+      </ul>
+    </section>
+  </main>
+  <style>
+    main ul { padding-left: 1.5rem; margin: 0.5rem 0 1.5rem; }
+    main li { margin: 0.4rem 0; line-height: 1.6; }
+    main h2 { margin-top: 1.5rem; font-size: 1.15rem; color: var(--accent); }
+  </style>
+</Base>

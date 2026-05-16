@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro'
+const updated = '2026-05-16'
+---
+<Base title="cost · ask149">
+  <main>
+    <p class="mono" style="font-size: var(--small);"><a href="/">← home</a></p>
+    <h1 style="margin-top: 2rem;">/cost</h1>
+    <p class="mono muted" style="font-size: var(--small);">
+      what this site + my agent setup costs me, roughly. updated {updated}. honesty bias > precision.
+    </p>
+
+    <h2 style="margin-top: 2rem;">infrastructure</h2>
+    <table class="cost">
+      <tr><td>GitHub Pages hosting</td><td class="mono accent">$0</td><td class="muted">free for public repos</td></tr>
+      <tr><td>Cloudflare Workers + KV (feed)</td><td class="mono accent">$0</td><td class="muted">free tier; 100k reads/day, 1k writes/day</td></tr>
+      <tr><td>Domain (ask149.github.io)</td><td class="mono accent">$0</td><td class="muted">subdomain of GitHub Pages; no custom domain yet</td></tr>
+      <tr><td><strong>Infrastructure total</strong></td><td class="mono accent"><strong>$0/mo</strong></td><td></td></tr>
+    </table>
+
+    <h2 style="margin-top: 2rem;">agent tooling</h2>
+    <table class="cost">
+      <tr><td>GitHub Copilot</td><td class="mono accent">$10/mo</td><td class="muted">individual subscription</td></tr>
+      <tr><td>Claude Code (via API credits)</td><td class="mono accent">~$30/mo</td><td class="muted">rolling, varies by usage</td></tr>
+      <tr><td>OpenCode (uses Copilot model under the hood)</td><td class="mono accent">$0</td><td class="muted">bundled with Copilot subscription</td></tr>
+      <tr><td>Google Jules (Free tier)</td><td class="mono accent">$0</td><td class="muted">15 tasks/day rolling, 3 concurrent</td></tr>
+      <tr><td><strong>Agent total</strong></td><td class="mono accent"><strong>~$40/mo</strong></td><td></td></tr>
+    </table>
+
+    <p style="margin-top: 2rem;" class="muted">
+      For context: this entire site, including the live agent feed, has cost roughly <strong style="color: var(--accent);">$0.50 of Claude / Copilot credits</strong> to build end-to-end. The Cloudflare Worker has consumed 0 paid-tier resources. The Jules tasks I've run cost $0. The most expensive thing here is the time I spent writing the manifesto by hand-with-orchestrator.
+    </p>
+  </main>
+  <style>
+    .cost { width: 100%; border-collapse: collapse; margin: 0.5rem 0; }
+    .cost td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--rule); font-size: var(--small); vertical-align: top; }
+    .cost td:nth-child(1) { width: 50%; }
+    .cost td:nth-child(2) { text-align: right; width: 8rem; }
+  </style>
+</Base>

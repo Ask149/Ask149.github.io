@@ -1,0 +1,66 @@
+---
+title: How I work with 4 coding agents in parallel
+date: 2026-05-16
+description: A real answer to "how do you use AI?" — not a Copilot demo. What changed in the job, what didn't, and where the leverage actually lives now.
+tags: [ai, tooling, agents, working-style]
+---
+
+Yesterday I built a Google Jules wrapper for OpenCode. I wrote five new files, opened one PR, configured two sets of credentials, and updated my docs. **I didn't type any of it.**
+
+That sentence used to be a flex. In 2026 it's just how my Tuesdays go.
+
+Here's what actually happened, end to end. I cycled Tab in my terminal until the orchestrator agent came up, and asked it to research Google's Jules and build me a wrapper for it. The orchestrator dispatched a researcher agent in parallel with my own context-gathering. Twenty minutes later the researcher came back with the full API surface, a quota table, and a recommendation: no official MCP server, use direct HTTP. The orchestrator picked Python over `curl` — correctly inferring my repo's bash allowlist. I wrote zero code. I read every diff. I asked three clarifying questions across the entire flow. The receipts are scrolling at the top of this page right now.
+
+I have a job at Microsoft. I'm leaving it in six weeks for an India-based senior IC role. The reason this post exists is that recruiters at the companies I'm interviewing with keep asking the same question in different words: *How do you work with AI?* Every senior IC says *"I use Copilot daily."* That answers nothing. So this is the real answer.
+
+## The four agents and what each one is for
+
+I run four coding agents concurrently. They don't compete; they occupy different quadrants on a two-axis grid: **latency** (instant vs minutes-to-hours) and **autonomy** (autocomplete vs full task ownership).
+
+```
+              autonomy →
+            low                 high
+   ┌──────────────────────┬──────────────────────┐
+ t │ GitHub Copilot       │ OpenCode             │
+ i │ — inline complete    │ — orchestrator +     │
+ m │ — chat in editor     │   27 subagents       │
+ e │ — fast, narrow       │ — parallel research  │
+   ├──────────────────────┼──────────────────────┤
+ ↓ │ Claude Code          │ Google Jules         │
+   │ — terminal native    │ — async, fork repo   │
+   │ — exploration        │ — runs in own VM     │
+   │ — context-deep       │ — opens a PR         │
+   └──────────────────────┴──────────────────────┘
+```
+
+**GitHub Copilot** wins inside a function. Completion, regex, the boring middle of a file. Latency in milliseconds, autonomy approximately zero. It's a typing accelerator with taste. I leave it on always.
+
+**Claude Code** wins for exploration. Walk into an unfamiliar repo, ask it to trace how authentication works, get a real call-graph answer in three minutes. Terminal-first, fluid, conversational. The working directory IS its context. I use it three or four times a day.
+
+**OpenCode** wins for anything that needs a *system* — multiple steps, multiple specialists, quality gates, a real plan. My OpenCode setup has an orchestrator agent that decomposes intent and dispatches twenty-seven subagents: a researcher for tracing code, a scout for external research, an architect for plans, a coder for implementation, a reviewer + security-reviewer + ui-reviewer as quality gates, and a long tail of personas (strategist, CTO, PM, even a fashion advisor for when I need to buy a shirt for a wedding). It's a small company that runs in my terminal. When I have an hour I want to invest in something nontrivial, I open OpenCode.
+
+**Google Jules** wins for the work I want to *delegate completely*. Bounded, mechanical, async. Scaffold a new project. Bump dependencies across a repo. Convert one file from JavaScript to TypeScript. Add a CHANGELOG stub. I write a 5-element-framed prompt with explicit scope fences and acceptance criteria, paste it into jules.google.com, and walk away. Twenty minutes later there's a PR. I review it like any code change before merging. It's a junior engineer who never sleeps and never asks for clarification — which is exactly why the prompt-framing has to be airtight.
+
+## What actually changed in the job
+
+The story people want to hear is *"AI writes code while I drink coffee."* That's not the story. Here's the story.
+
+The amount of code I write per day has dropped by roughly 70%. The number of **decisions** I make has gone up by about the same. Senior IC value used to be *"I can write this fast and right."* In 2026 it's *"I can frame the problem so an agent finishes it without going wide."*
+
+The artifacts I produce now are different. I write more `AGENTS.md` files. I write more **scope fences** — *"modify only these files; do not bump dependencies; verify with this command."* I write more **acceptance criteria.** I write fewer functions. The agents do the typing. I do the deciding, the reviewing, the gating, and — increasingly — the taste-making.
+
+This is not bad for the craft. It's a redistribution of where craft lives. The craft is now in the prompt, the scope fence, the AGENTS.md, the quality gate, and the diff review. Senior engineers who learn to invest in those four surfaces are getting more leverage than they've ever had. Senior engineers who don't are about to find out what their floor looks like.
+
+## The trap, and the cure
+
+Generic *"AI everywhere"* ruins your taste. I've watched it happen — to myself, to colleagues, to my own commits before I caught it. The agent adds a "helpful" refactor in a file you didn't ask it to touch. The agent bumps a dependency to satisfy a perceived best practice. The agent invents a unit test that tests its own incorrect implementation. The agent confidently fixes a bug that wasn't a bug. The agent does five things when you asked for one.
+
+The cure is named: **scope fences in every prompt, AGENTS.md in every repo, quality gates you wrote yourself, and READING THE DIFFS.** The day you merge an agent's PR without reading it is the day you stop being an engineer. I don't merge anything I haven't read. The leverage isn't *"don't read the code anymore."* The leverage is *"someone else types the first draft."*
+
+## Why this matters for the team I join next
+
+The agent feed scrolling at the top of this page isn't a gimmick. It's the receipt. Every line is a real agent doing real work on a real project right now. If you're a recruiter or a hiring manager trying to understand how I'll operate inside your team, that ticker IS the operational answer.
+
+I work with four coding agents because each one is best at something the others aren't. I work with quality gates because I don't trust any of them to be right by default. I work in public because the work itself is the portfolio.
+
+If you want to see how I'd handle your codebase, look at the next twenty entries.

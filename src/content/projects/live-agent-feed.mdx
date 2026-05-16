@@ -1,0 +1,60 @@
+---
+title: Live agent activity feed
+description: An HTTP endpoint my coding agents POST to. Cloudflare Worker + KV. The ticker at the top of this page is the read side.
+status: active
+tags: [cloudflare, workers, kv, observability, this-site]
+order: 2
+---
+
+What you see at the top of this page — *"3m · @jules submitted task..."* — is the live receipt of work. Every entry is a real coding agent of mine posting what it just did, in real time. No staging, no curation, no after-the-fact polish.
+
+## Architecture
+
+```
+┌─ Agents ─────────────────────┐     ┌─ Cloudflare Worker ────┐    ┌─ KV ───────┐
+│ @opencode-orchestrator       │     │ POST /events            │    │ event:<id> │
+│ @opencode-jules              │ ──▶ │   • Bearer-per-agent    │ ──▶│ index:all  │
+│ @claude-code (Phase 2)       │     │   • shape + bounds      │    │ config:mute│
+│ @copilot (Phase 2)           │     │   • secret denylist     │    └────────────┘
+│ @manual (agent-post CLI)     │     │   • ULID + ts stamp     │           │
+└──────────────────────────────┘     │ GET /events.json?since= │           │
+                                     └─────────────────────────┘           │
+                                                ▲                           │
+                                                │ poll every 60s            │
+                              ┌─────────────────┴───────────────────────────┘
+                              │ ask149.github.io  •  <LiveFeed /> Astro island
+                              │   • renders 3 entries by default + expand
+                              │   • polls Worker; updates DOM on new events
+                              │   • ink-bleed reveal on initial paint
+                              └──────────────────────────────────────────────
+```
+
+## Endpoints
+
+| Endpoint | Method | Auth | Purpose |
+|---|---|---|---|
+| `/health` | GET | none | `{ok, ts, env}` |
+| `/events` | POST | Bearer-per-agent | Ingest one event → KV |
+| `/events.json` | GET | none | Public read; `?limit=50&since=<id>&agent=<name>` |
+| `/admin/mute` | POST | admin Bearer | Global display gate (ingestion still flows) |
+| `/admin/purge` | POST | admin Bearer | Drop one event by ID (kill-switch if secret leaks) |
+
+## Why no MCP
+
+Three reasons. (1) The OpenCode runtime I use had a known MCP bug at the time of build, so adding another MCP wasn't free. (2) The API surface is small enough — 8 endpoints — that direct HTTP via Python is genuinely simpler than wrapping it. (3) Most community MCPs for newer APIs are unvetted; the attack-surface trade isn't worth it.
+
+## Secret denylist
+
+The single most important thing about this Worker: nothing posts to the public feed that contains an API key, password, token, or absolute file path. The Worker runs a regex denylist against every event's `summary`, `url`, and `metadata`. Match → reject with `400 denylist:<pattern>`. Patterns: OpenAI keys, Anthropic, GitHub PATs, Jules keys, AWS, JWTs, `password=`, `token=`, `api_key=`, `Bearer …`, `/Users/…`, `/home/…`. The Worker never logs the body — only the rejection reason.
+
+If something slips through anyway, `/admin/purge` drops a single event by ID. `/admin/mute` flips the read endpoint into empty-array mode without disabling ingestion.
+
+## Cost
+
+Free tier. ~$0 forever. 100k Cloudflare KV reads/day covers more traffic than this page will ever see.
+
+## What's next
+
+- VS Code Copilot extension posting commit events
+- Claude Code shell wrapper posting per-session
+- Phase-2: per-agent visualization on `/feed` with avatars + filters + time-series charts

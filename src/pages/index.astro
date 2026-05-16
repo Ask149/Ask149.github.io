@@ -1,0 +1,175 @@
+---
+import Base from '../layouts/Base.astro'
+import LiveFeed from '../components/LiveFeed.tsx'
+import { getCollection } from 'astro:content'
+
+const FEED_ENDPOINT = 'https://ask149-feed.workers.dev/events.json'
+
+const essays = (await getCollection('essays', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3)
+
+const allProjects = await getCollection('projects')
+const projects = allProjects.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999)).slice(0, 6)
+
+const statusBadge: Record<string, string> = {
+  active: '● active',
+  shipped: '◉ shipped',
+  experimental: '◇ experimental',
+  abandoned: '○ abandoned',
+}
+
+const timeline = [
+  ['Oct 2025 → Jun 2026', 'Microsoft', 'Software Engineer · Seattle. Transitioning internally to Hyderabad/Bangalore Jun 2026.'],
+  ['Aug 2022 → May 2024', 'Arizona State University', 'MS Computer Science · 4.0 GPA · AI focus'],
+  ['2021 → 2022', 'Amazon (India)', 'SDE2 · Scalable systems, microservices, AWS + Java + Spring Boot'],
+  ['2019 → 2021', 'Barclays (Pune)', 'Graduate Analyst → SDE · Card processing, fraud platforms'],
+  ['2015 → 2019', 'PICT (Pune Institute of Computer Technology)', 'BE Computer Engineering · GSoC 2019 @ CERN-HSF'],
+]
+---
+<Base title="Ashish Kshirsagar — Senior SWE, building with 4 agents in parallel">
+  <main>
+    <!-- 1. Header -->
+    <header style="margin-bottom: 1rem;">
+      <h1 style="margin-bottom: 0.5rem;">Ashish Kshirsagar</h1>
+      <p class="mono muted" style="font-size: var(--small); letter-spacing: 0.02em; line-height: 1.6;">
+        senior swe @ microsoft → iodevz · seattle → pune (jun 2026) · vibe-coding with 4 agents in parallel · <a href="mailto:ashishkshirsagar10@gmail.com">open to india-based senior IC roles</a>
+      </p>
+    </header>
+
+    <!-- 2. Live feed -->
+    <LiveFeed endpoint={FEED_ENDPOINT} client:load />
+
+    <div class="divider">▍ ▍ ▍</div>
+
+    <!-- 3. Manifesto teaser -->
+    {essays[0] && (
+      <section>
+        <h2 style="margin-top: 0;">manifesto</h2>
+        <a href={`/writing/${essays[0].slug}`} class="manifesto-card">
+          <h3 style="margin-top: 0.5rem; font-size: 1.4rem;">{essays[0].data.title}</h3>
+          <p class="muted" style="font-size: 1rem; margin-top: 0.5rem; line-height: 1.5;">
+            {essays[0].data.description}
+          </p>
+          <p class="mono accent" style="margin-top: 0.75rem; font-size: var(--small);">read →</p>
+        </a>
+      </section>
+    )}
+
+    <!-- 4. Currently -->
+    <section>
+      <h2>currently</h2>
+      <p>
+        Shipping <a href="/projects/live-agent-feed">portfolio v2</a> with a live agent activity feed (the ticker above is the receipt). Wrapping up at Microsoft; transitioning to a senior IC role in India in June. Co-running <a href="/projects/iodevz">IODevz</a> on the side. Wedding June 27.
+      </p>
+      <p class="mono muted" style="font-size: var(--small); margin-top: 0.5rem;">
+        more detail → <a href="/now">/now</a>
+      </p>
+    </section>
+
+    <!-- 5. Projects -->
+    <section>
+      <h2>selected projects</h2>
+      <div class="proj-grid">
+        {projects.map((p) => (
+          <a href={`/projects/${p.slug}`} class="proj-card">
+            <div class="proj-header">
+              <span class={`proj-status status-${p.data.status} mono`}>{statusBadge[p.data.status]}</span>
+            </div>
+            <h3 class="proj-title">{p.data.title}</h3>
+            <p class="proj-desc muted">{p.data.description}</p>
+          </a>
+        ))}
+      </div>
+      <p class="mono muted" style="font-size: var(--small); margin-top: 1rem;">
+        all → <a href="/projects">/projects</a>
+      </p>
+    </section>
+
+    <!-- 6. Writing -->
+    <section>
+      <h2>writing</h2>
+      <ul class="writing-list">
+        {essays.map((e) => (
+          <li>
+            <a href={`/writing/${e.slug}`}>
+              <span class="mono faint" style="font-size: var(--small);">
+                {e.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })}
+              </span>
+              <span style="margin-left: 1rem;">{e.data.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="mono muted" style="font-size: var(--small); margin-top: 0.75rem;">
+        all → <a href="/writing">/writing</a>
+      </p>
+    </section>
+
+    <!-- 7. Career timeline -->
+    <section>
+      <h2>career</h2>
+      <table class="timeline">
+        {timeline.map(([dates, org, desc]) => (
+          <tr>
+            <td class="mono faint" style="font-size: var(--small); width: 12rem; vertical-align: top; padding-top: 0.4em;">{dates}</td>
+            <td>
+              <div style="font-weight: 600;">{org}</div>
+              <div class="muted" style="font-size: var(--small); margin-top: 0.2rem;">{desc}</div>
+            </td>
+          </tr>
+        ))}
+      </table>
+    </section>
+
+    <!-- 8. Connect -->
+    <section>
+      <h2>connect</h2>
+      <p class="mono" style="font-size: var(--small);">
+        <a href="mailto:ashishkshirsagar10@gmail.com">email</a> ·
+        <a href="https://github.com/Ask149">github</a> ·
+        <a href="https://twitter.com/iodevz_ai">twitter</a> ·
+        <a href="https://linkedin.com/in/ask149">linkedin</a>
+      </p>
+    </section>
+
+    <hr />
+    <footer class="mono" style="font-size: var(--tiny); color: var(--fg-faint); text-align: center;">
+      built with astro + cloudflare workers · <a href="https://github.com/Ask149/Ask149.github.io">source</a> · easter eggs: <a href="/sudo">/sudo</a> · <a href="/agents">/agents</a> · <a href="/cost">/cost</a>
+    </footer>
+  </main>
+  <style>
+    .manifesto-card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 1.5rem;
+      background-image: none !important;
+      transition: border-color var(--t-normal) var(--ease);
+    }
+    .manifesto-card:hover { border-color: var(--accent); }
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; }
+    .proj-card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 1rem;
+      background-image: none !important;
+      transition: border-color var(--t-normal) var(--ease);
+    }
+    .proj-card:hover { border-color: var(--accent); }
+    .proj-header { display: flex; justify-content: space-between; align-items: center; font-size: var(--tiny); margin-bottom: 0.4rem; }
+    .proj-status.status-active { color: var(--success); }
+    .proj-status.status-shipped { color: var(--accent); }
+    .proj-status.status-experimental { color: var(--fg-muted); }
+    .proj-status.status-abandoned { color: var(--fg-faint); }
+    .proj-title { font-size: 1.05rem; margin: 0.4rem 0; }
+    .proj-desc { font-size: var(--small); line-height: 1.45; }
+    .writing-list { list-style: none; }
+    .writing-list li { padding: 0.4rem 0; border-bottom: 1px solid var(--rule); }
+    .writing-list a { background-image: none; }
+    .writing-list a:hover { color: var(--accent); }
+    .timeline { width: 100%; border-collapse: collapse; }
+    .timeline td { padding: 0.6rem 0; border-bottom: 1px solid var(--rule); }
+  </style>
+</Base>

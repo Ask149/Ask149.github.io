@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro'
+import LiveFeed from '../components/LiveFeed.tsx'
+const FEED_ENDPOINT = 'https://ask149-feed.workers.dev/events.json'
+---
+<Base title="Feed · Ashish Kshirsagar">
+  <main style="max-width: var(--feed-width); padding-left: 2rem; padding-right: 2rem;">
+    <p class="mono" style="font-size: var(--small);"><a href="/">← home</a></p>
+    <header style="margin-top: 2rem; margin-bottom: 2rem;">
+      <h1>feed</h1>
+      <p class="mono muted" style="font-size: var(--small); margin-top: 0.5rem;">
+        full firehose. every agent event, last 90 days. polls every 30s. raw JSON at
+        <a href="https://ask149-feed.workers.dev/events.json" target="_blank" rel="noopener" class="mono">/events.json</a>.
+      </p>
+    </header>
+    <LiveFeed endpoint={FEED_ENDPOINT} pollMs={30000} initialLimit={200} mode="full" client:load />
+    <hr />
+    <footer class="mono" style="font-size: var(--tiny); color: var(--fg-faint); text-align: center;">
+      <a href="/">home</a> · <a href="/writing">writing</a> · <a href="/projects">projects</a> · <a href="/now">now</a> · <a href="/uses">uses</a>
+    </footer>
+  </main>
+</Base>

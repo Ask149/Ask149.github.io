@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro'
+---
+<Base title="Uses · Ashish Kshirsagar">
+  <main>
+    <p class="mono" style="font-size: var(--small);"><a href="/">← home</a></p>
+    <header style="margin-top: 2rem;">
+      <h1>uses</h1>
+      <p class="mono muted" style="font-size: var(--small);">
+        the actual tools. zero affiliate links. (see <a href="https://uses.tech" target="_blank" rel="noopener">uses.tech</a> for the genre.)
+      </p>
+    </header>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>hardware</h2>
+      <ul>
+        <li><strong>MacBook</strong> — M-series; relentless. macOS for the unix + the apps.</li>
+        <li><strong>Keyboard / monitor / desk</strong> — TBD on this page (I'll fill in when I rebuild the home office in Pune in June).</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>coding agents</h2>
+      <ul>
+        <li><strong>OpenCode</strong> — orchestrator + 27 subagents. Where I do non-trivial multi-step work. <a href="/writing/agents-in-parallel">essay</a>.</li>
+        <li><strong>GitHub Copilot</strong> — inline, always on. The boring middle of every file.</li>
+        <li><strong>Claude Code</strong> — terminal-first, conversational, fluid. Best for unfamiliar-repo exploration.</li>
+        <li><strong>Google Jules</strong> — async, autonomous, opens PRs. For bounded mechanical work I want to delegate completely. <a href="/projects/jules-agent">my OpenCode wrapper</a>.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>editor / shell</h2>
+      <ul>
+        <li><strong>VS Code</strong> for ambient Copilot + comfort. Terminal in a side pane.</li>
+        <li><strong>zsh</strong> + a small dotfiles set. Nothing fancy.</li>
+        <li><strong>iTerm2 / Ghostty</strong> — both at various times.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>infrastructure</h2>
+      <ul>
+        <li><strong>Cloudflare Workers + Pages</strong> — for static sites + small APIs. Free tier covers more than I'll ever need.</li>
+        <li><strong>GitHub Pages</strong> — for this site (legacy + cutover target).</li>
+        <li><strong>Supabase</strong> — when I need a real database with auth.</li>
+        <li><strong>Fly.io / Railway</strong> — for anything containerized.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>writing + notes</h2>
+      <ul>
+        <li><strong>Obsidian</strong> for long-form personal notes.</li>
+        <li><strong>Plain markdown</strong> in the repo for OpenCode-adjacent context (<code>~/.config/opencode/notes/</code>).</li>
+        <li><strong>Google Workspace</strong> for Tasks + Calendar + Drive. Wrapped by a custom <code>@gws-concierge</code> OpenCode agent.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>fragrance while coding</h2>
+      <ul>
+        <li>Rotating. Newsreader-vibe sessions get something warm-woody. JetBrains-Mono-vibe sessions get something fresh-citrus. (Yes, this is real. <a href="/writing">essay coming</a>.)</li>
+      </ul>
+    </section>
+
+    <hr />
+    <footer class="mono" style="font-size: var(--tiny); color: var(--fg-faint); text-align: center;">
+      <a href="/">home</a> · <a href="/writing">writing</a> · <a href="/projects">projects</a> · <a href="/now">now</a> · <a href="/feed">feed</a>
+    </footer>
+  </main>
+  <style>
+    main ul { padding-left: 1.5rem; }
+    main li { margin: 0.5rem 0; line-height: 1.6; }
+    main strong { color: var(--accent); }
+  </style>
+</Base>
