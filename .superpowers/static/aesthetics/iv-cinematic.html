@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>iv. Cinematic moody</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #0a0d12; color: #e8d9b8; font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse at 30% 20%, rgba(217, 126, 63, 0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(58, 84, 112, 0.25) 0%, transparent 50%); pointer-events: none; z-index: 0; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; position: relative; z-index: 1; }
+  .top-row { display: flex; justify-content: space-between; padding-bottom: 2rem; border-bottom: 1px solid rgba(232, 217, 184, 0.1); font-family: 'Inter', sans-serif; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(232, 217, 184, 0.5); }
+  .top-row .stamp { color: #d97e3f; }
+  .hero { padding: 8rem 0 6rem; position: relative; min-height: 70vh; display: flex; flex-direction: column; justify-content: center; }
+  .pre { font-family: 'Inter', sans-serif; font-size: 0.72rem; letter-spacing: 0.4em; text-transform: uppercase; color: #d97e3f; margin-bottom: 1.5rem; }
+  .hero h1 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 7rem; line-height: 0.95; letter-spacing: -0.04em; color: #f0e6d0; }
+  .hero h1 span { background: linear-gradient(180deg, #f0e6d0 0%, #d97e3f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-tag { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: rgba(232, 217, 184, 0.75); max-width: 30ch; line-height: 1.5; margin-top: 2.5rem; }
+  .hero-light { position: absolute; right: -60px; top: 0; width: 500px; height: 500px; background: radial-gradient(circle, rgba(240, 196, 104, 0.22) 0%, transparent 70%); pointer-events: none; }
+  .scenes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin: 4rem 0; }
+  .scene { padding: 2rem 1.4rem; background: linear-gradient(180deg, rgba(26, 34, 48, 0.6) 0%, rgba(10, 13, 18, 0.4) 100%); border: 1px solid rgba(232, 217, 184, 0.1); border-radius: 2px; position: relative; overflow: hidden; transition: all 0.4s; }
+  .scene::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, #d97e3f 50%, transparent 100%); opacity: 0.5; }
+  .scene:hover { background: linear-gradient(180deg, rgba(58, 84, 112, 0.3) 0%, rgba(10, 13, 18, 0.6) 100%); border-color: rgba(217, 126, 63, 0.4); }
+  .scene-num { font-family: 'Inter', sans-serif; font-size: 0.62rem; letter-spacing: 0.35em; color: rgba(217, 126, 63, 0.7); margin-bottom: 1rem; }
+  .scene h3 { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1.5rem; color: #f0e6d0; letter-spacing: -0.01em; }
+  .scene p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.92rem; color: rgba(232, 217, 184, 0.6); margin-top: 0.6rem; line-height: 1.5; }
+  .travel { padding: 6rem 0 4rem; border-top: 1px solid rgba(232, 217, 184, 0.1); }
+  .frame-label { font-family: 'Inter', sans-serif; font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: #d97e3f; }
+  .travel h2 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 3.5rem; letter-spacing: -0.03em; color: #f0e6d0; margin: 0.5rem 0 1rem; }
+  .travel-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: rgba(232, 217, 184, 0.6); }
+  .filmstrip { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 1rem; margin: 3rem 0; aspect-ratio: 21/9; }
+  .still { background: linear-gradient(135deg, var(--c1), var(--c2)); border-radius: 2px; position: relative; overflow: hidden; }
+  .still::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%); }
+  .still:nth-child(1) { --c1: #d97e3f; --c2: #4a2a18; }
+  .still:nth-child(2) { --c1: #3a5470; --c2: #0e1320; }
+  .still:nth-child(3) { --c1: #c4915c; --c2: #5a3a22; }
+  .still:nth-child(4) { --c1: #1a2638; --c2: #0a0d12; }
+  .still-label { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; z-index: 2; font-family: 'Inter', sans-serif; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: #f0e6d0; display: flex; justify-content: space-between; }
+  .voiceover { background: linear-gradient(135deg, rgba(26, 34, 48, 0.6) 0%, rgba(10, 13, 18, 0.4) 100%); border: 1px solid rgba(232, 217, 184, 0.1); padding: 2.5rem; margin-top: 2rem; max-width: 800px; }
+  .voiceover .label { font-family: 'Inter', sans-serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: #d97e3f; margin-bottom: 1rem; }
+  .voiceover p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; line-height: 1.6; color: #f0e6d0; }
+  .voiceover .meta { display: flex; gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(232, 217, 184, 0.1); font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 0.18em; color: rgba(232, 217, 184, 0.5); }
+  footer { padding: 4rem 0 2rem; border-top: 1px solid rgba(232, 217, 184, 0.1); margin-top: 5rem; font-family: 'Inter', sans-serif; font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(232, 217, 184, 0.4); display: flex; justify-content: space-between; }
+</style></head><body>
+<div class="container">
+  <div class="top-row">
+    <span>ASHISH KSHIRSAGAR / 2026</span>
+    <span class="stamp">● LIVE · @JULES · 3M</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-light"></div>
+    <div class="pre">— FRAME 01 · OPEN —</div>
+    <h1>Vibe-coding<br/>with <span>four agents</span><br/>in parallel.</h1>
+    <p class="hero-tag">Senior software engineer at Microsoft. Returning to Pune in June. Building in public, in low light.</p>
+  </section>
+
+  <section class="scenes">
+    <div class="scene"><div class="scene-num">SCENE 01</div><h3>Workshop</h3><p>Code and the four agents</p></div>
+    <div class="scene"><div class="scene-num">SCENE 02</div><h3>Voyages</h3><p>Photographs from the road</p></div>
+    <div class="scene"><div class="scene-num">SCENE 03</div><h3>Curio</h3><p>Books, music, fragrance</p></div>
+    <div class="scene"><div class="scene-num">SCENE 04</div><h3>Atelier</h3><p>Things made with hands</p></div>
+  </section>
+
+  <section class="travel">
+    <div class="frame-label">— SCENE 02 · OPENING —</div>
+    <h2>Seattle</h2>
+    <div class="travel-sub">A two-year exterior shot · June 2024 — May 2026</div>
+
+    <div class="filmstrip">
+      <div class="still"><div class="still-label"><span>01</span><span>FERRY · JUN</span></div></div>
+      <div class="still"><div class="still-label"><span>02</span><span>RAINIER</span></div></div>
+      <div class="still"><div class="still-label"><span>03</span><span>PIKE</span></div></div>
+      <div class="still"><div class="still-label"><span>04</span><span>DEPART</span></div></div>
+    </div>
+
+    <div class="voiceover">
+      <div class="label">— VOICEOVER · A.K. —</div>
+      <p>"Two years on the western edge. The rain stopped surprising me by month four. Counted twelve Rainier appearances, every one a small reward. Learned how a city holds still under low clouds — ferries dissolving into Puget Sound, the Space Needle going quiet on grey afternoons."</p>
+      <div class="meta">
+        <span>12 frames</span>
+        <span>written / draft</span>
+        <span>jun 2024 — may 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>SHOT IN INTER &amp; CORMORANT</span>
+    <span>ASK149 STUDIOS · 2026</span>
+    <span>FIN.</span>
+  </footer>
+</div>
+</body></html>

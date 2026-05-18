@@ -1,0 +1,36 @@
+---
+// ManifestoTeaser — extracted from v2 src/pages/index.astro `<!-- 3. Manifesto teaser -->` block.
+// Self-contained: pulls most-recent non-draft essay via getCollection directly.
+import { getCollection } from "astro:content";
+
+const essays = (await getCollection("essays", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const latest = essays[0];
+---
+{latest && (
+  <section>
+    <h2 style="margin-top: 0;">manifesto</h2>
+    <a href={`/writing/${latest.slug}`} class="manifesto-card">
+      <h3 style="margin-top: 0.5rem; font-size: 1.4rem;">{latest.data.title}</h3>
+      <p class="muted" style="font-size: 1rem; margin-top: 0.5rem; line-height: 1.5;">
+        {latest.data.description}
+      </p>
+      <p class="mono accent" style="margin-top: 0.75rem; font-size: var(--small);">read →</p>
+    </a>
+  </section>
+)}
+
+<style>
+  .manifesto-card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 1.5rem;
+    background-image: none !important;
+    transition: border-color var(--t-normal) var(--ease);
+  }
+  .manifesto-card:hover {
+    border-color: var(--accent);
+  }
+</style>

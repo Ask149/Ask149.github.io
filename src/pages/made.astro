@@ -1,0 +1,23 @@
+---
+import PersonaLayout from "../layouts/PersonaLayout.astro";
+import MadeHero from "../components/made/MadeHero.astro";
+import { MakerGrid } from "../components/made/MakerGrid";
+import BuildQueueList from "../components/made/BuildQueueList.astro";
+import { getCollection } from "astro:content";
+
+const all = await getCollection("builds", (e) => !e.data.draft);
+const builds = all.map((b) => ({
+  slug: b.slug,
+  title: b.data.title,
+  blurb: b.data.blurb,
+  status: b.data.status,
+  shippedDate: b.data.shippedDate?.toISOString().slice(0,10),
+  tags: b.data.tags,
+  cover: b.data.cover ? { src: b.data.cover.src, alt: b.data.coverAlt } : undefined,
+}));
+---
+<PersonaLayout personaId="made" title="Made — Ashish Kshirsagar" description="Side builds and sketchbook.">
+  <MadeHero />
+  <MakerGrid builds={builds} client:visible />
+  <BuildQueueList items={all} />
+</PersonaLayout>

@@ -1,0 +1,269 @@
+<h2>Per-tab interaction patterns</h2>
+<p class="subtitle">Same chrome (top nav). Each tab now has its own <strong>interaction logic</strong>, not just its own colors. Static mockups can only hint at motion &mdash; affordances annotated. Curator + Maker get honest "starting this room" framing.</p>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+
+  <!-- ===== CODER · scroll-triggered tech reveal ===== -->
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(184,88,56,0.08);">§ Coder · scroll &rarr; tech chips fly in &middot; hover-filter</div>
+    <div class="mockup-body" style="padding: 0; background-color: #F4EFE3; background-image: radial-gradient(circle at 1px 1px, rgba(60,40,20,0.08) 0.5px, transparent 0.5px); background-size: 18px 18px;">
+      <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 1rem; border-bottom: 1px solid #DDD2BB;">
+        <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; font-size: 0.72rem; color: #15110A;">Ashish Kshirsagar</div>
+        <div style="display: flex; gap: 0.8rem; font-family: ui-monospace, monospace; font-size: 0.52rem; letter-spacing: 0.15em; text-transform: uppercase;">
+          <span style="color: #15110A; border-bottom: 2px solid #B85838; padding-bottom: 2px;">Coder</span>
+          <span style="color: #9A8E73;">Traveler</span>
+          <span style="color: #9A8E73;">Curator</span>
+          <span style="color: #9A8E73;">Maker</span>
+        </div>
+      </nav>
+      <div style="padding: 0.9rem 1rem;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #9A8E73; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.4rem;">§ Selected work · scroll for more</div>
+
+        <!-- project card (active hover state shown) -->
+        <div style="background: rgba(255,255,255,0.5); border: 1px solid #B85838; padding: 0.55rem 0.7rem; margin-bottom: 0.4rem; box-shadow: 0 1px 6px rgba(184,88,56,0.15);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div style="font-family: Newsreader, Georgia, serif; font-size: 0.78rem; font-weight: 600; color: #15110A;">Live Agent Feed</div>
+            <div style="font-family: ui-monospace, monospace; font-size: 0.45rem; color: #B85838; letter-spacing: 0.12em; text-transform: uppercase;">Active</div>
+          </div>
+          <div style="font-family: Newsreader, Georgia, serif; font-size: 0.6rem; color: #5C4A2E; font-style: italic; margin-top: 0.15rem;">Cloudflare Worker + KV. The receipts.</div>
+          <div style="display: flex; gap: 0.25rem; flex-wrap: wrap; margin-top: 0.35rem;">
+            <span style="font-family: ui-monospace, monospace; font-size: 0.42rem; padding: 0.12rem 0.35rem; background: #B85838; color: #fff; letter-spacing: 0.08em; text-transform: uppercase;">TypeScript</span>
+            <span style="font-family: ui-monospace, monospace; font-size: 0.42rem; padding: 0.12rem 0.35rem; background: rgba(184,88,56,0.15); color: #15110A; letter-spacing: 0.08em; text-transform: uppercase;">Cloudflare</span>
+            <span style="font-family: ui-monospace, monospace; font-size: 0.42rem; padding: 0.12rem 0.35rem; background: rgba(184,88,56,0.15); color: #15110A; letter-spacing: 0.08em; text-transform: uppercase;">KV</span>
+            <span style="font-family: ui-monospace, monospace; font-size: 0.42rem; padding: 0.12rem 0.35rem; background: rgba(184,88,56,0.15); color: #15110A; letter-spacing: 0.08em; text-transform: uppercase;">Astro</span>
+          </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.35); border: 1px solid #DDD2BB; padding: 0.55rem 0.7rem; margin-bottom: 0.4rem; opacity: 0.45;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div style="font-family: Newsreader, Georgia, serif; font-size: 0.78rem; font-weight: 600; color: #15110A;">OpenCode · Jules Wrapper</div>
+            <div style="font-family: ui-monospace, monospace; font-size: 0.45rem; color: #5C4A2E; letter-spacing: 0.12em; text-transform: uppercase;">Shipped</div>
+          </div>
+          <div style="display: flex; gap: 0.25rem; margin-top: 0.3rem;">
+            <span style="font-family: ui-monospace, monospace; font-size: 0.42rem; padding: 0.12rem 0.35rem; background: rgba(184,88,56,0.15); color: #15110A; letter-spacing: 0.08em; text-transform: uppercase;">Python</span>
+            <span style="font-family: ui-monospace, monospace; font-size: 0.42rem; padding: 0.12rem 0.35rem; background: #DDD2BB; color: #9A8E73; letter-spacing: 0.08em; text-transform: uppercase;">REST API</span>
+          </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.25); border: 1px dashed #C9B89A; padding: 0.4rem 0.7rem; opacity: 0.4; transform: translateY(8px);">
+          <div style="font-family: Newsreader, Georgia, serif; font-size: 0.72rem; font-weight: 600; color: #15110A;">IODevz</div>
+          <div style="font-family: ui-monospace, monospace; font-size: 0.42rem; color: #C26644; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.2rem;">↓ scrolling reveals more</div>
+        </div>
+
+        <div style="margin-top: 0.6rem; padding: 0.4rem; background: rgba(184,88,56,0.06); border-left: 2px solid #B85838; font-family: ui-monospace, monospace; font-size: 0.5rem; color: #5C4A2E; letter-spacing: 0.05em;">
+          ↻ hover any tech chip &rarr; cross-filters all projects using it<br/>
+          ⇣ scroll triggers stagger-fade-in for chips per project
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TRAVELER · horizontal timeline slider ===== -->
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(58,84,112,0.08);">§ Traveler · horizontal timeline · drag/swipe to slide</div>
+    <div class="mockup-body" style="padding: 0; background: linear-gradient(180deg, #E8DBC0 0%, #D9CFB8 100%); position: relative;">
+      <div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0, transparent 40px, rgba(58,84,112,0.05) 40px, rgba(58,84,112,0.05) 41px), repeating-linear-gradient(0deg, transparent 0, transparent 40px, rgba(58,84,112,0.05) 40px, rgba(58,84,112,0.05) 41px); pointer-events: none;"></div>
+      <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 1rem; border-bottom: 1px solid rgba(58,84,112,0.25); background: rgba(245,239,224,0.65); position: relative;">
+        <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; font-size: 0.72rem; color: #15110A;">Ashish Kshirsagar</div>
+        <div style="display: flex; gap: 0.8rem; font-family: ui-monospace, monospace; font-size: 0.52rem; letter-spacing: 0.15em; text-transform: uppercase;">
+          <span style="color: #9A8E73;">Coder</span>
+          <span style="color: #15110A; border-bottom: 2px solid #3A5470; padding-bottom: 2px;">Traveler</span>
+          <span style="color: #9A8E73;">Curator</span>
+          <span style="color: #9A8E73;">Maker</span>
+        </div>
+      </nav>
+
+      <div style="padding: 0.9rem 1rem 0.4rem 1rem; position: relative;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+          <div>
+            <h1 style="font-family: Newsreader, Georgia, serif; font-size: 1.15rem; font-weight: 600; color: #1A2638; margin: 0;">Travels</h1>
+            <div style="font-family: ui-monospace, monospace; font-size: 0.48rem; color: #3A5470; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.2rem;">12 places · 3 countries · currently in Seattle</div>
+          </div>
+          <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #B85838; letter-spacing: 0.12em; text-align: right;">→ next: Pune · Jun 2026</div>
+        </div>
+      </div>
+
+      <!-- horizontal timeline -->
+      <div style="padding: 0 0 0.7rem 1rem; position: relative; overflow: hidden;">
+        <div style="display: flex; gap: 0.5rem; align-items: flex-end; transform: translateX(-15px);">
+          <div style="flex: 0 0 100px; background: #FFFFFFC8; border: 1px solid #C9B89A; padding: 0.4rem; transform: rotate(-1.5deg);">
+            <div style="background: #B89B7C; height: 50px;"></div>
+            <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.5rem; color: #15110A; margin-top: 0.2rem;">Pune &middot; 2026</div>
+            <div style="font-family: ui-monospace, monospace; font-size: 0.4rem; color: #3A5470; letter-spacing: 0.1em;">PNQ · home</div>
+          </div>
+          <div style="flex: 0 0 100px; background: #FFFFFFC8; border: 1px solid #C9B89A; padding: 0.4rem; transform: rotate(1deg);">
+            <div style="background: #6E8AA4; height: 50px;"></div>
+            <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.5rem; color: #15110A; margin-top: 0.2rem;">Seattle &middot; 2024</div>
+            <div style="font-family: ui-monospace, monospace; font-size: 0.4rem; color: #3A5470; letter-spacing: 0.1em;">SEA · MSFT</div>
+          </div>
+          <div style="flex: 0 0 100px; background: #FFFFFFC8; border: 1px solid #C9B89A; padding: 0.4rem; transform: rotate(-0.8deg);">
+            <div style="background: #C49B6B; height: 50px;"></div>
+            <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.5rem; color: #15110A; margin-top: 0.2rem;">Tempe &middot; 2023</div>
+            <div style="font-family: ui-monospace, monospace; font-size: 0.4rem; color: #3A5470; letter-spacing: 0.1em;">PHX · ASU</div>
+          </div>
+          <div style="flex: 0 0 100px; background: #FFFFFFC0; border: 1px dashed #C9B89A; padding: 0.4rem; opacity: 0.6;">
+            <div style="background: rgba(58,84,112,0.2); height: 50px;"></div>
+            <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.5rem; color: #5C4A2E; margin-top: 0.2rem;">Pune &middot; 2019</div>
+            <div style="font-family: ui-monospace, monospace; font-size: 0.4rem; color: #9A8E73; letter-spacing: 0.1em;">PNQ · school</div>
+          </div>
+          <div style="flex: 0 0 30px; opacity: 0.4; font-family: ui-monospace, monospace; font-size: 0.5rem; color: #3A5470; align-self: center; letter-spacing: 0.15em;">→</div>
+        </div>
+        <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 30px; background: linear-gradient(90deg, transparent, #E8DBC0); pointer-events: none;"></div>
+      </div>
+
+      <div style="padding: 0.4rem 1rem 0.8rem 1rem; position: relative;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #2A3A52; letter-spacing: 0.06em; padding: 0.4rem; background: rgba(58,84,112,0.06); border-left: 2px solid #3A5470;">
+          ← drag/swipe to scroll the timeline · year markers and polaroids slide<br/>
+          ↻ click any card &rarr; photo lightbox + travel note expands
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CURATOR · currently reading + quote ===== -->
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(122,40,40,0.08);">§ Curator · "currently reading" hero · quote rotates daily</div>
+    <div class="mockup-body" style="padding: 0; background: linear-gradient(180deg, #F0E8D8 0%, #E6D9BE 100%);">
+      <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 1rem; border-bottom: 1px solid rgba(122,40,40,0.2); background: rgba(245,239,224,0.65);">
+        <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; font-size: 0.72rem; color: #15110A;">Ashish Kshirsagar</div>
+        <div style="display: flex; gap: 0.8rem; font-family: ui-monospace, monospace; font-size: 0.52rem; letter-spacing: 0.15em; text-transform: uppercase;">
+          <span style="color: #9A8E73;">Coder</span>
+          <span style="color: #9A8E73;">Traveler</span>
+          <span style="color: #15110A; border-bottom: 2px solid #7A2828; padding-bottom: 2px;">Curator</span>
+          <span style="color: #9A8E73;">Maker</span>
+        </div>
+      </nav>
+
+      <div style="padding: 0.9rem 1rem 0.5rem 1rem;">
+        <h1 style="font-family: Newsreader, Georgia, serif; font-size: 1.15rem; font-weight: 600; color: #4A2828; margin: 0; font-style: italic;">Curate</h1>
+        <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.6rem; color: #5C4A2E; margin-top: 0.15rem;">Building this catalog. One book at a time.</div>
+      </div>
+
+      <!-- currently reading hero card -->
+      <div style="margin: 0.4rem 1rem; padding: 0.7rem; background: rgba(255,255,255,0.7); border: 1px solid #C9B89A; box-shadow: 0 1px 4px rgba(122,40,40,0.08); display: grid; grid-template-columns: 60px 1fr; gap: 0.7rem;">
+        <div style="background: linear-gradient(135deg, #7A2828, #4A2828); aspect-ratio: 2/3; box-shadow: 0 1px 3px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; padding: 0.2rem;">
+          <div style="font-family: Newsreader, Georgia, serif; font-size: 0.42rem; color: #F0E8D8; text-align: center; line-height: 1.2; font-style: italic;">Italo<br/>Calvino<br/>—<br/>Invisible<br/>Cities</div>
+        </div>
+        <div>
+          <div style="font-family: ui-monospace, monospace; font-size: 0.45rem; color: #7A2828; letter-spacing: 0.15em; text-transform: uppercase;">Currently reading</div>
+          <div style="font-family: Newsreader, Georgia, serif; font-size: 0.72rem; font-weight: 600; color: #15110A; margin-top: 0.15rem;">Invisible Cities</div>
+          <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.58rem; color: #5C4A2E;">Italo Calvino · 1972</div>
+
+          <div style="margin-top: 0.4rem; padding-left: 0.5rem; border-left: 2px solid #7A2828;">
+            <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.62rem; color: #2A2520; line-height: 1.4;">&ldquo;The city does not consist of this, but of relationships between the measurements of its space and the events of its past.&rdquo;</div>
+            <div style="font-family: ui-monospace, monospace; font-size: 0.42rem; color: #7A2828; letter-spacing: 0.1em; margin-top: 0.2rem;">↻ page 10 · rotates daily</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 0.4rem 1rem 0.6rem 1rem;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.45rem; color: #7A2828; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.3rem;">Recently finished · 2 books</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+          <div style="font-family: Newsreader, Georgia, serif; font-size: 0.58rem; color: #15110A;">Steinbeck · East of Eden <span style="color: #B89968;">★★★★</span></div>
+          <div style="font-family: Newsreader, Georgia, serif; font-size: 0.58rem; color: #15110A;">Le Guin · The Dispossessed <span style="color: #B89968;">★★★★★</span></div>
+        </div>
+      </div>
+
+      <div style="padding: 0.4rem 1rem 0.7rem 1rem;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.48rem; color: #4A2828; letter-spacing: 0.05em; padding: 0.35rem; background: rgba(122,40,40,0.06); border-left: 2px solid #7A2828;">
+          ↻ pull quote rotates daily (or per-visit)<br/>
+          ↳ honest "starting this room" subtitle · grows as you add
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAKER · empty state with intention ===== -->
+  <div class="mockup">
+    <div class="mockup-header" style="background: rgba(216,88,32,0.08);">§ Maker · honest empty state · "first sketch lands here"</div>
+    <div class="mockup-body" style="padding: 0; background: linear-gradient(180deg, #2A3A52 0%, #1A2638 100%); color: #F5EFE0; position: relative;">
+      <div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0, transparent 30px, rgba(245,239,224,0.04) 30px, rgba(245,239,224,0.04) 31px), repeating-linear-gradient(0deg, transparent 0, transparent 30px, rgba(245,239,224,0.04) 30px, rgba(245,239,224,0.04) 31px); pointer-events: none;"></div>
+      <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 1rem; border-bottom: 1px solid rgba(245,239,224,0.15); position: relative; background: rgba(15,16,30,0.5);">
+        <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; font-size: 0.72rem; color: #F5EFE0;">Ashish Kshirsagar</div>
+        <div style="display: flex; gap: 0.8rem; font-family: ui-monospace, monospace; font-size: 0.52rem; letter-spacing: 0.15em; text-transform: uppercase;">
+          <span style="color: rgba(245,239,224,0.5);">Coder</span>
+          <span style="color: rgba(245,239,224,0.5);">Traveler</span>
+          <span style="color: rgba(245,239,224,0.5);">Curator</span>
+          <span style="color: #F5EFE0; border-bottom: 2px solid #D85820; padding-bottom: 2px;">Maker</span>
+        </div>
+      </nav>
+
+      <div style="padding: 0.9rem 1rem 0.5rem 1rem; position: relative;">
+        <h1 style="font-family: Newsreader, Georgia, serif; font-size: 1.15rem; font-weight: 600; color: #F5EFE0; margin: 0;">Made</h1>
+        <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.6rem; color: rgba(245,239,224,0.7); margin-top: 0.15rem;">Starting this room. First sketch lands here soon.</div>
+      </div>
+
+      <!-- placeholder for first sketch -->
+      <div style="margin: 0.4rem 1rem; padding: 1.2rem 0.6rem; border: 1.5px dashed rgba(216,88,32,0.55); background: rgba(15,16,30,0.4); text-align: center; position: relative;">
+        <svg width="60" height="40" viewBox="0 0 60 40" style="margin-bottom: 0.4rem;">
+          <rect x="6" y="8" width="22" height="16" stroke="rgba(216,88,32,0.5)" stroke-width="0.8" stroke-dasharray="2,2" fill="none"/>
+          <circle cx="42" cy="20" r="9" stroke="rgba(216,88,32,0.5)" stroke-width="0.8" stroke-dasharray="2,2" fill="none"/>
+          <line x1="28" y1="20" x2="33" y2="20" stroke="rgba(216,88,32,0.5)" stroke-width="0.6" stroke-dasharray="1,1"/>
+        </svg>
+        <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #D85820; letter-spacing: 0.18em; text-transform: uppercase;">FIG. 1 · placeholder</div>
+        <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.6rem; color: rgba(245,239,224,0.75); margin-top: 0.4rem; line-height: 1.4;">A first sketch arrives here. Something physical. A small mechanism, an enclosure, a drawing. Pulse will fade in.</div>
+      </div>
+
+      <div style="padding: 0.5rem 1rem 0.4rem 1rem; position: relative;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.48rem; color: #D85820; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.35rem;">Build queue · planning</div>
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 0.6rem; color: rgba(245,239,224,0.8); line-height: 1.65;">
+          1 &middot; Mechanical keyboard build (split, hand-wired)<br/>
+          2 &middot; Notebook-clip pen rest, walnut + brass<br/>
+          3 &middot; Garden weather station, ESP32 + paper display
+        </div>
+      </div>
+
+      <div style="padding: 0.4rem 1rem 0.7rem 1rem; position: relative;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.48rem; color: rgba(245,239,224,0.6); letter-spacing: 0.05em; padding: 0.35rem; background: rgba(216,88,32,0.08); border-left: 2px solid #D85820;">
+          ↳ empty placeholder pulses subtly &middot; "starting" framing is honest, not embarrassing<br/>
+          ↻ when first sketch lands &rarr; placeholder swaps to schematic, queue moves to "in flight"
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top: 1.4rem;">
+  <div class="label">Per-tab interaction patterns &mdash; in plain words</div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+    <div>
+      <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; color: #B85838;">§1 Coder</div>
+      <ul style="font-size: 0.82rem; line-height: 1.55; margin-top: 0.2rem; padding-left: 1.2rem;">
+        <li>Project cards scroll-trigger their tech chips (50ms stagger fade-in)</li>
+        <li>Hover any tech chip &rarr; cross-filter: all projects using it brighten, rest dim</li>
+        <li>Live agent feed at top (already in spec)</li>
+        <li>/changelog footer status (already in spec)</li>
+      </ul>
+    </div>
+    <div>
+      <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; color: #3A5470;">§2 Traveler</div>
+      <ul style="font-size: 0.82rem; line-height: 1.55; margin-top: 0.2rem; padding-left: 1.2rem;">
+        <li>Horizontal polaroid timeline &mdash; drag/swipe/scroll-wheel</li>
+        <li>Year markers fixed at intervals (2019 / 2021 / 2023 / 2024 / 2026)</li>
+        <li>Click polaroid &rarr; photo lightbox + travel note expands</li>
+        <li>"Currently · next stop" indicator with date countdown</li>
+      </ul>
+    </div>
+    <div>
+      <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; color: #7A2828;">§3 Curator</div>
+      <ul style="font-size: 0.82rem; line-height: 1.55; margin-top: 0.2rem; padding-left: 1.2rem;">
+        <li>"Currently reading" hero card with rotating quote (daily or per-visit)</li>
+        <li>Honest subtitle: "Building this catalog. One book at a time."</li>
+        <li>"Recently finished" mini-list &mdash; grows as you add</li>
+        <li>Later: tabs/filters for Books / Fragrance / Music when content grows</li>
+      </ul>
+    </div>
+    <div>
+      <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; color: #D85820;">§6 Maker</div>
+      <ul style="font-size: 0.82rem; line-height: 1.55; margin-top: 0.2rem; padding-left: 1.2rem;">
+        <li>Dashed-outline "FIG. 1 · placeholder" with soft pulse (intentional, not lazy)</li>
+        <li>"Build queue · planning" list visible immediately (you have ideas, that&rsquo;s real)</li>
+        <li>When first sketch lands &rarr; placeholder swaps to schematic, queue auto-updates</li>
+        <li>Page is visibly building itself over time, like all the others</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top: 1.4rem;">If the interaction direction is right, say <strong>"lock it"</strong> and I&rsquo;ll write the spec. Else: <em>"Coder needs a horizontal projects scroller too,"</em> <em>"Traveler should have a map not polaroids,"</em> <em>"Curator: also list fragrances even though I only have 2,"</em> <em>"Maker: the pulse is too much,"</em> etc.</p>

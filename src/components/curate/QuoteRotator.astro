@@ -1,0 +1,17 @@
+---
+export interface Props { quotes: { text: string; source: string }[]; }
+const { quotes } = Astro.props;
+const idx = quotes.length > 0 ? Math.floor(Date.now() / 86_400_000) % quotes.length : 0;
+const today = quotes[idx];
+---
+{today && (
+  <blockquote class="quote">
+    <p>{today.text}</p>
+    <cite>— {today.source}</cite>
+  </blockquote>
+)}
+<style>
+  .quote { margin: var(--space-8) 0; padding: var(--space-6); border-left: 3px solid var(--accent); background: var(--surface); }
+  p { font-family: var(--font-display); font-style: italic; font-size: 1.25rem; line-height: 1.5; color: var(--fg); margin: 0 0 var(--space-3); }
+  cite { font-family: var(--font-mono); font-size: 0.8rem; color: var(--fg-muted); font-style: normal; }
+</style>

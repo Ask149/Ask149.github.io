@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ii. Wes Anderson flat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Futura&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f0d5c5; color: #2a1810; font-family: 'Cardo', serif; min-height: 100vh; text-align: center; }
+  .container { max-width: 920px; margin: 0 auto; padding: 3rem 2rem; }
+  .top-stripe { display: flex; justify-content: space-between; align-items: center; padding: 0 0 2rem; border-bottom: 2px solid #2a1810; margin-bottom: 3rem; font-family: 'Futura', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: #2a1810; }
+  .hero { padding: 2rem 0 4rem; position: relative; }
+  .facade { background: #c8a87b; border: 3px solid #2a1810; padding: 3rem 2rem; position: relative; max-width: 720px; margin: 0 auto; box-shadow: 8px 8px 0 #2a1810; }
+  .facade::before, .facade::after { content: ""; position: absolute; top: -20px; width: 60px; height: 8px; background: #c84a3c; }
+  .facade::before { left: 40px; }
+  .facade::after { right: 40px; }
+  .estd { font-family: 'Futura', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: #2a1810; margin-bottom: 0.8rem; }
+  .name { font-family: 'Cardo', serif; font-size: 4.5rem; font-weight: 700; letter-spacing: 0.05em; color: #2a1810; line-height: 0.95; }
+  .name-underline { width: 80px; height: 3px; background: #2a1810; margin: 1.2rem auto; }
+  .role { font-family: 'Futura', sans-serif; font-size: 0.85rem; letter-spacing: 0.32em; text-transform: uppercase; color: #2a1810; }
+  .floors { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 5rem 0 4rem; border: 3px solid #2a1810; box-shadow: 8px 8px 0 #2a1810; background: #6a9b9b; }
+  .floor { padding: 2rem 1rem; border-right: 2px solid #2a1810; position: relative; color: #fefdf8; }
+  .floor:last-child { border-right: none; }
+  .floor-num { font-family: 'Futura', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: rgba(254, 253, 248, 0.7); }
+  .floor-icon { width: 36px; height: 36px; margin: 1rem auto; background: #fefdf8; border-radius: 50%; display: grid; place-items: center; font-family: 'Cardo', serif; font-size: 1.2rem; font-weight: 700; color: #2a1810; }
+  .floor-name { font-family: 'Cardo', serif; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.04em; }
+  .floor-tag { font-family: 'Futura', sans-serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(254, 253, 248, 0.8); margin-top: 0.4rem; }
+  .travel-section { padding: 3rem 0; }
+  .chapter { font-family: 'Futura', sans-serif; font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: #2a1810; margin-bottom: 0.8rem; }
+  .travel-title { font-family: 'Cardo', serif; font-size: 2.5rem; font-weight: 700; color: #2a1810; }
+  .travel-sub { font-family: 'Cardo', serif; font-style: italic; font-size: 1rem; color: #6a4030; margin-top: 0.5rem; }
+  .photo-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin: 3rem auto; max-width: 720px; }
+  .frame { border: 2px solid #2a1810; background: #c84a3c; padding: 0.5rem; position: relative; }
+  .frame-img { aspect-ratio: 1; background: var(--bg); }
+  .frame:nth-child(1) { --bg: #c8a87b; background: #6a9b9b; }
+  .frame:nth-child(2) { --bg: #f0d5c5; background: #c8a87b; }
+  .frame:nth-child(3) { --bg: #6a9b9b; background: #c84a3c; }
+  .frame:nth-child(4) { --bg: #c84a3c; background: #c8a87b; }
+  .frame-label { font-family: 'Futura', sans-serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: #fefdf8; padding: 0.4rem 0.2rem 0.1rem; }
+  .placard { border: 2px solid #2a1810; background: #fefdf8; padding: 1.5rem 2rem; max-width: 580px; margin: 0 auto; text-align: left; box-shadow: 5px 5px 0 #2a1810; }
+  .placard-label { font-family: 'Futura', sans-serif; font-size: 0.55rem; letter-spacing: 0.35em; text-transform: uppercase; color: #c84a3c; margin-bottom: 0.6rem; }
+  .placard p { font-family: 'Cardo', serif; font-size: 1.05rem; line-height: 1.55; font-style: italic; color: #2a1810; }
+  footer { font-family: 'Futura', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; padding: 3rem 0 2rem; color: #2a1810; }
+</style></head><body>
+<div class="container">
+  <div class="top-stripe"><span>Vol. III · No. 1</span><span>The Kshirsagar Hotel</span><span>Anno MMXXVI</span></div>
+
+  <section class="hero">
+    <div class="facade">
+      <div class="estd">Established · 1994</div>
+      <div class="name">ASHISH</div>
+      <div class="name-underline"></div>
+      <div class="role">Senior Software Engineer · Microsoft · Seattle</div>
+    </div>
+  </section>
+
+  <section class="floors">
+    <div class="floor"><div class="floor-num">Floor 1</div><div class="floor-icon">⌘</div><div class="floor-name">Workshop</div><div class="floor-tag">Engineering & Agents</div></div>
+    <div class="floor"><div class="floor-num">Floor 2</div><div class="floor-icon">⛵</div><div class="floor-name">Voyages</div><div class="floor-tag">Travels & Diaries</div></div>
+    <div class="floor"><div class="floor-num">Floor 3</div><div class="floor-icon">♛</div><div class="floor-name">Curio</div><div class="floor-tag">Books & Cabinet</div></div>
+    <div class="floor"><div class="floor-num">Floor 4</div><div class="floor-icon">✎</div><div class="floor-name">Atelier</div><div class="floor-tag">Made by hand</div></div>
+  </section>
+
+  <section class="travel-section">
+    <div class="chapter">— Chapter II —</div>
+    <h2 class="travel-title">SEATTLE</h2>
+    <div class="travel-sub">A north-western expedition · 1 June 2024 → 31 May 2026</div>
+
+    <div class="photo-strip">
+      <div class="frame"><div class="frame-img"></div><div class="frame-label">No. 01</div></div>
+      <div class="frame"><div class="frame-img"></div><div class="frame-label">No. 02</div></div>
+      <div class="frame"><div class="frame-img"></div><div class="frame-label">No. 03</div></div>
+      <div class="frame"><div class="frame-img"></div><div class="frame-label">No. 04</div></div>
+    </div>
+
+    <div class="placard">
+      <div class="placard-label">From the diary of the proprietor</div>
+      <p>Two years residing on the western edge of America. Took the early ferry. Watched the city dissolve into low cloud each afternoon. Made friends with rain. Counted twelve sightings of Mt. Rainier. Drank an unreasonable quantity of espresso.</p>
+    </div>
+  </section>
+
+  <footer>— Vol. III · The Kshirsagar Hotel · Suite 4 · Floor 2 —</footer>
+</div>
+</body></html>

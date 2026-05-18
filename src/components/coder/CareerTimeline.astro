@@ -1,0 +1,36 @@
+---
+// CareerTimeline — extracted from v2 src/pages/index.astro `<!-- 7. Career timeline -->` block.
+// Embedded data: no external collection needed.
+const timeline: Array<[string, string, string]> = [
+  ["Oct 2025 → Jun 2026", "Microsoft", "Software Engineer · Seattle. Transitioning internally to Hyderabad/Bangalore Jun 2026."],
+  ["Aug 2022 → May 2024", "Arizona State University", "MS Computer Science · 4.0 GPA · AI focus"],
+  ["2021 → 2022", "Amazon (India)", "SDE2 · Scalable systems, microservices, AWS + Java + Spring Boot"],
+  ["2019 → 2021", "Barclays (Pune)", "Graduate Analyst → SDE · Card processing, fraud platforms"],
+  ["2015 → 2019", "PICT (Pune Institute of Computer Technology)", "BE Computer Engineering · GSoC 2019 @ CERN-HSF"],
+];
+---
+<section>
+  <h2>career</h2>
+  <table class="timeline">
+    {timeline.map(([dates, org, desc]) => (
+      <tr>
+        <td class="mono faint" style="font-size: var(--small); width: 12rem; vertical-align: top; padding-top: 0.4em;">{dates}</td>
+        <td>
+          <div style="font-weight: 600;">{org}</div>
+          <div class="muted" style="font-size: var(--small); margin-top: 0.2rem;">{desc}</div>
+        </td>
+      </tr>
+    ))}
+  </table>
+</section>
+
+<style>
+  .timeline {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .timeline td {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+</style>

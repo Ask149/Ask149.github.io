@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>§1 Workshop · hybrid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; overflow-x: hidden; position: relative; font-family: 'Cormorant Garamond', serif; }
+  .top-strip { position: relative; z-index: 10; display: flex; justify-content: space-between; padding: 1.2rem 2.5rem; border-bottom: 1px solid var(--rule); backdrop-filter: blur(8px); font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .top-strip .brand { font-family: 'Anton', sans-serif; font-size: 0.95rem; letter-spacing: 0.05em; color: var(--fg); }
+  .top-strip .nav { display: flex; gap: 1.5rem; }
+  .top-strip .nav a { color: var(--muted); text-decoration: none; }
+  .top-strip .nav a.active { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 0.1rem; }
+  .hero { position: relative; z-index: 10; padding: 5rem 2.5rem 2rem; max-width: 920px; }
+  .hero-pre { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
+  .hero h1 { font-family: 'Anton', sans-serif; font-size: 8.5rem; line-height: 0.84; letter-spacing: -0.04em; color: var(--fg); margin: 0.6rem 0 1.5rem; }
+  .hero h1 span { background: linear-gradient(180deg, var(--fg) 30%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: var(--muted); max-width: 35ch; line-height: 1.45; }
+  .hero-meta { display: flex; gap: 1.5rem; margin-top: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .hero-meta strong { color: var(--accent); font-weight: 500; }
+  footer { position: relative; z-index: 10; padding: 3rem 2.5rem 2rem; border-top: 1px solid var(--rule); margin-top: 4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--muted); display: flex; justify-content: space-between; }
+
+  :root { --bg-from: #e8e5d8; --bg-to: #d8d3c0; --fg: #1f2418; --muted: #5a5848; --accent: #8b5a2a; --rule: rgba(31, 36, 24, 0.18); --surface: rgba(254, 250, 240, 0.55); }
+  body { background: linear-gradient(180deg, var(--bg-from) 0%, var(--bg-to) 100%); color: var(--fg); }
+  body::before { content: ""; position: fixed; inset: 0; background-image: linear-gradient(rgba(31, 36, 24, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(31, 36, 24, 0.08) 1px, transparent 1px); background-size: 30px 30px; pointer-events: none; z-index: 1; }
+  .schematic-bg { position: fixed; inset: 0; display: grid; place-items: center; z-index: 0; opacity: 0.18; pointer-events: none; }
+  .schematic-bg svg { width: 80%; max-width: 1100px; }
+  .top-strip { background: rgba(232, 229, 216, 0.7); }
+  .feed-strip { position: relative; z-index: 10; padding: 1rem 2.5rem; background: var(--surface); border-bottom: 1px solid var(--rule); font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); display: flex; gap: 1rem; align-items: center; }
+  .feed-strip .live { color: var(--accent); }
+  .projects { position: relative; z-index: 10; padding: 0 2.5rem; max-width: 1100px; margin: 0 auto; }
+  .projects-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+  .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .proj { padding: 1.3rem; background: var(--surface); border: 1px solid var(--rule); position: relative; }
+  .proj-num { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+  .proj h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.4rem; margin: 0.4rem 0; color: var(--fg); }
+  .proj .desc { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--muted); margin-bottom: 0.9rem; line-height: 1.5; }
+  .proj .chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .chip { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; padding: 0.15rem 0.45rem; background: rgba(139, 90, 42, 0.12); color: var(--accent); border-radius: 99px; }
+  .chip.on { background: var(--accent); color: #fefdf8; }
+  .scribble { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--accent); transform: rotate(-2deg); position: absolute; top: -8px; right: 10px; opacity: 0.65; }
+</style></head><body>
+
+<div class="schematic-bg">
+  <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="rgba(31, 36, 24, 0.35)" stroke-width="1" fill="none">
+      <rect x="100" y="100" width="160" height="100"/>
+      <rect x="120" y="120" width="40" height="40"/>
+      <circle cx="220" cy="150" r="20"/>
+      <line x1="260" y1="150" x2="340" y2="150" stroke-dasharray="4 4"/>
+      <rect x="340" y="120" width="120" height="60"/>
+      <text x="350" y="150" font-family="JetBrains Mono" font-size="10" fill="rgba(31, 36, 24, 0.5)">orchestrator</text>
+      <line x1="460" y1="150" x2="600" y2="150" stroke-dasharray="4 4"/>
+      <rect x="600" y="100" width="200" height="100"/>
+      <text x="620" y="135" font-family="JetBrains Mono" font-size="10" fill="rgba(31, 36, 24, 0.5)">subagent fleet</text>
+      <line x1="700" y1="200" x2="700" y2="280"/>
+      <rect x="600" y="280" width="200" height="80"/>
+      <text x="620" y="320" font-family="JetBrains Mono" font-size="10" fill="rgba(31, 36, 24, 0.5)">reviewer gates</text>
+    </g>
+    <text x="500" y="450" font-family="Caveat" font-size="22" fill="rgba(139, 90, 42, 0.45)" text-anchor="middle">fig.04 · the four-agent quadrant</text>
+  </svg>
+</div>
+
+<div class="top-strip">
+  <span class="brand">ASHISH K.</span>
+  <div class="nav">
+    <a href="vi-hybrid-workshop.html" class="active">workshop</a>
+    <a href="vi-hybrid-travel.html">voyages</a>
+    <a href="vi-hybrid-curio.html">curio</a>
+    <a href="vi-hybrid-atelier.html">atelier</a>
+  </div>
+  <a href="/resume" style="color: var(--accent); text-decoration: none; font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;">↓ resume</a>
+  <span>ver. XIV · §1</span>
+</div>
+
+<div class="feed-strip">
+  <span class="live">● LIVE</span>
+  <span>@jules · submitted CHANGELOG PR · 3m ago</span>
+  <span style="margin-left:auto">/changelog → +47 words today</span>
+</div>
+
+<section class="hero">
+  <div class="hero-pre">~ §1 · the workshop ~</div>
+  <h1>VIBE-CODING<br/><span>WITH 4 AGENTS.</span></h1>
+  <p class="sub">Senior software engineer at Microsoft. Four agents in parallel — Copilot, Claude Code, OpenCode, Jules. The code, the manifesto, the receipts.</p>
+  <div class="hero-meta">
+    <span><strong>5</strong> active projects</span>
+    <span><strong>247</strong> agent events this week</span>
+    <span><strong>0</strong> commits typed by hand</span>
+  </div>
+</section>
+
+<section class="projects">
+  <div class="projects-label">→ §1.2 · selected work · scroll for tech filter</div>
+  <div class="proj-grid">
+    <div class="proj">
+      <div class="proj-num">001 · ACTIVE</div>
+      <h3>Live Agent Feed</h3>
+      <div class="desc">Cloudflare Worker + KV. The receipts behind this notebook.</div>
+      <div class="chips"><span class="chip on">TypeScript</span><span class="chip">Cloudflare</span><span class="chip">KV</span><span class="chip">Astro</span></div>
+      <span class="scribble">~ shipped today</span>
+    </div>
+    <div class="proj">
+      <div class="proj-num">002 · SHIPPED</div>
+      <h3>OpenCode · Jules Wrapper</h3>
+      <div class="desc">A read-only agent inside the orchestrator fleet of 28.</div>
+      <div class="chips"><span class="chip">Python</span><span class="chip">REST</span><span class="chip">MCP</span></div>
+    </div>
+    <div class="proj">
+      <div class="proj-num">003 · ONGOING</div>
+      <h3>IODevz</h3>
+      <div class="desc">A studio with two friends. Each of us owns one bet.</div>
+      <div class="chips"><span class="chip">SaaS</span><span class="chip">Next.js</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>set in Anton · Cormorant Garamond · JetBrains Mono</span>
+  <span>last edit · 3m ago · @jules</span>
+  <span>§1 / p. 47</span>
+</footer>
+</body></html>

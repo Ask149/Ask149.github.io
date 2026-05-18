@@ -1,0 +1,120 @@
+<h2>How do D and B coexist on the page?</h2>
+<p class="subtitle">D = live generative canvas driven by agent events. B = hand-drawn / illustrated warmth. The next question is structural — where does each one live? Three paths, ordered from most-D-forward to most-B-forward.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="alpha" onclick="toggleSelect(this)">
+    <div class="card-image" style="display: flex; flex-direction: column; min-height: 280px; padding: 0;">
+      <div style="flex: 0 0 60%; background: radial-gradient(ellipse at 30% 40%, #C26644 0%, #6E2F1C 35%, #1A0A05 75%, #0E0E0E 100%); position: relative; overflow: hidden;">
+        <svg width="100%" height="100%" viewBox="0 0 200 120" preserveAspectRatio="none" style="position:absolute;inset:0;">
+          <path d="M 5 90 Q 45 35, 85 75 T 175 65" stroke="rgba(228,133,94,0.7)" stroke-width="1.5" fill="none"/>
+          <path d="M 15 105 Q 55 55, 95 95 T 185 85" stroke="rgba(245,241,234,0.35)" stroke-width="1" fill="none"/>
+          <path d="M 25 60 Q 65 20, 105 50 T 195 45" stroke="rgba(255,200,150,0.5)" stroke-width="0.8" fill="none"/>
+          <circle cx="40" cy="60" r="2" fill="rgba(228,133,94,0.9)"/>
+          <circle cx="120" cy="40" r="1.5" fill="rgba(255,200,150,0.8)"/>
+          <circle cx="160" cy="80" r="2.5" fill="rgba(194,102,68,1)"/>
+          <circle cx="80" cy="90" r="1.2" fill="rgba(245,241,234,0.6)"/>
+        </svg>
+        <div style="position:absolute;top:0.5rem;right:0.7rem;font-family:ui-monospace,monospace;font-size:0.55rem;color:rgba(245,241,234,0.85);">🟢 LIVE · @jules</div>
+        <div style="position:absolute;bottom:0.4rem;left:0.7rem;font-family:Newsreader,Georgia,serif;font-size:0.55rem;font-style:italic;color:rgba(245,241,234,0.6);">the activity is the art</div>
+      </div>
+      <div style="flex: 1; background: #F5F1EA; padding: 0.9rem; display: flex; flex-direction: column; gap: 0.3rem;">
+        <svg width="50" height="6" style="opacity: 0.55;">
+          <path d="M 0 3 Q 12 0, 25 3 T 50 3" stroke="#C26644" stroke-width="1.2" fill="none"/>
+        </svg>
+        <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.85rem; color: #1A1A1A;">manifesto</div>
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 0.7rem; color: #5C5C5C; line-height: 1.4;">How I work with 4 coding agents in parallel — the hand-drawn world below the data-art.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>α. Generative Hero, Warm Body</h3>
+      <p>The top 50–60vh IS the live data-art. Below: hand-drawn warmth, illustrated dividers, italic accents. Max wow on landing, clear hierarchy. <strong>Build: high.</strong> Risk: hero overshadows content; you scroll past your own work.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="beta" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #F5F1EA; padding: 1.1rem; min-height: 280px; display: flex; flex-direction: column; gap: 0.5rem; position: relative; overflow: hidden;">
+      <svg style="position:absolute;top:-12px;left:-8px;width:65px;height:65px;opacity:0.45;" viewBox="0 0 65 65">
+        <path d="M 5 32 Q 18 6, 32 26 T 60 30" stroke="#C26644" stroke-width="1.5" fill="none"/>
+        <circle cx="30" cy="20" r="2" fill="#C26644"/>
+        <path d="M 8 50 Q 20 35, 32 45" stroke="#C26644" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
+      </svg>
+      <svg style="position:absolute;bottom:-10px;right:-8px;width:55px;height:55px;opacity:0.3;transform:rotate(180deg);" viewBox="0 0 55 55">
+        <path d="M 5 27 Q 16 5, 28 22 T 50 27" stroke="#C26644" stroke-width="1.2" fill="none"/>
+      </svg>
+
+      <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.85rem; color: #2A2520; position: relative;">Ashish · the live canvas ↓</div>
+
+      <div style="background: #0E0E0E; border: 7px solid #FFFFFF; box-shadow: 0 2px 10px rgba(0,0,0,0.15); padding: 0; aspect-ratio: 16/7; position: relative; overflow: hidden;">
+        <div style="position:absolute;inset:0;background: radial-gradient(ellipse at 40% 55%, #C26644 0%, #6E2F1C 50%, #0E0E0E 100%);"></div>
+        <svg width="100%" height="100%" style="position:relative;display:block;" viewBox="0 0 200 80" preserveAspectRatio="none">
+          <path d="M 10 55 Q 50 22, 90 45 T 180 40" stroke="rgba(228,133,94,0.75)" stroke-width="1.3" fill="none"/>
+          <path d="M 20 70 Q 60 40, 100 60 T 190 55" stroke="rgba(255,200,150,0.4)" stroke-width="0.8" fill="none"/>
+          <circle cx="60" cy="32" r="1.5" fill="rgba(228,133,94,1)"/>
+          <circle cx="140" cy="55" r="2.2" fill="rgba(255,200,150,0.85)"/>
+          <circle cx="100" cy="48" r="1" fill="rgba(245,241,234,0.6)"/>
+        </svg>
+        <div style="position:absolute;bottom:5px;right:7px;font-family:ui-monospace,monospace;font-size:0.5rem;color:rgba(245,241,234,0.65);">🟢 LIVE · 23 events</div>
+      </div>
+
+      <div style="display: flex; gap: 0.4rem; margin-top: 0.3rem; position: relative;">
+        <div style="flex: 1; background: white; border: 1px solid #D7D1C5; padding: 0.5rem; font-family: Newsreader, Georgia, serif; font-size: 0.65rem; color: #5C5C5C; position: relative;">
+          <span style="display: block; font-style: italic; color: #1A1A1A; margin-bottom: 0.15rem;">@jules</span>
+          readonly wrapper
+          <svg style="position:absolute;top:2px;right:2px;width:16px;height:16px;opacity:0.45;" viewBox="0 0 16 16"><path d="M 2 8 Q 8 2, 14 8" stroke="#C26644" stroke-width="1" fill="none"/></svg>
+        </div>
+        <div style="flex: 1; background: white; border: 1px solid #D7D1C5; padding: 0.5rem; font-family: Newsreader, Georgia, serif; font-size: 0.65rem; color: #5C5C5C;">
+          <span style="display: block; font-style: italic; color: #1A1A1A; margin-bottom: 0.15rem;">live feed</span>
+          worker + KV
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>β. Sketchbook with a Live Window</h3>
+      <p>The whole site is a hand-drawn sketchbook — flourishes, italic warmth, illustrated cards. ONE framed window embeds the live generative canvas as a featured artifact. <strong>Build: medium.</strong> Voice is the human; live art is the centerpiece, not the headliner.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="gamma" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #F5F1EA; padding: 0.95rem; min-height: 280px; display: flex; flex-direction: column; gap: 0.45rem; position: relative;">
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 1rem; font-weight: 600; color: #1A1A1A;">Ashish Kshirsagar</div>
+      <div style="font-family: ui-monospace, monospace; font-size: 0.55rem; color: #5C5C5C; letter-spacing: 0.02em;">senior swe @ microsoft · 4 agents in parallel</div>
+
+      <div style="position: relative; height: 14px; display: flex; align-items: center; margin-top: 0.2rem;">
+        <div style="flex: 1; height: 1px; background: #D7D1C5;"></div>
+        <svg width="90" height="14" style="margin: 0 0.4rem;">
+          <circle cx="6" cy="7" r="1" fill="#C26644" opacity="0.7"/>
+          <circle cx="18" cy="4" r="0.8" fill="#C26644" opacity="0.5"/>
+          <circle cx="30" cy="8" r="1.3" fill="#C26644" opacity="0.85"/>
+          <circle cx="44" cy="5" r="0.7" fill="#C26644" opacity="0.45"/>
+          <circle cx="58" cy="9" r="1.1" fill="#C26644" opacity="0.65"/>
+          <circle cx="72" cy="4" r="1.4" fill="#C26644" opacity="0.75"/>
+          <circle cx="84" cy="7" r="0.9" fill="#C26644" opacity="0.55"/>
+        </svg>
+        <div style="flex: 1; height: 1px; background: #D7D1C5;"></div>
+      </div>
+      <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #9A968F; align-self: center;">// dividers breathe with agent activity</div>
+
+      <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.8rem; color: #2A2520; margin-top: 0.3rem;">currently</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.7rem; color: #5C5C5C; line-height: 1.45;">Shipping portfolio v2 with a live agent feed. Every divider, every margin pulses softly when agents are active...</div>
+
+      <div style="position: relative; height: 14px; display: flex; align-items: center; margin-top: 0.35rem;">
+        <div style="flex: 1; height: 1px; background: #D7D1C5;"></div>
+        <svg width="90" height="14" style="margin: 0 0.4rem;">
+          <path d="M 0 7 Q 18 3, 36 7 T 72 6 T 90 7" stroke="#C26644" stroke-width="1" fill="none" opacity="0.55"/>
+          <circle cx="50" cy="5" r="1" fill="#C26644" opacity="0.7"/>
+        </svg>
+        <div style="flex: 1; height: 1px; background: #D7D1C5;"></div>
+      </div>
+
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.65rem; color: #C26644; font-style: italic; align-self: center; margin-top: 0.35rem;">no big hero · ambient everywhere</div>
+    </div>
+    <div class="card-body">
+      <h3>γ. Ambient Generative Throughout</h3>
+      <p>No big hero. Calm warmth dominates. BUT every divider, edge, and margin holds a tiny generative element shaped by agent activity — the page breathes. <strong>Build: high</strong> (subtle is harder than loud). Risk: too quiet, no screenshot moment.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top: 1.5rem; opacity: 0.75;">Click one, or reply in the terminal — including "α but the canvas is smaller" or "β with a generative footer too" or "show me what α actually does on mobile."</p>

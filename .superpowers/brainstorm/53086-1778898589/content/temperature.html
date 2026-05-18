@@ -1,0 +1,67 @@
+<h2>What aesthetic temperature feels right?</h2>
+<p class="subtitle">v2 currently lives in Mode A (calm publication, Linus-adjacent restraint). Modes B–D are the spaces you open up if we push harder. Pick the one that matches your gut — we will narrow inside it next.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #F5F1EA; color: #1A1A1A; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; min-height: 200px;">
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 1.6rem; font-weight: 600; line-height: 1.15;">Ashish Kshirsagar</div>
+      <div style="font-family: ui-monospace, monospace; font-size: 0.65rem; color: #5C5C5C; letter-spacing: 0.02em;">senior swe @ microsoft · seattle → pune · 4 agents in parallel</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.85rem; line-height: 1.5; margin-top: 0.4rem;">A reading garden. Dense typography. The work IS the portfolio. The agent stream is a quiet beat at the top. Calm authority — Karpathy, Linus Lee, Simon Willison energy.</div>
+      <div style="font-family: ui-monospace, monospace; font-size: 0.6rem; color: #C26644; margin-top: 0.4rem;">▍ ▍ ▍</div>
+    </div>
+    <div class="card-body">
+      <h3>A. Calm + Dense (current spec, pushed further)</h3>
+      <p>Where v2 already lives. Newsreader serif + warm copper. Push: go further into restraint. Build cost: <strong>low</strong>. Risk: too similar to v2 today.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #EFE9DC; color: #2A2520; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; min-height: 200px; position: relative; overflow: hidden;">
+      <svg style="position: absolute; right: -10px; top: -10px; width: 80px; height: 80px; opacity: 0.4;" viewBox="0 0 80 80">
+        <path d="M 10 40 Q 25 10 40 40 T 70 50" stroke="#C26644" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="40" cy="25" r="3" fill="#C26644"/>
+        <path d="M 15 60 Q 30 45 50 55" stroke="#C26644" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+      </svg>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 1.5rem; font-style: italic; line-height: 1.2;">Hi, I am Ashish 👋</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.85rem; line-height: 1.5; margin-top: 0.4rem;">A sketchbook in public. Hand-drawn SVG flourishes, italic warmth, doodled section dividers, the human visible in every brushstroke. Maggie Appleton garden, Cassie Evans playground.</div>
+      <div style="font-family: ui-monospace, monospace; font-size: 0.6rem; color: #C26644; margin-top: 0.4rem;">~ working on ~ writing ~ tinkering ~</div>
+    </div>
+    <div class="card-body">
+      <h3>B. Playful + Warm</h3>
+      <p>Personality forward. Illustrations, italic accents, micro-doodles, hand-drawn feel. Reads as <em>made by a human who codes with agents</em>. Build cost: <strong>medium</strong> (needs an illustration system).</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #0E0E0E; color: #E8E4DD; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.35rem; min-height: 200px; font-family: ui-monospace, JetBrains Mono, monospace;">
+      <div style="color: #7BA67A; font-size: 0.7rem;">$ ask149 --status --tail</div>
+      <div style="font-size: 0.65rem; color: #9A968F;">[02:14:03] @orchestrator   dispatching @scout + @researcher</div>
+      <div style="font-size: 0.65rem; color: #9A968F;">[02:15:21] @scout          → 13 ref sites + 5 directions</div>
+      <div style="font-size: 0.65rem; color: #E4855E;">[02:16:08] @researcher    → portfolio v2 ALREADY BUILT ⚠</div>
+      <div style="font-size: 0.65rem; color: #9A968F;">[02:18:44] @opencode       awaiting human input...</div>
+      <div style="font-size: 0.65rem; color: #7BA67A;">▎ <span style="color: #5C5852;">_</span></div>
+      <div style="font-size: 0.55rem; color: #5C5852; margin-top: 0.3rem;">// the page IS a styled log tail. nav is fake commands.</div>
+    </div>
+    <div class="card-body">
+      <h3>C. Terminal as Canvas</h3>
+      <p>AI-native and unmistakable. Monospace everything, ANSI palette, the page presents as a beautified log tail. Warp / Cursor / Anthropic-research-page energy. Build cost: <strong>medium</strong>.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="d" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: radial-gradient(ellipse at 30% 40%, #C26644 0%, #6E2F1C 35%, #1A0A05 75%, #0E0E0E 100%); color: #F5F1EA; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; min-height: 200px; position: relative; overflow: hidden;">
+      <div style="position: absolute; inset: 0; background: radial-gradient(circle at 75% 20%, rgba(228,133,94,0.5) 0%, transparent 25%), radial-gradient(circle at 20% 80%, rgba(255,200,150,0.3) 0%, transparent 35%); mix-blend-mode: screen;"></div>
+      <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; height: 1px; background: linear-gradient(90deg, transparent, rgba(245,241,234,0.4), transparent);"></div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 1.3rem; font-weight: 600; position: relative; line-height: 1.2;">the activity is the art</div>
+      <div style="font-family: ui-monospace, monospace; font-size: 0.65rem; opacity: 0.85; position: relative; margin-top: 0.3rem; line-height: 1.5;">each agent event becomes a particle, a stroke, a heartbeat. the canvas is alive. content sits below in calm typography.</div>
+    </div>
+    <div class="card-body">
+      <h3>D. Live Generative Hero</h3>
+      <p>Bret Victor energy. A WebGL/canvas hero that mutates in real-time from the agent feed events. Highest "artistic" score, most memorable, most shareable. Build cost: <strong>high</strong>.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top: 1.5rem; opacity: 0.75;">Click a card to select, or tell me in the terminal — including "none of these" or "B+C hybrid" or "show me more options like X".</p>

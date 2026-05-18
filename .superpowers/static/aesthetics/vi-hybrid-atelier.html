@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>§4 Atelier · hybrid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; overflow-x: hidden; position: relative; font-family: 'Cormorant Garamond', serif; }
+  .top-strip { position: relative; z-index: 10; display: flex; justify-content: space-between; padding: 1.2rem 2.5rem; border-bottom: 1px solid var(--rule); backdrop-filter: blur(8px); font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .top-strip .brand { font-family: 'Anton', sans-serif; font-size: 0.95rem; letter-spacing: 0.05em; color: var(--fg); }
+  .top-strip .nav { display: flex; gap: 1.5rem; }
+  .top-strip .nav a { color: var(--muted); text-decoration: none; }
+  .top-strip .nav a.active { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 0.1rem; }
+  .hero { position: relative; z-index: 10; padding: 5rem 2.5rem 2rem; max-width: 920px; }
+  .hero-pre { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
+  .hero h1 { font-family: 'Anton', sans-serif; font-size: 8.5rem; line-height: 0.84; letter-spacing: -0.04em; color: var(--fg); margin: 0.6rem 0 1.5rem; }
+  .hero h1 span { background: linear-gradient(180deg, var(--fg) 30%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: var(--muted); max-width: 35ch; line-height: 1.45; }
+  .hero-meta { display: flex; gap: 1.5rem; margin-top: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .hero-meta strong { color: var(--accent); font-weight: 500; }
+  footer { position: relative; z-index: 10; padding: 3rem 2.5rem 2rem; border-top: 1px solid var(--rule); margin-top: 4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--muted); display: flex; justify-content: space-between; }
+
+  :root { --bg-from: #0e1320; --bg-to: #1a2638; --fg: #f0e6d0; --muted: rgba(240, 230, 208, 0.65); --accent: #d97e3f; --amber: #f0c468; --rule: rgba(240, 230, 208, 0.15); --surface: rgba(26, 38, 56, 0.55); }
+  body { background: linear-gradient(180deg, var(--bg-from) 0%, var(--bg-to) 100%); color: var(--fg); }
+  body::before { content: ""; position: fixed; inset: 0; background-image: linear-gradient(rgba(240, 230, 208, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(240, 230, 208, 0.04) 1px, transparent 1px); background-size: 30px 30px; pointer-events: none; z-index: 1; }
+  body::after { content: ""; position: fixed; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(217, 126, 63, 0.22) 0%, transparent 65%); pointer-events: none; z-index: 0; }
+  .schematic-bg { position: fixed; inset: 0; display: grid; place-items: center; z-index: 0; opacity: 0.12; pointer-events: none; }
+  .schematic-bg svg { width: 80%; max-width: 1100px; }
+  .top-strip { background: rgba(14, 19, 32, 0.6); border-bottom-color: rgba(240, 230, 208, 0.15); }
+  .placeholders { position: relative; z-index: 10; max-width: 1100px; margin: 2rem auto; padding: 0 2.5rem; }
+  .ph-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
+  .ph-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .ph-card { aspect-ratio: 4/3; border: 1.5px dashed rgba(217, 126, 63, 0.5); background: var(--surface); display: grid; place-items: center; position: relative; }
+  .ph-card .ph-fig { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); text-align: center; line-height: 1.6; }
+  .ph-card .ph-icon { width: 64px; height: 48px; margin: 0 auto 1rem; opacity: 0.7; }
+  .ph-card.shipped { border: 1.5px solid rgba(217, 126, 63, 0.8); background: linear-gradient(135deg, rgba(217, 126, 63, 0.15), rgba(26, 38, 56, 0.4)); }
+  .ph-card.shipped .ph-fig { color: var(--amber); }
+  .queue { position: relative; z-index: 10; max-width: 1100px; margin: 3rem auto; padding: 0 2.5rem; }
+  .queue-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .queue-list { background: var(--surface); border: 1px solid var(--rule); }
+  .q-row { display: grid; grid-template-columns: 60px 1fr 2fr 100px; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--rule); align-items: center; }
+  .q-row:last-child { border-bottom: none; }
+  .q-row .p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--amber); }
+  .q-row .t { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.1rem; }
+  .q-row .b { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.9rem; color: var(--muted); }
+  .q-row .s { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); text-align: right; }
+</style></head><body>
+
+<div class="schematic-bg">
+  <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="rgba(240, 230, 208, 0.45)" stroke-width="1" fill="none">
+      <rect x="120" y="100" width="280" height="180"/>
+      <line x1="120" y1="190" x2="400" y2="190" stroke-dasharray="3 3"/>
+      <line x1="260" y1="100" x2="260" y2="280" stroke-dasharray="3 3"/>
+      <circle cx="180" cy="155" r="22"/>
+      <circle cx="180" cy="155" r="8"/>
+      <text x="120" y="320" font-family="JetBrains Mono" font-size="9" fill="rgba(240, 230, 208, 0.5)">FIG.1 · split keyboard · exploded view</text>
+      <circle cx="600" cy="180" r="60"/>
+      <line x1="540" y1="180" x2="540" y2="120"/>
+      <line x1="660" y1="180" x2="660" y2="120"/>
+      <line x1="540" y1="180" x2="660" y2="180" stroke-dasharray="2 2"/>
+      <text x="555" y="280" font-family="JetBrains Mono" font-size="9" fill="rgba(240, 230, 208, 0.5)">FIG.2 · pen rest profile</text>
+      <rect x="800" y="120" width="120" height="80"/>
+      <line x1="800" y1="200" x2="820" y2="220"/>
+      <line x1="920" y1="200" x2="900" y2="220"/>
+      <rect x="820" y="220" width="80" height="40"/>
+      <text x="810" y="290" font-family="JetBrains Mono" font-size="9" fill="rgba(240, 230, 208, 0.5)">FIG.3 · weather station</text>
+    </g>
+  </svg>
+</div>
+
+<div class="top-strip">
+  <span class="brand">ASHISH K.</span>
+  <div class="nav">
+    <a href="vi-hybrid-workshop.html">workshop</a>
+    <a href="vi-hybrid-travel.html">voyages</a>
+    <a href="vi-hybrid-curio.html">curio</a>
+    <a href="vi-hybrid-atelier.html" class="active">atelier</a>
+  </div>
+  <a href="/resume" style="color: var(--accent); text-decoration: none; font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;">↓ resume</a>
+  <span>ver. XIV · §4</span>
+</div>
+
+<section class="hero">
+  <div class="hero-pre">~ §4 · the workbench, late ~</div>
+  <h1>MADE<br/><span>BY HAND.</span></h1>
+  <p class="sub">Physical things — soldered, sawn, sketched. Mostly aspirational right now. The first finished build will replace the dashed placeholder below.</p>
+  <div class="hero-meta">
+    <span><strong>0</strong> shipped</span>
+    <span><strong>3</strong> in the queue</span>
+    <span><strong>1</strong> on the bench</span>
+  </div>
+</section>
+
+<section class="placeholders">
+  <div class="ph-label">→ §4.1 · current builds · placeholder until something ships</div>
+  <div class="ph-grid">
+    <div class="ph-card">
+      <div style="text-align:center">
+        <svg class="ph-icon" viewBox="0 0 64 48"><g stroke="rgba(217, 126, 63, 0.6)" stroke-width="1" fill="none" stroke-dasharray="2 2"><rect x="4" y="8" width="56" height="32" rx="2"/><line x1="4" y1="20" x2="60" y2="20"/></g></svg>
+        <div class="ph-fig">FIG.1 · placeholder<br/>first sketch lands here</div>
+      </div>
+    </div>
+    <div class="ph-card">
+      <div style="text-align:center">
+        <svg class="ph-icon" viewBox="0 0 64 48"><g stroke="rgba(217, 126, 63, 0.6)" stroke-width="1" fill="none" stroke-dasharray="2 2"><circle cx="32" cy="24" r="14"/><circle cx="32" cy="24" r="5"/></g></svg>
+        <div class="ph-fig">FIG.2 · placeholder<br/>something carved or printed</div>
+      </div>
+    </div>
+    <div class="ph-card">
+      <div style="text-align:center">
+        <svg class="ph-icon" viewBox="0 0 64 48"><g stroke="rgba(217, 126, 63, 0.6)" stroke-width="1" fill="none" stroke-dasharray="2 2"><rect x="6" y="8" width="22" height="14"/><line x1="28" y1="15" x2="44" y2="15"/><rect x="44" y="6" width="14" height="20"/></g></svg>
+        <div class="ph-fig">FIG.3 · placeholder<br/>circuit + enclosure</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="queue">
+  <div class="queue-label">→ §4.2 · build queue · sorted by priority</div>
+  <div class="queue-list">
+    <div class="q-row"><span class="p">P7</span><span class="t">Hand-wired split keyboard</span><span class="b">Corne layout, hand-wired matrix, walnut plate.</span><span class="s">Queued · added apr 15</span></div>
+    <div class="q-row"><span class="p">P6</span><span class="t">Garden weather station</span><span class="b">ESP32 + e-paper display. Soil moisture sensor.</span><span class="s">Queued · added may 1</span></div>
+    <div class="q-row"><span class="p">P5</span><span class="t">Notebook-clip pen rest</span><span class="b">Walnut + brass. Slides under notebook spine.</span><span class="s">Queued · added apr 20</span></div>
+  </div>
+</section>
+
+<footer>
+  <span>set in Anton · Cormorant Garamond · JetBrains Mono</span>
+  <span>last entry · 12d ago</span>
+  <span>§4 / p. 7</span>
+</footer>
+</body></html>

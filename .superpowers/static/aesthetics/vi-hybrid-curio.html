@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>§3 Curio · hybrid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; overflow-x: hidden; position: relative; font-family: 'Cormorant Garamond', serif; }
+  .top-strip { position: relative; z-index: 10; display: flex; justify-content: space-between; padding: 1.2rem 2.5rem; border-bottom: 1px solid var(--rule); backdrop-filter: blur(8px); font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .top-strip .brand { font-family: 'Anton', sans-serif; font-size: 0.95rem; letter-spacing: 0.05em; color: var(--fg); }
+  .top-strip .nav { display: flex; gap: 1.5rem; }
+  .top-strip .nav a { color: var(--muted); text-decoration: none; }
+  .top-strip .nav a.active { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 0.1rem; }
+  .hero { position: relative; z-index: 10; padding: 5rem 2.5rem 2rem; max-width: 920px; }
+  .hero-pre { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
+  .hero h1 { font-family: 'Anton', sans-serif; font-size: 8.5rem; line-height: 0.84; letter-spacing: -0.04em; color: var(--fg); margin: 0.6rem 0 1.5rem; }
+  .hero h1 span { background: linear-gradient(180deg, var(--fg) 30%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: var(--muted); max-width: 35ch; line-height: 1.45; }
+  .hero-meta { display: flex; gap: 1.5rem; margin-top: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .hero-meta strong { color: var(--accent); font-weight: 500; }
+  footer { position: relative; z-index: 10; padding: 3rem 2.5rem 2rem; border-top: 1px solid var(--rule); margin-top: 4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--muted); display: flex; justify-content: space-between; }
+
+  :root { --bg-from: #f0e4cf; --bg-to: #e6d6b5; --fg: #2a1818; --muted: #6a4a3a; --accent: #7a2828; --brass: #b89968; --rule: rgba(42, 24, 24, 0.18); --surface: rgba(254, 250, 240, 0.7); }
+  body { background: linear-gradient(180deg, var(--bg-from) 0%, var(--bg-to) 100%); color: var(--fg); }
+  body::before { content: ""; position: fixed; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0, transparent 28px, rgba(42, 24, 24, 0.05) 28px, rgba(42, 24, 24, 0.05) 29px); pointer-events: none; z-index: 1; }
+  .ornament { position: fixed; pointer-events: none; z-index: 0; opacity: 0.55; }
+  .ornament svg { width: 100%; height: 100%; }
+  .ornament.tl { top: 1rem; left: 1rem; width: 120px; height: 120px; }
+  .ornament.br { bottom: 1rem; right: 1rem; width: 140px; height: 140px; transform: rotate(180deg); }
+  .top-strip { background: rgba(240, 228, 207, 0.7); }
+  .hero h1 em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 0.8em; vertical-align: baseline; }
+  .now-reading { position: relative; z-index: 10; max-width: 920px; margin: 2rem auto; padding: 0 2.5rem; }
+  .nr-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .nr-card { display: grid; grid-template-columns: 110px 1fr; gap: 1.5rem; padding: 1.5rem; background: var(--surface); border: 1px solid var(--rule); box-shadow: 0 6px 20px rgba(42, 24, 24, 0.08); }
+  .nr-cover { aspect-ratio: 2/3; background: linear-gradient(135deg, var(--accent), #4a1818); display: grid; place-items: center; padding: 0.6rem; box-shadow: 0 3px 10px rgba(0,0,0,0.18); }
+  .nr-cover .title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.7rem; color: rgba(240, 228, 207, 0.9); text-align: center; line-height: 1.3; }
+  .nr-info h3 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.8rem; color: var(--fg); margin-bottom: 0.3rem; }
+  .nr-info .author { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--muted); }
+  .quote { margin-top: 1rem; padding-left: 1rem; border-left: 3px solid var(--accent); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; line-height: 1.55; color: var(--fg); }
+  .quote-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--brass); margin-top: 0.6rem; }
+  .finished { position: relative; z-index: 10; max-width: 920px; margin: 3rem auto; padding: 0 2.5rem; }
+  .fin-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .fin-list { background: var(--surface); border: 1px solid var(--rule); padding: 0; }
+  .fin-row { display: grid; grid-template-columns: 30px 1fr auto; gap: 1rem; padding: 0.9rem 1.5rem; border-bottom: 1px dashed var(--rule); align-items: center; }
+  .fin-row:last-child { border-bottom: none; }
+  .fin-row .n { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--brass); }
+  .fin-row .t { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; }
+  .fin-row .t em { font-style: italic; color: var(--muted); }
+  .fin-row .r { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--brass); }
+</style></head><body>
+
+<div class="ornament tl">
+  <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="rgba(122, 40, 40, 0.5)" stroke-width="1" fill="none">
+      <path d="M 10 10 Q 30 5 55 15 T 110 20"/>
+      <path d="M 10 25 Q 25 25 35 35"/>
+      <circle cx="40" cy="40" r="3" fill="rgba(184, 153, 104, 0.5)" stroke="none"/>
+      <path d="M 12 50 L 12 110"/>
+      <path d="M 25 60 L 25 100"/>
+    </g>
+  </svg>
+</div>
+<div class="ornament br">
+  <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="rgba(122, 40, 40, 0.4)" stroke-width="1" fill="none">
+      <path d="M 10 10 Q 40 5 70 20 T 130 30"/>
+      <path d="M 10 25 Q 30 30 50 50"/>
+      <circle cx="60" cy="55" r="4" fill="rgba(184, 153, 104, 0.5)" stroke="none"/>
+      <path d="M 15 70 L 15 130"/>
+    </g>
+  </svg>
+</div>
+
+<div class="top-strip">
+  <span class="brand">ASHISH K.</span>
+  <div class="nav">
+    <a href="vi-hybrid-workshop.html">workshop</a>
+    <a href="vi-hybrid-travel.html">voyages</a>
+    <a href="vi-hybrid-curio.html" class="active">curio</a>
+    <a href="vi-hybrid-atelier.html">atelier</a>
+  </div>
+  <a href="/resume" style="color: var(--accent); text-decoration: none; font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;">↓ resume</a>
+  <span>ver. XIV · §3</span>
+</div>
+
+<section class="hero">
+  <div class="hero-pre">~ §3 · the cabinet of curiosities ~</div>
+  <h1><em>Curio</em><br/><span>& KEEPING.</span></h1>
+  <p class="sub">Books finished, music on loop, fragrances on the shelf, the small obsessions that make a life. Building this catalog, one entry at a time.</p>
+  <div class="hero-meta">
+    <span><strong>3</strong> books this year</span>
+    <span><strong>12</strong> on the shelf</span>
+    <span><strong>currently</strong> Calvino</span>
+  </div>
+</section>
+
+<section class="now-reading">
+  <div class="nr-label">→ §3.1 · now reading · quote rotates daily</div>
+  <div class="nr-card">
+    <div class="nr-cover"><div class="title">Italo Calvino<br/>—<br/>Invisible Cities</div></div>
+    <div class="nr-info">
+      <h3>Invisible Cities</h3>
+      <div class="author">Italo Calvino · 1972</div>
+      <div class="quote">"The city does not consist of this, but of relationships between the measurements of its space and the events of its past."</div>
+      <div class="quote-meta">page 10 · started may 1 · 64% finished</div>
+    </div>
+  </div>
+</section>
+
+<section class="finished">
+  <div class="fin-label">→ §3.2 · recently finished</div>
+  <div class="fin-list">
+    <div class="fin-row"><span class="n">01</span><span class="t">East of Eden <em>— Steinbeck</em></span><span class="r">★★★★ · nov 2025</span></div>
+    <div class="fin-row"><span class="n">02</span><span class="t">The Dispossessed <em>— Le Guin</em></span><span class="r">★★★★★ · aug 2025</span></div>
+    <div class="fin-row"><span class="n">03</span><span class="t">Stoner <em>— John Williams</em></span><span class="r">★★★★★ · jun 2025</span></div>
+  </div>
+</section>
+
+<footer>
+  <span>set in Anton · Cormorant Garamond · JetBrains Mono</span>
+  <span>last entry · 11d ago</span>
+  <span>§3 / p. 23</span>
+</footer>
+</body></html>

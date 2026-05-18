@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" preserveAspectRatio="xMidYMid slice">
+  <g fill="none" stroke="rgba(58, 84, 112, 0.08)" stroke-width="1">
+    <path d="M 0 60 Q 60 30, 120 60 T 240 60"/>
+    <path d="M 0 100 Q 80 70, 140 110 T 240 100"/>
+    <path d="M 0 140 Q 50 110, 110 140 T 240 140"/>
+    <path d="M 0 180 Q 70 150, 130 180 T 240 180"/>
+    <path d="M 0 220 Q 60 190, 120 220 T 240 220"/>
+  </g>
+</svg>

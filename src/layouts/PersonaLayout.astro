@@ -1,0 +1,73 @@
+---
+// Phase A deviation: Astro 4.x exports `ViewTransitions`, not `ClientRouter`
+// (renamed in Astro 5). When upgrading to Astro 5+, switch back to `ClientRouter`.
+import { ViewTransitions as ClientRouter } from "astro:transitions";
+import { getPersonaById, type PersonaId } from "../personas/registry";
+import TopNav from "../components/chrome/TopNav.astro";
+import FooterStatus from "../components/chrome/FooterStatus.astro";
+import "../styles/tokens.css";
+import "../styles/global.css";
+
+export interface Props {
+  personaId: PersonaId;
+  title: string;
+  description?: string;
+}
+
+const { personaId, title, description } = Astro.props;
+const persona = getPersonaById(personaId);
+---
+<!doctype html>
+<html lang="en" data-persona={persona.id}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href={`/styles/${persona.tokensHref}`} />
+    <ClientRouter />
+  </head>
+  <body class={`persona-${persona.id}`}>
+    <TopNav />
+    <main {...persona.transitionMode === "fade" ? { "transition:animate": "fade" } : {}}>
+      <slot />
+    </main>
+    <FooterStatus />
+  </body>
+</html>
+
+<style is:global>
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    margin: 0;
+    min-height: 100vh;
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: var(--bg-texture, none);
+    background-size: var(--bg-texture-size, auto);
+    background-repeat: repeat;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+  main {
+    max-width: var(--max-w-feed);
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-6);
+  }
+</style>

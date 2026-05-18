@@ -1,0 +1,18 @@
+:root[data-persona="curate"] {
+  --bg: linear-gradient(180deg, #F0E8D8 0%, #E6D9BE 100%);
+  --bg-texture: none;
+  --bg-texture-size: 0;
+  --fg: #4A2828;
+  --fg-muted: #7A5A5A;
+  --fg-faint: #B89AA0;
+  --rule: #D9C7B0;
+  --accent: #7A2828;
+  --accent-secondary: #B89968;
+  --surface: #FFFFFFCC;
+  --polaroid-bg: #FFFFFF;
+  --polaroid-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  --font-display: "Newsreader", serif;
+  --font-display-style: italic;
+  --font-body: "Newsreader", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}

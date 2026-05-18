@@ -1,0 +1,36 @@
+---
+import { PERSONAS, getPersonaByRoute } from "../../personas/registry";
+const active = getPersonaByRoute(Astro.url.pathname);
+---
+<nav class="top-nav" aria-label="Persona navigation">
+  <a href="/" class="brand">ask149</a>
+  <ul class="tabs">
+    {PERSONAS.map((p) => (
+      <li>
+        <a
+          href={p.route}
+          aria-current={active?.id === p.id ? "page" : undefined}
+          aria-description={p.blurb}
+          data-persona={p.id}
+          class:list={["tab", { active: active?.id === p.id }]}
+        >
+          {active?.id === p.id && (
+            <span class="pill" transition:name="tab-pill" />
+          )}
+          <span class="label">{p.label}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .top-nav { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--rule); max-width: var(--max-w-feed); margin: 0 auto; }
+  .brand { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; text-decoration: none; color: var(--fg); }
+  .tabs { display: flex; gap: var(--space-2); list-style: none; padding: 0; margin: 0; }
+  .tab { position: relative; padding: var(--space-2) var(--space-4); text-decoration: none; color: var(--fg-muted); font-family: var(--font-body); border-radius: var(--radius-pill); transition: color var(--transition-fast); }
+  .tab:hover { color: var(--fg); }
+  .tab.active { color: var(--accent); }
+  .pill { position: absolute; inset: 0; background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: var(--radius-pill); z-index: -1; }
+  .label { position: relative; z-index: 1; }
+</style>

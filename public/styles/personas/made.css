@@ -1,0 +1,22 @@
+:root[data-persona="made"] {
+  --bg: linear-gradient(180deg, #2A3A52 0%, #1A2638 100%);
+  --bg-texture: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 23px,
+    rgba(245, 239, 224, 0.04) 23px,
+    rgba(245, 239, 224, 0.04) 24px
+  );
+  --bg-texture-size: auto;
+  --fg: #F5EFE0;
+  --fg-muted: #C0B8A8;
+  --fg-faint: #6A6258;
+  --rule: rgba(245, 239, 224, 0.12);
+  --accent: #D85820;
+  --surface: rgba(245, 239, 224, 0.06);
+  --polaroid-bg: #F5EFE0;
+  --polaroid-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  --font-display: "Newsreader", serif;
+  --font-body: "Newsreader", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}

@@ -1,0 +1,16 @@
+:root[data-persona="traveler"] {
+  --bg: linear-gradient(180deg, #E8DBC0 0%, #D9CFB8 100%);
+  --bg-texture: url("/textures/topographic-lines.svg");
+  --bg-texture-size: 240px;
+  --fg: #1A2638;
+  --fg-muted: #5A6878;
+  --fg-faint: #99A2B0;
+  --rule: #C7BFA8;
+  --accent: #3A5470;
+  --surface: #FFFFFFE0;
+  --polaroid-bg: #F8F4EA;
+  --polaroid-shadow: 0 4px 14px rgba(26, 38, 56, 0.18);
+  --font-display: "Newsreader", serif;
+  --font-body: "Newsreader", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}

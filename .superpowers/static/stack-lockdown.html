@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Portfolio v3 · Stack Lockdown</title>
+<style>
+  body { background: #1a1a1a; color: #e8e4dd; font-family: ui-sans-serif, system-ui; padding: 2rem; max-width: 980px; margin: 0 auto; line-height: 1.55; }
+  h1 { color: #fff; font-weight: 600; font-size: 1.6rem; margin: 0 0 0.3rem 0; }
+  h2 { color: #c26644; font-weight: 600; font-size: 1.1rem; margin: 1.8rem 0 0.6rem 0; }
+  h3 { color: #fff; font-weight: 600; font-size: 0.95rem; margin: 0 0 0.3rem 0; }
+  .subtitle { color: #9a968f; font-size: 0.92rem; margin: 0 0 1.5rem 0; }
+  .label { font-family: ui-monospace, monospace; font-size: 0.62rem; color: #c26644; letter-spacing: 0.15em; text-transform: uppercase; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.6rem; }
+  .card { background: #242424; border: 1px solid #3a3a3a; border-radius: 6px; padding: 1rem; }
+  .card.coder { border-left: 3px solid #B85838; }
+  .card.traveler { border-left: 3px solid #3A5470; }
+  .card.curator { border-left: 3px solid #7A2828; }
+  .card.maker { border-left: 3px solid #D85820; }
+  .badge { display: inline-block; padding: 0.15rem 0.5rem; background: rgba(194,102,68,0.15); color: #C26644; font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 2px; margin: 0.1rem 0.2rem 0.1rem 0; }
+  pre { background: #0e0e0e; border: 1px solid #2a2a2a; border-radius: 4px; padding: 0.7rem; overflow-x: auto; font-family: ui-monospace, monospace; font-size: 0.7rem; color: #d4d4d4; margin: 0.5rem 0; line-height: 1.5; }
+  pre code .kw { color: #c26644; }
+  pre code .str { color: #b5cea8; }
+  pre code .com { color: #6a9955; }
+  .tab-key { color: #c26644; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; }
+  th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid #2a2a2a; font-size: 0.85rem; }
+  th { color: #c26644; font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid #c26644; }
+  ul { padding-left: 1.2rem; }
+  li { margin: 0.2rem 0; }
+  .footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #3a3a3a; color: #9a968f; font-size: 0.85rem; }
+  a { color: #c26644; }
+</style></head><body>
+
+<h1>Portfolio v3 — Stack Lockdown</h1>
+<p class="subtitle">Code-grounded library + technique map. Researcher fetched real source files from <code>shadcn-ui/ui</code> and <code>davidjerleke/embla-carousel</code>; cited line numbers below. Total incremental JS: ~30 KB gzipped across all four patterns.</p>
+
+<h2>The four tabs · locked libraries</h2>
+
+<div class="grid">
+
+  <div class="card coder">
+    <h3><span class="tab-key">§1</span> Coder · Stagger reveal + tag cross-filter</h3>
+    <div style="margin: 0.4rem 0;">
+      <span class="badge">motion/react</span>
+      <span class="badge">staggerChildren</span>
+      <span class="badge">whileInView</span>
+    </div>
+    <p style="font-size: 0.85rem; color: #b8b3a8;">Project cards stagger-fade their tech chips on scroll-in. Hover any chip → all cards lacking it dim to 0.25 opacity. Click = persistent filter.</p>
+<pre><code>const container = { hidden:{opacity:0}, show:{opacity:1,
+  transition:{ staggerChildren: 0.04 }}}
+const chip = { hidden:{opacity:0,y:6}, show:{opacity:1,y:0}}
+
+&lt;motion.article variants={container} initial="hidden"
+  whileInView="show" viewport={{ once:true, margin:"-80px" }}
+  animate={{ opacity: activeTag &amp;&amp; !tags.includes(activeTag)
+    ? 0.25 : 1 }}&gt;</code></pre>
+  </div>
+
+  <div class="card traveler">
+    <h3><span class="tab-key">§2</span> Traveler · Horizontal polaroid timeline</h3>
+    <div style="margin: 0.4rem 0;">
+      <span class="badge">shadcn/Carousel</span>
+      <span class="badge">embla-carousel-react</span>
+      <span class="badge">+ wheel-gestures</span>
+    </div>
+    <p style="font-size: 0.85rem; color: #b8b3a8;">Drag, swipe, scroll-wheel, arrow keys all work for free. <code>api.on('select')</code> drives sticky year-marker header. Free-drag mode (no snap) for the timeline feel.</p>
+<pre><code>// drop into your repo with:
+// npx shadcn@latest add carousel
+
+const [carouselRef, api] = useEmblaCarousel(
+  { axis:"x", dragFree:true, loop:false },
+  [WheelGesturesPlugin()]
+)
+// L113-122 of shadcn carousel.tsx:
+api.on("select", () =&gt; setActiveYear(
+  places[api.selectedScrollSnap()].year))</code></pre>
+  </div>
+
+  <div class="card curator">
+    <h3><span class="tab-key">§3</span> Curator · Currently reading + quote rotation</h3>
+    <div style="margin: 0.4rem 0;">
+      <span class="badge">Astro Content Collections</span>
+      <span class="badge">Zod schema</span>
+      <span class="badge" style="background:rgba(122,166,122,0.2); color:#7BA67A;">0 KB JS</span>
+    </div>
+    <p style="font-size: 0.85rem; color: #b8b3a8;">Pure server-render. Drop a .md per book. Daily quote rotation is deterministic date-modulo (stable across page navs, changes daily).</p>
+<pre><code>// src/content.config.ts
+const books = defineCollection({ type:'content',
+  schema: z.object({
+    title: z.string(), author: z.string(),
+    status: z.enum(['reading','finished']),
+    started: z.date(), finished: z.date().optional(),
+    rating: z.number().min(1).max(5).optional(),
+    quote: z.string().optional(),
+}) })
+// dayIdx = Math.floor(Date.now()/86_400_000) % quotes.length</code></pre>
+  </div>
+
+  <div class="card maker">
+    <h3><span class="tab-key">§6</span> Maker · Intentional empty state</h3>
+    <div style="margin: 0.4rem 0;">
+      <span class="badge">animate-pulse</span>
+      <span class="badge">AnimatePresence</span>
+      <span class="badge">graceful populate</span>
+    </div>
+    <p style="font-size: 0.85rem; color: #b8b3a8;">Dashed placeholder pulses subtly. Build queue visible. When real card lands → <code>AnimatePresence</code> cross-fades placeholder out, card in.</p>
+<pre><code>&lt;AnimatePresence mode="popLayout"&gt;
+  {isEmpty ? (
+    &lt;motion.div className="border-dashed
+      animate-pulse motion-safe:animate-pulse"
+      initial={{opacity:0}} animate={{opacity:1}}
+      exit={{opacity:0}}&gt;
+      &lt;p&gt;Workshop is warming up&lt;/p&gt;
+    &lt;/motion.div&gt;
+  ) : projects.map(p =&gt; &lt;ProjectCard …/&gt;)}
+&lt;/AnimatePresence&gt;</code></pre>
+  </div>
+
+</div>
+
+<h2>Bundle budget</h2>
+<table>
+  <tr><th>Tab</th><th>Library</th><th>Added gzip</th><th>JS at runtime</th></tr>
+  <tr><td>Coder</td><td>motion/react</td><td>~18 KB</td><td>Hydrated <code>client:visible</code></td></tr>
+  <tr><td>Traveler</td><td>embla + shadcn + wheel-gestures</td><td>~13 KB</td><td>Hydrated <code>client:visible</code></td></tr>
+  <tr><td>Curator</td><td>(none)</td><td>0 KB</td><td>SSG only · zero hydration</td></tr>
+  <tr><td>Maker</td><td>shares motion w/ Coder</td><td>~0 incremental</td><td>Hydrated <code>client:visible</code></td></tr>
+  <tr><td><strong>Total</strong></td><td><strong>4 libs</strong></td><td><strong>~31 KB gz</strong></td><td><strong>Lighthouse ≥ 95 plausible</strong></td></tr>
+</table>
+
+<h2>Cross-cutting</h2>
+<ul>
+  <li><strong>Astro <code>&lt;ClientRouter /&gt;</code></strong> for tab-to-tab route transitions. <code>transition:name</code> on the active tab pill = morphing underline. Built-in Astro 4.x.</li>
+  <li><strong><code>prefers-reduced-motion</code></strong> — Motion auto-respects. Tailwind <code>motion-safe:</code> / <code>motion-reduce:</code> variants for everything else.</li>
+  <li><strong>Performance:</strong> All four patterns hydrate <code>client:visible</code> (not <code>client:load</code>), so above-fold paint is HTML-only. LCP locked to the H1.</li>
+  <li><strong>Content model:</strong> Everything that grows over time (books, places, projects, builds) becomes an Astro Content Collection with a Zod schema. Adding a new entry = git commit a .md file. No CMS, no deploy config.</li>
+</ul>
+
+<h2>Researcher's verified vs ghost repos</h2>
+<table>
+  <tr><th>Repo</th><th>Status</th><th>Used for</th></tr>
+  <tr><td><code>shadcn-ui/ui</code></td><td>✓ Live · 115k ⭐ · v released today</td><td>Carousel.tsx (252 lines fetched)</td></tr>
+  <tr><td><code>davidjerleke/embla-carousel</code></td><td>✓ Live · 8.2k ⭐ · v8.6.0 Apr 2025</td><td>useEmblaCarousel.ts (80 lines fetched)</td></tr>
+  <tr><td><code>motiondivision/motion</code></td><td>✓ Live · 32k ⭐ · renamed from framer-motion</td><td>Stagger + AnimatePresence patterns</td></tr>
+  <tr><td><code>satnaing/astro-paper</code></td><td>✓ Live · 4.6k ⭐ · v6.0.0 released TODAY (2026-05-17)</td><td>Content Collections schema reference</td></tr>
+  <tr><td><code>withastro/astro</code> examples/</td><td>✓ Live</td><td>Canonical Astro 4.x patterns</td></tr>
+  <tr><td><code>raunofreiberg/rauno.me</code></td><td>✗ 404 (private)</td><td>Skipped</td></tr>
+  <tr><td><code>lynnandtonic/*</code></td><td>✗ 404 (private)</td><td>Skipped</td></tr>
+  <tr><td><code>cassidoo/cassidoo.co</code></td><td>✗ 404 (private)</td><td>Skipped</td></tr>
+  <tr><td><code>pacocoursey/paco</code></td><td>⚠ Archived Apr 2022</td><td>Skipped</td></tr>
+  <tr><td><code>leerob/leerob.io</code></td><td>⚠ Redirects to template repo, not live source</td><td>Skipped — can't lift specific micro-interactions</td></tr>
+  <tr><td><code>splidejs/splide</code></td><td>⚠ Stale (last release Sep 2022)</td><td>Skipped — Embla supersedes</td></tr>
+</table>
+
+<h2>Stitch status (FYI)</h2>
+<p style="font-size: 0.85rem; color: #b8b3a8;">15 stitch_* tools register correctly in the MCP surface, but every call dies in the OpenCode lazyagent.ts post-hook with the same <code>JSON.stringify(output).slice</code> error from May. Per AGENTS.md gotcha #1, the fix is a 5-char null-coalesce at line ~524 of <code>~/.config/opencode/plugins/lazyagent.ts</code>. Either the patch isn't applied or OpenCode wasn't fully relaunched after the edit. Not blocking — we have everything needed without Stitch. Flag if you want me to verify the patch separately.</p>
+
+<h2>If you say "lock it"</h2>
+<p style="font-size: 0.9rem;">Next step is the design spec: <code>docs/superpowers/specs/2026-05-17-portfolio-v3-multi-persona-design.md</code>. It'll lock the 4-persona IA, the route map (<code>/</code>, <code>/traveler</code>, <code>/curate</code>, <code>/made</code>), the component contracts (props, hydration strategy per island, content collection schemas), motion budget, reduced-motion behavior, and the migration plan from current v2.</p>
+
+<div class="footer">
+  Set in system-ui · Locked patterns from real code · Researcher report dated 2026-05-17 · Built with confidence-grading and honest gap-flagging
+</div>
+
+</body></html>

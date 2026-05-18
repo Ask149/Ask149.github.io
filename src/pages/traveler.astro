@@ -1,0 +1,60 @@
+---
+import PersonaLayout from "../layouts/PersonaLayout.astro";
+import TravelerHero from "../components/traveler/TravelerHero.astro";
+import NextStopCard from "../components/traveler/NextStopCard.astro";
+import { TravelTimeline } from "../components/traveler/TravelTimeline";
+import { getCollection } from "astro:content";
+
+const raw = await getCollection("places", (e) => !e.data.draft);
+const places = raw
+  .sort((a, b) => a.data.yearMonth.localeCompare(b.data.yearMonth))
+  .map((e) => ({
+    slug: e.slug,
+    title: e.data.title,
+    country: e.data.country,
+    airportCode: e.data.airportCode,
+    yearMonth: e.data.yearMonth,
+    image: e.data.cover
+      ? { src: e.data.cover.src, alt: e.data.coverAlt }
+      : { src: "", alt: e.data.coverAlt ?? "" },
+  }));
+---
+<PersonaLayout
+  personaId="traveler"
+  title="Traveler — Ashish Kshirsagar"
+  description="Horizontal timeline of places visited and places next."
+>
+  <TravelerHero />
+  <TravelTimeline places={places} client:visible />
+  <NextStopCard name="Pune" date="June 2026" reason="wedding + relocation" />
+</PersonaLayout>
+
+<noscript>
+  <style>
+    /*
+      No-JS fallback for the Embla carousel.
+      When JavaScript is disabled, Embla never hydrates, so the SSR'd
+      <div data-embla-no-js> stays as a plain block. This rule promotes
+      its inner CarouselContent flex row to a native horizontal scroller
+      with scroll-snap, so users still get a usable polaroid strip.
+
+      Targets the first descendant flex container (CarouselContent renders
+      as `display: flex`).
+    */
+    [data-embla-no-js] > div:has(> div) {
+      overflow-x: auto !important;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 1rem;
+    }
+    [data-embla-no-js] > div > div > div {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
+    /* Hide carousel arrow buttons (require JS to function) */
+    [data-embla-no-js] button[aria-label*="ous"],
+    [data-embla-no-js] button[aria-label*="ext"] {
+      display: none;
+    }
+  </style>
+</noscript>

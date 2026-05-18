@@ -1,9 +1,48 @@
+/* PHASE F CLEANUP TODO:
+ * Remove legacy v2 tokens (--accent, --bg, --font-serif, --h1, --h2, etc.) when all routes have migrated off Base.astro to PersonaLayout.
+ * Routes still using Base.astro as of Phase B: /404, /agents, /cost, /feed, /now, /sudo, /uses, /projects/*, /writing/*
+ * Index route (/) migrates to PersonaLayout in Phase B5.
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Neutral tokens — shared across all personas + legacy v2 pages.
+ *
+ * Phase A deviation note: The plan said to shrink this file to ONLY the neutral
+ * block below (removing --accent, --bg, --font-serif, --h1, etc.). Doing that
+ * would break every existing route — Base.astro / global.css use those tokens
+ * and don't load any persona stylesheet. Until existing routes are migrated to
+ * PersonaLayout (later phases), we keep the legacy v2 tokens here as the
+ * "fallback persona = warm copper / cream", and ADD the plan's new neutral
+ * tokens. The new tokens are additive; nothing is removed.
+ * ───────────────────────────────────────────────────────────────────────────── */
+
 :root {
-  /* Typography */
+  /* ── New neutral system (Phase A — used by PersonaLayout + chrome) ── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-pill: 9999px;
+  --transition-fast: 150ms ease-out;
+  --transition-base: 200ms ease-out;
+  --max-w-text: 720px;
+  --max-w-grid: 960px;
+  --max-w-feed: 1100px;
+  --duration-stagger: 50ms;
+  --duration-reveal: 200ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --success: #5B8C5A;
+
+  /* ── Legacy v2 tokens (kept until existing routes migrate) ── */
   --font-serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
 
-  /* Color — light mode (default) */
+  /* Color — light mode (default, legacy) */
   --accent: #C26644;        /* warm copper */
   --bg: #F5F1EA;            /* warm cream */
   --fg: #1A1A1A;
@@ -11,9 +50,8 @@
   --fg-faint: #A8A39C;
   --surface: rgba(255, 255, 255, 0.6);
   --rule: #D7D1C5;
-  --success: #5B8C5A;       /* online pulse */
 
-  /* Type scale */
+  /* Type scale (legacy) */
   --h1: 3rem;
   --h2: 1.75rem;
   --h3: 1.25rem;
@@ -21,13 +59,12 @@
   --small: 0.875rem;
   --tiny: 0.75rem;
 
-  /* Layout */
+  /* Layout (legacy aliases) */
   --content-width: 720px;
   --grid-width: 960px;
   --feed-width: 1100px;
 
-  /* Motion */
-  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Motion (legacy aliases) */
   --t-fast: 150ms;
   --t-normal: 200ms;
 }

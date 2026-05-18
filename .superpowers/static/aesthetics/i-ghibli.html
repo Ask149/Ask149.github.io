@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>i. Studio Ghibli warm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: linear-gradient(180deg, #f6e8c8 0%, #f0dcb0 60%, #e8c98a 100%); color: #4a3422; font-family: 'Lora', serif; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ""; position: fixed; inset: 0; background-image: radial-gradient(circle at 20% 30%, rgba(232, 168, 107, 0.18) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(122, 153, 104, 0.12) 0%, transparent 50%); pointer-events: none; }
+  .container { max-width: 980px; margin: 0 auto; padding: 3rem 2rem; position: relative; }
+  .hero { position: relative; padding: 3rem 0 5rem; min-height: 460px; }
+  .hero-art { position: absolute; right: -40px; top: 20px; width: 360px; height: 360px; opacity: 0.85; }
+  .greet { font-family: 'Caveat', cursive; font-size: 2rem; color: #8b6240; transform: rotate(-3deg); margin-bottom: 0.5rem; }
+  h1 { font-family: 'Lora', serif; font-weight: 600; font-size: 4.5rem; line-height: 1; color: #2e1f10; letter-spacing: -0.02em; }
+  .tag { font-style: italic; font-size: 1.15rem; color: #6b4226; margin-top: 1.2rem; max-width: 28ch; line-height: 1.5; }
+  .tag em { color: #b86d3a; font-style: normal; font-weight: 500; }
+  .doors { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin: 5rem 0 4rem; position: relative; z-index: 2; }
+  .door { background: linear-gradient(180deg, rgba(255, 250, 235, 0.7) 0%, rgba(244, 230, 200, 0.4) 100%); border: 1px solid rgba(139, 98, 64, 0.25); border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(74, 52, 34, 0.08); position: relative; }
+  .door::before { content: ""; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; border: 1px dashed rgba(139, 98, 64, 0.2); border-radius: 4px; pointer-events: none; }
+  .door-num { font-family: 'Caveat', cursive; font-size: 1.4rem; color: #b86d3a; }
+  .door-name { font-family: 'Lora', serif; font-weight: 600; font-size: 1.5rem; color: #2e1f10; margin: 0.3rem 0 0.4rem; }
+  .door-blurb { font-size: 0.92rem; color: #6b4226; font-style: italic; }
+  .travel { margin: 4rem 0; padding-top: 3rem; border-top: 1px solid rgba(139, 98, 64, 0.2); }
+  .travel-head { font-family: 'Caveat', cursive; font-size: 1.6rem; color: #8b6240; margin-bottom: 0.5rem; }
+  .travel h2 { font-family: 'Lora', serif; font-weight: 600; font-size: 2rem; color: #2e1f10; }
+  .photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin: 2.5rem 0; }
+  .polaroid { background: #fffaf0; padding: 0.6rem 0.6rem 1.5rem; box-shadow: 0 6px 20px rgba(74, 52, 34, 0.18); transform: rotate(var(--r, 0deg)); transition: transform 0.3s; }
+  .polaroid:hover { transform: rotate(0deg) scale(1.04); }
+  .polaroid:nth-child(1) { --r: -2.5deg; }
+  .polaroid:nth-child(2) { --r: 1.5deg; }
+  .polaroid:nth-child(3) { --r: -1deg; }
+  .polaroid:nth-child(4) { --r: 2deg; }
+  .polaroid-img { aspect-ratio: 1; background: linear-gradient(135deg, var(--c1), var(--c2)); }
+  .polaroid:nth-child(1) .polaroid-img { --c1: #c8916b; --c2: #6b4226; }
+  .polaroid:nth-child(2) .polaroid-img { --c1: #6e8aa4; --c2: #3a5470; }
+  .polaroid:nth-child(3) .polaroid-img { --c1: #e8a86b; --c2: #b86d3a; }
+  .polaroid:nth-child(4) .polaroid-img { --c1: #7a9968; --c2: #3e4d33; }
+  .polaroid-cap { font-family: 'Caveat', cursive; font-size: 1.1rem; color: #2e1f10; text-align: center; margin-top: 0.5rem; }
+  .diary { background: rgba(255, 250, 235, 0.55); padding: 2rem; border-radius: 12px; border: 1px solid rgba(139, 98, 64, 0.18); margin-top: 2rem; position: relative; }
+  .diary::before { content: "❀"; position: absolute; top: -12px; left: 2rem; background: #f0dcb0; padding: 0 0.6rem; color: #b86d3a; }
+  .diary p { font-family: 'Lora', serif; font-style: italic; font-size: 1.1rem; line-height: 1.7; color: #4a3422; }
+  .diary-meta { display: flex; gap: 1.5rem; margin-top: 1.2rem; font-size: 0.85rem; color: #8b6240; font-family: 'Caveat', cursive; font-size: 1.05rem; }
+  footer { padding: 3rem 0 2rem; text-align: center; color: #8b6240; font-family: 'Caveat', cursive; font-size: 1.2rem; }
+</style></head><body>
+<div class="container">
+  <section class="hero">
+    <svg class="hero-art" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="sun" cx="0.5" cy="0.3"><stop offset="0%" stop-color="#fbd28a"/><stop offset="100%" stop-color="#e8a86b" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle cx="180" cy="120" r="100" fill="url(#sun)"/>
+      <rect x="80" y="180" width="200" height="140" fill="#a87a4a" opacity="0.4"/>
+      <rect x="100" y="200" width="60" height="80" fill="#fbe6b8" opacity="0.7" stroke="#6b4226" stroke-width="2"/>
+      <rect x="200" y="200" width="60" height="80" fill="#fbe6b8" opacity="0.7" stroke="#6b4226" stroke-width="2"/>
+      <path d="M 80 180 L 180 100 L 280 180 Z" fill="#8b6240" opacity="0.6"/>
+      <ellipse cx="60" cy="260" rx="30" ry="50" fill="#7a9968" opacity="0.65"/>
+      <ellipse cx="300" cy="280" rx="35" ry="55" fill="#7a9968" opacity="0.7"/>
+      <path d="M 130 240 Q 130 220 145 220 Q 145 240 130 240" fill="#9bbf8a"/>
+      <path d="M 230 240 Q 230 220 245 220 Q 245 240 230 240" fill="#9bbf8a"/>
+      <circle cx="50" cy="50" r="3" fill="#fbd28a"/>
+      <circle cx="80" cy="80" r="2" fill="#fbd28a"/>
+      <circle cx="320" cy="60" r="2" fill="#fbd28a"/>
+    </svg>
+    <div class="greet">welcome in,</div>
+    <h1>Ashish</h1>
+    <p class="tag">a senior engineer who works with <em>four agents in parallel</em>, travels with a notebook, and builds small machines on the weekends.</p>
+  </section>
+
+  <section class="doors">
+    <div class="door"><div class="door-num">§ first door</div><div class="door-name">the workshop</div><div class="door-blurb">where the code and the agents live, lit by lamps</div></div>
+    <div class="door"><div class="door-num">§ second door</div><div class="door-name">the window</div><div class="door-blurb">photographs and paragraphs from places visited</div></div>
+    <div class="door"><div class="door-num">§ third door</div><div class="door-name">the cabinet</div><div class="door-blurb">books finished, fragrances, music on loop</div></div>
+    <div class="door"><div class="door-num">§ fourth door</div><div class="door-name">the workbench</div><div class="door-blurb">things drawn, soldered, sometimes finished</div></div>
+  </section>
+
+  <section class="travel">
+    <div class="travel-head">→ peering through the second door</div>
+    <h2>Seattle, summer of 2024</h2>
+    <div class="photos">
+      <div class="polaroid"><div class="polaroid-img"></div><div class="polaroid-cap">first ferry · jun</div></div>
+      <div class="polaroid"><div class="polaroid-img"></div><div class="polaroid-cap">rainier · jul</div></div>
+      <div class="polaroid"><div class="polaroid-img"></div><div class="polaroid-cap">pike place · sep</div></div>
+      <div class="polaroid"><div class="polaroid-img"></div><div class="polaroid-cap">last view · may</div></div>
+    </div>
+    <div class="diary">
+      <p>Two years here. The rain stopped surprising me by month four. I learned to love the way the city held still under low clouds — ferries dissolving into Puget Sound, the Space Needle going quiet on grey afternoons. Mt Rainier appeared maybe twenty times the entire time, and every appearance felt like a small reward.</p>
+      <div class="diary-meta">
+        <span>~ 12 photographs</span>
+        <span>~ written by ashish</span>
+        <span>~ june 2024 — may 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>~ with love, from the studio ~</footer>
+</div>
+</body></html>

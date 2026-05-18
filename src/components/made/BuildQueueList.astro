@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from "astro:content";
+export interface Props { items: CollectionEntry<"builds">[]; }
+const { items } = Astro.props;
+const queued = items
+  .filter((b) => b.data.status === "queued")
+  .sort((a, b) => {
+    if (b.data.priority !== a.data.priority) return b.data.priority - a.data.priority;
+    return a.data.addedDate.valueOf() - b.data.addedDate.valueOf();
+  });
+---
+{queued.length > 0 && (
+  <section class="queue">
+    <h2>build queue</h2>
+    <ul>
+      {queued.map((b) => (
+        <li>
+          <span class="prio">P{b.data.priority}</span>
+          <span class="title">{b.data.title}</span>
+          <span class="blurb">{b.data.blurb}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+<style>
+  .queue { margin-top: var(--space-12); }
+  h2 { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); margin: 0 0 var(--space-3); }
+  ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule); }
+  li { display: grid; grid-template-columns: auto 1fr 2fr; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--rule); font-family: var(--font-body); }
+  .prio { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; }
+  .title { color: var(--fg); }
+  .blurb { color: var(--fg-muted); font-size: 0.9rem; }
+</style>

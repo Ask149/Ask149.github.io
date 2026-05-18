@@ -1,0 +1,185 @@
+<h2>Navigation metaphor — how do you move between personas?</h2>
+<p class="subtitle">All three keep R as the default page. They differ in how the OTHER three rooms (Traveler / Curator / Maker) are reached. Each mockup card shows the navigation gesture + thumbnails of all four worlds.</p>
+
+<div class="cards">
+
+  <!-- ============ NOTEBOOK SHELF ============ -->
+  <div class="card" data-choice="shelf" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #F4EFE3; background-image: radial-gradient(circle at 1px 1px, rgba(60,40,20,0.08) 0.5px, transparent 0.5px); background-size: 22px 22px; min-height: 320px; padding: 0; display: flex; flex-direction: column;">
+
+      <div style="background: #6E5236; padding: 0.5rem 0.8rem 0.4rem 0.8rem; color: #F5EFE0; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #4A3826;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase;">§ The Shelf</div>
+        <div style="font-family: ui-monospace, monospace; font-size: 0.55rem; letter-spacing: 0.12em; opacity: 0.7;">currently open ↓</div>
+      </div>
+
+      <div style="background: linear-gradient(180deg, #8B6C4C 0%, #6E5236 100%); padding: 0.7rem 0.9rem 1rem 0.9rem; display: flex; gap: 0.35rem; align-items: flex-end; border-bottom: 4px solid #3A2A1A; box-shadow: inset 0 -2px 4px rgba(0,0,0,0.3);">
+        <div style="flex: 1; height: 70px; background: linear-gradient(180deg, #F4EFE3 0%, #D9CFB8 100%); border-radius: 1px 1px 0 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.4); position: relative; transform: translateY(-2px); border: 1px solid #B85838;">
+          <div style="font-family: Newsreader, Georgia, serif; font-size: 0.55rem; font-weight: 700; color: #B85838; writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 0.05em;">§1 The Notebook</div>
+          <div style="position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: #B85838;"></div>
+        </div>
+        <div style="flex: 1; height: 62px; background: linear-gradient(180deg, #C8D4DC 0%, #8AA3B5 100%); border-radius: 1px 1px 0 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.4); position: relative; opacity: 0.85;">
+          <div style="font-family: Newsreader, Georgia, serif; font-size: 0.5rem; font-weight: 700; color: #3A5470; writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 0.05em;">§2 Traveler</div>
+        </div>
+        <div style="flex: 1; height: 66px; background: linear-gradient(180deg, #F0E8D8 0%, #C9B89A 100%); border-radius: 1px 1px 0 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.4); position: relative; opacity: 0.85;">
+          <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.5rem; font-weight: 700; color: #7A2828; writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 0.05em;">§3 Curator</div>
+        </div>
+        <div style="flex: 1; height: 60px; background: linear-gradient(180deg, #2A3A52 0%, #1A2638 100%); border-radius: 1px 1px 0 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.4); position: relative; opacity: 0.85;">
+          <div style="font-family: ui-monospace, monospace; font-size: 0.45rem; font-weight: 700; color: #D85820; writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 0.12em; text-transform: uppercase;">§6 Maker</div>
+        </div>
+      </div>
+
+      <div style="flex: 1; padding: 0.7rem 0.9rem; display: flex; flex-direction: column; gap: 0.3rem;">
+        <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; font-size: 0.85rem; color: #15110A; line-height: 1.1;">Ashish Kshirsagar</div>
+        <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.6rem; color: #5C4A2E;">Senior SWE · 4 agents in parallel</div>
+        <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #B85838; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.2rem;">§1 currently open · last edit 3m</div>
+        <div style="margin-top: 0.3rem; height: 1px; background: #DDD2BB;"></div>
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 0.6rem; color: #15110A; line-height: 1.5; margin-top: 0.2rem;"><span style="font-family: Newsreader, Georgia, serif; font-weight: 700; font-size: 1.2rem; line-height: 0.8; color: #B85838; float: left; margin-right: 0.2rem;">I</span>&nbsp;run four agents concurrently. Each occupies a different quadrant on a latency × autonomy grid...</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. The Notebook Shelf</h3>
+      <p>A wooden shelf at top with four book spines — each a different cover. Open book = current persona. Click a spine → that notebook opens, the page transforms to its visual world. Persistent across all rooms. <strong>Build: medium.</strong> Extends the R metaphor. Most cohesive with what is already designed.</p>
+    </div>
+  </div>
+
+  <!-- ============ CARTOGRAPHER'S MAP ============ -->
+  <div class="card" data-choice="map" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #F4EFE3; min-height: 320px; padding: 0; display: flex; flex-direction: column;">
+
+      <div style="background: #EFE6D0; padding: 0.7rem 0.9rem; border-bottom: 1px solid #C9B89A; position: relative; flex: 0 0 130px; overflow: hidden;">
+        <div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0, transparent 24px, rgba(184,88,56,0.08) 24px, rgba(184,88,56,0.08) 25px), repeating-linear-gradient(0deg, transparent 0, transparent 24px, rgba(184,88,56,0.08) 24px, rgba(184,88,56,0.08) 25px);"></div>
+        <svg style="position: absolute; inset: 0; width: 100%; height: 100%;" viewBox="0 0 280 130" preserveAspectRatio="none">
+          <path d="M 30 100 Q 60 70, 90 80 T 150 50 T 220 70 T 270 40" stroke="#A8501F" stroke-width="1" fill="none" stroke-dasharray="3,3" opacity="0.6"/>
+          <path d="M 40 30 Q 80 45, 130 90 T 200 100" stroke="#A8501F" stroke-width="0.8" fill="none" stroke-dasharray="2,3" opacity="0.5"/>
+          <text x="50" y="115" style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 6px; fill: #6E5C44; opacity: 0.7;">~ pune ~</text>
+        </svg>
+
+        <div style="position: absolute; left: 22%; top: 35%; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #B85838; box-shadow: 0 0 0 3px rgba(184,88,56,0.25);"></div>
+          <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #B85838; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;">§1 workshop</div>
+        </div>
+        <div style="position: absolute; left: 55%; top: 20%; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+          <div style="width: 6px; height: 6px; border-radius: 50%; background: #3A5470; opacity: 0.7;"></div>
+          <div style="font-family: ui-monospace, monospace; font-size: 0.48rem; color: #3A5470; letter-spacing: 0.1em; text-transform: uppercase;">§2 road</div>
+        </div>
+        <div style="position: absolute; left: 80%; top: 55%; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+          <div style="width: 6px; height: 6px; border-radius: 50%; background: #7A2828; opacity: 0.7;"></div>
+          <div style="font-family: ui-monospace, monospace; font-size: 0.48rem; color: #7A2828; letter-spacing: 0.1em; text-transform: uppercase;">§3 cabinet</div>
+        </div>
+        <div style="position: absolute; left: 35%; top: 70%; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+          <div style="width: 6px; height: 6px; border-radius: 50%; background: #2A3A52; opacity: 0.7;"></div>
+          <div style="font-family: ui-monospace, monospace; font-size: 0.48rem; color: #2A3A52; letter-spacing: 0.1em; text-transform: uppercase;">§6 bench</div>
+        </div>
+
+        <div style="position: absolute; top: 6px; left: 8px; font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.55rem; color: #5C4A2E; letter-spacing: 0.05em;">~ a small atlas of Ashish ~</div>
+        <div style="position: absolute; bottom: 6px; right: 8px; font-family: ui-monospace, monospace; font-size: 0.45rem; color: #9A8E73; letter-spacing: 0.1em; text-transform: uppercase;">N ↑</div>
+      </div>
+
+      <div style="flex: 1; padding: 0.7rem 0.9rem; background-color: #F4EFE3; background-image: radial-gradient(circle at 1px 1px, rgba(60,40,20,0.08) 0.5px, transparent 0.5px); background-size: 18px 18px;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #B85838; letter-spacing: 0.18em; text-transform: uppercase;">§1 the workshop · zoomed in</div>
+        <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; font-size: 0.85rem; color: #15110A; margin-top: 0.25rem;">Ashish Kshirsagar</div>
+        <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.58rem; color: #5C4A2E; margin-top: 0.15rem;">Senior SWE · 4 agents in parallel</div>
+        <div style="margin-top: 0.4rem; height: 1px; background: #DDD2BB;"></div>
+        <div style="font-family: Newsreader, Georgia, serif; font-size: 0.58rem; color: #15110A; line-height: 1.5; margin-top: 0.3rem;">I run four agents concurrently. Each occupies a different quadrant on a latency × autonomy grid...</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. The Cartographer&rsquo;s Map</h3>
+      <p>A hand-drawn aerial map at top. Four locations pinned (workshop · road · cabinet · bench). Click a pin → camera flies/zooms to that location; the room beneath shifts to its world. Map shrinks to a compass-corner minimap inside each room. <strong>Build: high.</strong> Most spatial. Best for "exploring my life" feeling.</p>
+    </div>
+  </div>
+
+  <!-- ============ HORIZONTAL PANORAMA ============ -->
+  <div class="card" data-choice="panorama" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #F4EFE3; min-height: 320px; padding: 0; display: flex; flex-direction: column;">
+
+      <div style="background: rgba(15,11,5,0.04); padding: 0.4rem 0.9rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #DDD2BB;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #5C4A2E; letter-spacing: 0.18em; text-transform: uppercase;">↳ scroll right · or swipe</div>
+        <div style="display: flex; gap: 4px; align-items: center;">
+          <div style="width: 14px; height: 3px; background: #B85838; border-radius: 2px;"></div>
+          <div style="width: 8px; height: 3px; background: #DDD2BB; border-radius: 2px;"></div>
+          <div style="width: 8px; height: 3px; background: #DDD2BB; border-radius: 2px;"></div>
+          <div style="width: 8px; height: 3px; background: #DDD2BB; border-radius: 2px;"></div>
+        </div>
+      </div>
+
+      <div style="flex: 1; display: grid; grid-template-columns: 1.5fr 0.7fr 0.7fr 0.7fr; gap: 0; overflow: hidden; position: relative;">
+
+        <div style="background-color: #F4EFE3; background-image: radial-gradient(circle at 1px 1px, rgba(60,40,20,0.08) 0.5px, transparent 0.5px); background-size: 16px 16px; padding: 0.7rem 0.6rem; display: flex; flex-direction: column; gap: 0.25rem;">
+          <div style="font-family: ui-monospace, monospace; font-size: 0.45rem; color: #B85838; letter-spacing: 0.18em; text-transform: uppercase;">§1 The Workshop</div>
+          <div style="font-family: Newsreader, Georgia, serif; font-weight: 600; font-size: 0.75rem; color: #15110A;">Ashish K.</div>
+          <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.5rem; color: #5C4A2E;">4 agents in parallel</div>
+          <div style="margin-top: 0.3rem; font-family: Newsreader, Georgia, serif; font-size: 0.5rem; color: #15110A; line-height: 1.5;"><span style="font-weight: 700; font-size: 0.95rem; line-height: 0.8; color: #B85838; float: left; margin-right: 0.15rem;">I</span> run four agents...</div>
+        </div>
+
+        <div style="background: linear-gradient(180deg, #C8D4DC 0%, #E8DBC0 100%); padding: 0.55rem 0.45rem; display: flex; flex-direction: column; gap: 0.2rem; position: relative;">
+          <div style="font-family: ui-monospace, monospace; font-size: 0.42rem; color: #3A5470; letter-spacing: 0.14em; text-transform: uppercase;">§2 The Road</div>
+          <div style="width: 28px; height: 28px; border: 1.5px solid #3A5470; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace; font-size: 0.4rem; color: #3A5470; transform: rotate(-8deg); margin-top: 0.2rem; background: rgba(245,239,224,0.6);">SEA<br/>14</div>
+          <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.45rem; color: #2A3A52; margin-top: 0.15rem;">stamps &amp;<br/>polaroids</div>
+        </div>
+
+        <div style="background: linear-gradient(180deg, #F0E8D8 0%, #D9C9B0 100%); padding: 0.55rem 0.45rem; display: flex; flex-direction: column; gap: 0.2rem;">
+          <div style="font-family: ui-monospace, monospace; font-size: 0.42rem; color: #7A2828; letter-spacing: 0.14em; text-transform: uppercase;">§3 Cabinet</div>
+          <div style="display: flex; gap: 3px; align-items: flex-end; margin-top: 0.2rem;">
+            <div style="width: 5px; height: 22px; background: #7A2828; border-radius: 1px 1px 0 0;"></div>
+            <div style="width: 4px; height: 18px; background: #B89968; border-radius: 1px 1px 0 0;"></div>
+            <div style="width: 5px; height: 25px; background: #4A3826; border-radius: 1px 1px 0 0;"></div>
+            <div style="width: 4px; height: 20px; background: #7A2828; border-radius: 1px 1px 0 0;"></div>
+          </div>
+          <div style="font-family: Newsreader, Georgia, serif; font-style: italic; font-size: 0.45rem; color: #4A2828; margin-top: 0.15rem;">fragrance · books · vinyl</div>
+        </div>
+
+        <div style="background: linear-gradient(180deg, #2A3A52 0%, #1A2638 100%); padding: 0.55rem 0.45rem; display: flex; flex-direction: column; gap: 0.2rem; color: #F5EFE0;">
+          <div style="font-family: ui-monospace, monospace; font-size: 0.42rem; color: #D85820; letter-spacing: 0.14em; text-transform: uppercase;">§6 Bench</div>
+          <svg style="margin-top: 0.2rem;" width="40" height="22" viewBox="0 0 40 22">
+            <rect x="3" y="6" width="14" height="10" stroke="#D85820" stroke-width="0.7" fill="none"/>
+            <circle cx="25" cy="11" r="4" stroke="#D85820" stroke-width="0.7" fill="none"/>
+            <line x1="17" y1="11" x2="21" y2="11" stroke="#D85820" stroke-width="0.5" stroke-dasharray="1,1"/>
+            <text x="3" y="20" style="font-family: ui-monospace, monospace; font-size: 4px; fill: #F5EFE0;">FIG. 1</text>
+          </svg>
+          <div style="font-family: ui-monospace, monospace; font-style: italic; font-size: 0.45rem; color: rgba(245,239,224,0.7); letter-spacing: 0.05em;">schematics &amp;<br/>diagrams</div>
+        </div>
+
+        <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 30%; background: linear-gradient(90deg, transparent 0%, rgba(244,239,227,0.85) 100%); pointer-events: none;"></div>
+      </div>
+
+      <div style="background: rgba(15,11,5,0.04); padding: 0.35rem 0.9rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #DDD2BB;">
+        <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #B85838; letter-spacing: 0.1em;">/changelog · +47w</div>
+        <div style="font-family: ui-monospace, monospace; font-size: 0.5rem; color: #9A8E73; letter-spacing: 0.12em;">1 of 4 · workshop</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. The Horizontal Panorama</h3>
+      <p>One long horizontal canvas. Scroll right (or swipe) to walk from Workshop → Road → Cabinet → Bench. Each scene is its own visual world; transitions blend at the edges. Indicator dots show position. <strong>Build: very high.</strong> Most cinematic. Mobile UX needs care (vertical fallback). Highest "creative + artistic" score.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top: 1.4rem;">
+  <div class="label">Each persona&rsquo;s visual world (locked-in regardless of structure)</div>
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-top: 0.5rem;">
+    <div style="padding: 0.6rem; border: 1px solid #DDD2BB; background: rgba(184,88,56,0.04);">
+      <div style="font-family: ui-monospace, monospace; font-size: 0.55rem; color: #B85838; letter-spacing: 0.15em; text-transform: uppercase;">§1 Workshop</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.75rem; color: #15110A; font-weight: 600; margin-top: 0.2rem;">Engineering paper</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.72rem; color: #5C4A2E; font-style: italic; line-height: 1.45; margin-top: 0.25rem;">Dot grid · Newsreader serif · copper accent · Tufte sidenotes. The R direction, locked.</div>
+    </div>
+    <div style="padding: 0.6rem; border: 1px solid #DDD2BB; background: linear-gradient(180deg, rgba(200,212,220,0.4) 0%, rgba(232,219,192,0.4) 100%);">
+      <div style="font-family: ui-monospace, monospace; font-size: 0.55rem; color: #3A5470; letter-spacing: 0.15em; text-transform: uppercase;">§2 Road</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.75rem; color: #15110A; font-weight: 600; margin-top: 0.2rem;">Atlas + stamps</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.72rem; color: #5C4A2E; font-style: italic; line-height: 1.45; margin-top: 0.25rem;">Sun-bleached blue + sand · stamped polaroids · topographic line texture · airport-code labels.</div>
+    </div>
+    <div style="padding: 0.6rem; border: 1px solid #DDD2BB; background: linear-gradient(180deg, rgba(240,232,216,0.6) 0%, rgba(217,201,176,0.5) 100%);">
+      <div style="font-family: ui-monospace, monospace; font-size: 0.55rem; color: #7A2828; letter-spacing: 0.15em; text-transform: uppercase;">§3 Cabinet</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.75rem; color: #15110A; font-weight: 600; margin-top: 0.2rem;">Apothecary shelf</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.72rem; color: #5C4A2E; font-style: italic; line-height: 1.45; margin-top: 0.25rem;">Vellum ivory · oxblood + brass · tasting-notes typography · museum-label cards.</div>
+    </div>
+    <div style="padding: 0.6rem; border: 1px solid #2A3A52; background: linear-gradient(180deg, #2A3A52 0%, #1A2638 100%); color: #F5EFE0;">
+      <div style="font-family: ui-monospace, monospace; font-size: 0.55rem; color: #D85820; letter-spacing: 0.15em; text-transform: uppercase;">§6 Bench</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.75rem; font-weight: 600; margin-top: 0.2rem;">Draftsman blueprint</div>
+      <div style="font-family: Newsreader, Georgia, serif; font-size: 0.72rem; color: rgba(245,239,224,0.75); font-style: italic; line-height: 1.45; margin-top: 0.25rem;">Deep blueprint blue · hand-drawn line schematics · safety-orange accent · technical labels.</div>
+    </div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top: 1.4rem;">Pick a navigation pattern. Or describe a hybrid: <em>&ldquo;shelf for nav, but each room is its own full-page world like the panorama&rdquo;</em> works. Or <em>&ldquo;none of these &mdash; the personas should be tabs at the top, simpler than this.&rdquo;</em></p>

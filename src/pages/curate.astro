@@ -1,0 +1,20 @@
+---
+import PersonaLayout from "../layouts/PersonaLayout.astro";
+import CurateHero from "../components/curate/CurateHero.astro";
+import NowReading from "../components/curate/NowReading.astro";
+import QuoteRotator from "../components/curate/QuoteRotator.astro";
+import FinishedGrid from "../components/curate/FinishedGrid.astro";
+import { getCollection } from "astro:content";
+
+const all = await getCollection("books", (e) => !e.data.draft);
+const reading = all.find((b) => b.data.status === "reading");
+const quotes = all
+  .filter((b) => !!b.data.quote)
+  .map((b) => ({ text: b.data.quote!.text, source: `${b.data.title}, ${b.data.author}` }));
+---
+<PersonaLayout personaId="curate" title="Curate — Ashish Kshirsagar" description="Books, quotes, taste.">
+  <CurateHero />
+  <NowReading book={reading} />
+  <QuoteRotator quotes={quotes} />
+  <FinishedGrid books={all} />
+</PersonaLayout>
