@@ -1,0 +1,31 @@
+---
+// src/components/curate/FinishedListV4.astro
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  books: CollectionEntry<"books">[];
+}
+const { books } = Astro.props;
+
+function ratingStars(rating?: number): string {
+  if (!rating) return "—";
+  return "★".repeat(rating) + "☆".repeat(Math.max(0, 5 - rating));
+}
+
+function monthYear(d?: Date): string {
+  if (!d) return "—";
+  return d.toLocaleString("en-US", { month: "short", year: "numeric" }).toLowerCase();
+}
+---
+<section class="finished">
+  <div class="fin-label">→ §3.2 · recently finished</div>
+  <div class="fin-list">
+    {books.map((b, i) => (
+      <div class="fin-row">
+        <span class="n">{String(i + 1).padStart(2, "0")}</span>
+        <span class="t">{b.data.title} <em>— {b.data.author}</em></span>
+        <span class="r" aria-label={b.data.rating ? `${b.data.rating} of 5 stars` : "no rating"}>{ratingStars(b.data.rating)} · {monthYear(b.data.finishedDate)}</span>
+      </div>
+    ))}
+  </div>
+</section>

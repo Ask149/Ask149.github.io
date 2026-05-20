@@ -1,18 +1,55 @@
 :root[data-persona="curate"] {
-  --bg: linear-gradient(180deg, #F0E8D8 0%, #E6D9BE 100%);
-  --bg-texture: none;
-  --bg-texture-size: 0;
-  --fg: #4A2828;
-  --fg-muted: #7A5A5A;
-  --fg-faint: #B89AA0;
-  --rule: #D9C7B0;
-  --accent: #7A2828;
-  --accent-secondary: #B89968;
-  --surface: #FFFFFFCC;
-  --polaroid-bg: #FFFFFF;
-  --polaroid-shadow: 0 1px 2px rgba(0,0,0,0.08);
-  --font-display: "Newsreader", serif;
-  --font-display-style: italic;
-  --font-body: "Newsreader", serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --bg-from: #f0e4cf;
+  --bg-to:   #e6d6b5;
+  --fg: #2a1818;
+  --muted: #6a4a3a;
+  --accent: #7a2828;
+  --brass: #b89968;
+  --rule: rgba(42, 24, 24, 0.18);
+  --surface: rgba(254, 250, 240, 0.7);
 }
+body[data-persona="curate"] {
+  background: linear-gradient(180deg, var(--bg-from) 0%, var(--bg-to) 100%);
+  color: var(--fg);
+  font-family: 'Cormorant Garamond', serif;
+}
+body[data-persona="curate"]::before {
+  content: ""; position: fixed; inset: 0;
+  background-image: repeating-linear-gradient(90deg, transparent 0, transparent 28px,
+    rgba(42,24,24,0.05) 28px, rgba(42,24,24,0.05) 29px);
+  pointer-events: none; z-index: 1;
+}
+
+body[data-persona="curate"] .ornament { position: fixed; pointer-events: none; z-index: 0; opacity: 0.55; }
+body[data-persona="curate"] .ornament svg { width: 100%; height: 100%; }
+body[data-persona="curate"] .ornament.tl { top: 1rem; left: 1rem; width: 120px; height: 120px; }
+body[data-persona="curate"] .ornament.br { bottom: 1rem; right: 1rem; width: 140px; height: 140px; transform: rotate(180deg); }
+
+body[data-persona="curate"] .hero { position: relative; z-index: 10; padding: 5rem 2.5rem 2rem; max-width: 920px; }
+body[data-persona="curate"] .hero-pre { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
+body[data-persona="curate"] .hero h1 { font-family: 'Anton', sans-serif; font-size: 8.5rem; line-height: 0.84; letter-spacing: -0.04em; color: var(--fg); margin: 0.6rem 0 1.5rem; }
+body[data-persona="curate"] .hero h1 em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 0.8em; vertical-align: baseline; }
+body[data-persona="curate"] .hero h1 span { background: linear-gradient(180deg, var(--fg) 30%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+body[data-persona="curate"] .hero .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: var(--muted); max-width: 35ch; line-height: 1.45; }
+body[data-persona="curate"] .hero-meta { display: flex; gap: 1.5rem; margin-top: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+body[data-persona="curate"] .hero-meta strong { color: var(--accent); font-weight: 500; }
+
+body[data-persona="curate"] .now-reading { position: relative; z-index: 10; max-width: 920px; margin: 2rem auto; padding: 0 2.5rem; }
+body[data-persona="curate"] .nr-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+body[data-persona="curate"] .nr-card { display: grid; grid-template-columns: 110px 1fr; gap: 1.5rem; padding: 1.5rem; background: var(--surface); border: 1px solid var(--rule); box-shadow: 0 6px 20px rgba(42, 24, 24, 0.08); }
+body[data-persona="curate"] .nr-cover { aspect-ratio: 2/3; background: linear-gradient(135deg, var(--accent), #4a1818); display: grid; place-items: center; padding: 0.6rem; box-shadow: 0 3px 10px rgba(0,0,0,0.18); }
+body[data-persona="curate"] .nr-cover .title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.7rem; color: rgba(240, 228, 207, 0.9); text-align: center; line-height: 1.3; }
+body[data-persona="curate"] .nr-info h3 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.8rem; color: var(--fg); margin-bottom: 0.3rem; }
+body[data-persona="curate"] .nr-info .author { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--muted); }
+body[data-persona="curate"] .quote { margin-top: 1rem; padding-left: 1rem; border-left: 3px solid var(--accent); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; line-height: 1.55; color: var(--fg); }
+body[data-persona="curate"] .quote-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--brass); margin-top: 0.6rem; }
+
+body[data-persona="curate"] .finished { position: relative; z-index: 10; max-width: 920px; margin: 3rem auto; padding: 0 2.5rem; }
+body[data-persona="curate"] .fin-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+body[data-persona="curate"] .fin-list { background: var(--surface); border: 1px solid var(--rule); padding: 0; }
+body[data-persona="curate"] .fin-row { display: grid; grid-template-columns: 30px 1fr auto; gap: 1rem; padding: 0.9rem 1.5rem; border-bottom: 1px dashed var(--rule); align-items: center; }
+body[data-persona="curate"] .fin-row:last-child { border-bottom: none; }
+body[data-persona="curate"] .fin-row .n { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--brass); }
+body[data-persona="curate"] .fin-row .t { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; }
+body[data-persona="curate"] .fin-row .t em { font-style: italic; color: var(--muted); }
+body[data-persona="curate"] .fin-row .r { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--brass); }

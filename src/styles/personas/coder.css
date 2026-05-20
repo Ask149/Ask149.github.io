@@ -1,16 +1,189 @@
 :root[data-persona="coder"] {
-  --bg: #F4EFE3;
-  --bg-texture: url("/textures/dot-grid-22.svg");
-  --bg-texture-size: 22px;
-  --fg: #15110A;
-  --fg-muted: #5C5650;
-  --fg-faint: #6B665F;
-  --rule: #D7D1C5;
-  --accent: #B85838;
-  --surface: #FFFFFFCC;
-  --polaroid-bg: #FFFFFF;
-  --polaroid-shadow: 0 1px 2px rgba(0,0,0,0.08);
-  --font-display: "Newsreader", serif;
-  --font-body: "Newsreader", serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --bg-from: #e8e5d8;
+  --bg-to: #d8d3c0;
+  --fg: #1f2418;
+  --muted: #5a5848;
+  /* REVIEW #6: was #8b5a2a (4.36:1, fails WCAG AA). #7a4a1f → ~5.6:1 on #e8e5d8. */
+  --accent: #7a4a1f;
+  --rule: rgba(31, 36, 24, 0.18);
+  --surface: rgba(254, 250, 240, 0.55);
+}
+body[data-persona="coder"] {
+  background: linear-gradient(180deg, var(--bg-from) 0%, var(--bg-to) 100%);
+  color: var(--fg);
+  font-family: 'Cormorant Garamond', serif;
+}
+body[data-persona="coder"]::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(31, 36, 24, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 36, 24, 0.08) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* REVIEW #10: schematic SVG background removed — 30px grid is the single
+   background language. SchematicBackground.astro is no longer imported in
+   index.astro. The `.schematic-bg` rule below is retained as no-op safety
+   in case any leftover markup is rendered. */
+body[data-persona="coder"] .schematic-bg { display: none; }
+
+/* Feed strip (mockup line 28) */
+body[data-persona="coder"] .feed-strip {
+  position: relative; z-index: 10;
+  padding: 1rem 2.5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.1em;
+  color: var(--muted);
+  display: flex; gap: 1rem; align-items: center;
+}
+body[data-persona="coder"] .feed-strip .live { color: var(--accent); }
+
+/* Hero (mockup lines 13–19) */
+/* REVIEW #7: clamp() the padding + font-size for 320–1280px viewports */
+body[data-persona="coder"] .hero {
+  position: relative; z-index: 10;
+  padding: clamp(2rem, 8vw, 5rem) clamp(1.25rem, 5vw, 2.5rem) 2rem;
+  max-width: 920px;
+}
+body[data-persona="coder"] .hero-pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Eyebrow-name treatment: name as small mono eyebrow above three display lines.
+   Replaces the old shouty clamp(3.5rem, 12vw, 8.5rem) h1.
+   #11 solid color, no gradient text-fill */
+body[data-persona="coder"] .workshop-h1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.6rem 0 1.5rem;
+  font-size: inherit;
+  line-height: 1;
+}
+body[data-persona="coder"] .workshop-h1__eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
+}
+body[data-persona="coder"] .workshop-h1__line {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+body[data-persona="coder"] .workshop-h1__line--stance {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  letter-spacing: 0;
+  line-height: 1.4;
+  color: var(--muted);
+  margin-top: 0.4rem;
+  max-width: 40ch;
+}
+
+/* REVIEW #3: above-the-fold human handhold — portrait + city + contact */
+body[data-persona="coder"] .hero-handhold {
+  display: flex; align-items: center; gap: 1rem;
+  margin: 1.75rem 0 0;
+}
+body[data-persona="coder"] .hero-portrait {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  box-shadow: 0 1px 4px rgba(31, 36, 24, 0.12);
+  flex-shrink: 0;
+}
+body[data-persona="coder"] .hero-handhold-text { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+body[data-persona="coder"] .hero-city {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+body[data-persona="coder"] .hero-contacts {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--fg);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.4rem;
+}
+body[data-persona="coder"] .hero-contacts a {
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 0.05rem;
+  transition: color 200ms ease;
+}
+body[data-persona="coder"] .hero-contacts a:hover { color: var(--accent); }
+body[data-persona="coder"] .hero-contacts a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+body[data-persona="coder"] .hero-sep { color: var(--muted); opacity: 0.6; }
+
+body[data-persona="coder"] .hero-meta {
+  display: flex; gap: 1.5rem; margin-top: 2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted);
+}
+body[data-persona="coder"] .hero-meta strong { color: var(--accent); font-weight: 500; }
+
+/* Projects (mockup lines 30–40) */
+body[data-persona="coder"] .projects { position: relative; z-index: 10; padding: 0 clamp(1.25rem, 5vw, 2.5rem); max-width: 1100px; margin: 0 auto; }
+body[data-persona="coder"] .projects-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+body[data-persona="coder"] .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+@media (max-width: 900px) {
+  body[data-persona="coder"] .proj-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  body[data-persona="coder"] .proj-grid { grid-template-columns: 1fr; }
+}
+body[data-persona="coder"] .proj { padding: 1.3rem; background: var(--surface); border: 1px solid var(--rule); position: relative; }
+body[data-persona="coder"] .proj-num { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+body[data-persona="coder"] .proj h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.4rem; margin: 0.4rem 0; color: var(--fg); }
+body[data-persona="coder"] .proj .desc { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--muted); margin-bottom: 0.9rem; line-height: 1.5; }
+body[data-persona="coder"] .proj .chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+/* REVIEW #6: chip background opacity bumped slightly to compensate for darker accent */
+body[data-persona="coder"] .chip { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; padding: 0.15rem 0.45rem; background: rgba(122, 74, 31, 0.14); color: var(--accent); border-radius: 99px; }
+body[data-persona="coder"] .chip.on { background: var(--accent); color: #fefdf8; }
+/* REVIEW #12: Caveat removed — scribble now uses Cormorant italic */
+body[data-persona="coder"] .scribble { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--accent); transform: rotate(-2deg); position: absolute; top: -8px; right: 10px; opacity: 0.75; }
+
+/* REVIEW #8: :focus-visible for project cards, chips, and any interactive island */
+body[data-persona="coder"] .proj:focus-visible,
+body[data-persona="coder"] .chip:focus-visible,
+body[data-persona="coder"] .proj a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-persona="coder"] .scribble { transform: none; }
+}
+
+@media (max-width: 640px) {
+  body[data-persona="coder"] .hero-handhold { gap: 0.75rem; }
+  body[data-persona="coder"] .hero-portrait { width: 72px; height: 72px; }
+  body[data-persona="coder"] .hero-contacts { font-size: 0.95rem; }
 }

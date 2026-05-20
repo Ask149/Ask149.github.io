@@ -1,0 +1,45 @@
+---
+// src/components/made/PlaceholderGrid.astro
+// Phase E3 — three dashed FIG.1/2/3 placeholder cards. Pure Astro, no client.
+// Each card: aspect 4/3, dashed amber border, centered tiny SVG icon + FIG label.
+// CSS lives in made.css (.ph-grid, .ph-card, .ph-icon, .ph-fig).
+---
+<section class="placeholders">
+  <div class="ph-label">→ §4.1 · current builds · placeholder until something ships</div>
+  <div class="ph-grid">
+    <div class="ph-card">
+      <div style="text-align:center">
+        <svg class="ph-icon" viewBox="0 0 64 48" aria-hidden="true">
+          <g stroke="rgba(217, 126, 63, 0.6)" stroke-width="1" fill="none" stroke-dasharray="2 2">
+            <rect x="4" y="8" width="56" height="32" rx="2"/>
+            <line x1="4" y1="20" x2="60" y2="20"/>
+          </g>
+        </svg>
+        <div class="ph-fig">FIG.1 · placeholder<br/>first sketch lands here</div>
+      </div>
+    </div>
+    <div class="ph-card">
+      <div style="text-align:center">
+        <svg class="ph-icon" viewBox="0 0 64 48" aria-hidden="true">
+          <g stroke="rgba(217, 126, 63, 0.6)" stroke-width="1" fill="none" stroke-dasharray="2 2">
+            <circle cx="32" cy="24" r="14"/>
+            <circle cx="32" cy="24" r="5"/>
+          </g>
+        </svg>
+        <div class="ph-fig">FIG.2 · placeholder<br/>something carved or printed</div>
+      </div>
+    </div>
+    <div class="ph-card">
+      <div style="text-align:center">
+        <svg class="ph-icon" viewBox="0 0 64 48" aria-hidden="true">
+          <g stroke="rgba(217, 126, 63, 0.6)" stroke-width="1" fill="none" stroke-dasharray="2 2">
+            <rect x="6" y="8" width="22" height="14"/>
+            <line x1="28" y1="15" x2="44" y2="15"/>
+            <rect x="44" y="6" width="14" height="20"/>
+          </g>
+        </svg>
+        <div class="ph-fig">FIG.3 · placeholder<br/>circuit + enclosure</div>
+      </div>
+    </div>
+  </div>
+</section>

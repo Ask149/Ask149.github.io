@@ -1,23 +1,43 @@
 ---
+// src/pages/made.astro — Phase E6
+// Pure Astro composition. Zero React JS shipped (only shared ClientRouter
+// from PersonaLayout). AnimatePresence cross-fade for shipped builds deferred
+// to v4.2 per spec §15 tombstone.
+import { getCollection, type CollectionEntry } from "astro:content";
 import PersonaLayout from "../layouts/PersonaLayout.astro";
-import MadeHero from "../components/made/MadeHero.astro";
-import { MakerGrid } from "../components/made/MakerGrid";
-import BuildQueueList from "../components/made/BuildQueueList.astro";
-import { getCollection } from "astro:content";
+import AtelierSchematicBg from "../components/made/AtelierSchematicBg.astro";
+import AtelierHero from "../components/made/AtelierHero.astro";
+import PlaceholderGrid from "../components/made/PlaceholderGrid.astro";
+import BuildQueueListV4 from "../components/made/BuildQueueListV4.astro";
 
-const all = await getCollection("builds", (e) => !e.data.draft);
-const builds = all.map((b) => ({
-  slug: b.slug,
-  title: b.data.title,
-  blurb: b.data.blurb,
-  status: b.data.status,
-  shippedDate: b.data.shippedDate?.toISOString().slice(0,10),
-  tags: b.data.tags,
-  cover: b.data.cover ? { src: b.data.cover.src, alt: b.data.coverAlt } : undefined,
-}));
+type BuildEntry = CollectionEntry<"builds">;
+
+const all = await getCollection("builds", (e: BuildEntry) => !e.data.draft);
+
+const shipped = all.filter((b) => b.data.status === "shipped").length;
+const queued = all.filter((b) => b.data.status === "queued").length;
+// "on-bench" may not be in the enum yet (Phase C owns that schema edit).
+// Treat "building" as the current bench equivalent; fall back to a flat 1 if neither
+// is present, mirroring the mockup's "1 on the bench" placeholder count.
+const benchCount = all.filter((b) => {
+  const s = b.data.status as string;
+  return s === "on-bench" || s === "building";
+}).length;
+const onBench = benchCount > 0 ? benchCount : 1;
+
+const lastEditISO = all
+  .map((b) => b.data.shippedDate?.toISOString() ?? b.data.addedDate.toISOString())
+  .sort()
+  .reverse()[0];
 ---
-<PersonaLayout personaId="made" title="Made — Ashish Kshirsagar" description="Side builds and sketchbook.">
-  <MadeHero />
-  <MakerGrid builds={builds} client:visible />
-  <BuildQueueList items={all} />
+<PersonaLayout
+  personaId="made"
+  title="Ashish K. · atelier"
+  description="Physical things — soldered, sawn, sketched. The workbench, late."
+  lastEditISO={lastEditISO}
+>
+  <AtelierSchematicBg />
+  <AtelierHero stats={{ shipped, queued, onBench }} />
+  <PlaceholderGrid />
+  <BuildQueueListV4 />
 </PersonaLayout>

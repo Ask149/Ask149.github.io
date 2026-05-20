@@ -21,6 +21,9 @@ const projects = defineCollection({
     order: z.number().optional(),
     url: z.string().url().optional(),
     repo: z.string().optional(),
+    // v4 polish r3 W8: optional ship date surfaces as "~ shipped YYYY-MM-DD"
+    // on the featured-first card in ProjectGridV4. ISO date string.
+    shipped: z.string().optional(),
   }),
 })
 
@@ -38,6 +41,17 @@ const places = defineCollection({
     reason: z.enum(["leisure", "work", "transit", "family", "wedding"]).default("leisure"),
     favorite: z.boolean().default(false),
     draft: z.boolean().default(false),
+
+    // ── v4 additions ────────────────────────────────────────────
+    paragraph: z.string().optional(),
+    // "ak" / "ashish" = hand-written. "ai" / "gemini-2.0-flash" = AI-generated.
+    // "ai-regenerate" = sentinel to force regeneration on next `npm run paragraphs`.
+    paragraphAuthor: z.enum(["ak", "ashish", "ai", "gemini-1.5-flash", "gemini-1.5-pro", "gemini-2.0-flash", "gemini-2.0-flash-exp", "gemini-2.5-flash", "gemini-flash-latest", "gemini-pro-latest", "ai-regenerate"]).optional(),
+    photoFolder: z.string().optional(),
+    mapCoords: z.object({ leftPct: z.number(), topPct: z.number() }).optional(),
+    photoCaptions: z.array(z.string()).optional(),
+    geo: z.tuple([z.number(), z.number()]).optional(),
+    timelineLabel: z.string().optional(),
   }),
 })
 
@@ -65,7 +79,7 @@ const builds = defineCollection({
   type: "content",
   schema: ({ image }) => z.object({
     title: z.string(),
-    status: z.enum(["queued", "building", "shipped", "abandoned"]),
+    status: z.enum(["queued", "building", "shipped", "abandoned", "on-bench"]),
     priority: z.number().int().min(0).max(10).default(5),
     addedDate: z.coerce.date(),
     shippedDate: z.coerce.date().optional(),

@@ -1,0 +1,59 @@
+---
+// src/components/coder/WorkshopHero.astro
+// Eyebrow-name treatment: name as small mono eyebrow above three display lines.
+// H1 still leads with "Ashish Kshirsagar" for SEO + a11y (first text node).
+//   #3  Human handhold — portrait, city, contact links above the fold
+//   #7  Hero font-size now clamp()'d in coder.css for 320px viewports
+//   #11 Gradient text-fill removed (solid color on <h1>)
+//   v4 polish r3 W1: portrait routed through astro:assets (WebP, ~5-15KB).
+//   v4 polish r3 W6: contact strip now has 4 links (email, LI, GitHub, Twitter).
+//   v4 polish r3 Q7: city framing reflects Seattle→Pune transition.
+import { Image } from "astro:assets";
+import portrait from "../../assets/profile.jpeg";
+
+export interface Props {
+  stats?: {
+    activeProjects: number;
+  };
+}
+const { stats = { activeProjects: 5 } } = Astro.props;
+---
+<section class="hero">
+  <div class="hero-pre">~ §1 · the workshop ~</div>
+
+  <h1 class="workshop-h1">
+    <span class="workshop-h1__eyebrow">Ashish Kshirsagar</span>
+    <span class="workshop-h1__line">Software Engineer at Microsoft</span>
+    <span class="workshop-h1__line">Shipping updates on Windows</span>
+    <span class="workshop-h1__line workshop-h1__line--stance">Agentic AI enthusiast</span>
+  </h1>
+
+  <div class="hero-handhold">
+    <Image
+      src={portrait}
+      alt="Portrait of Ashish Kshirsagar"
+      width={192}
+      height={192}
+      quality={80}
+      format="webp"
+      loading="eager"
+      class="hero-portrait"
+    />
+    <div class="hero-handhold-text">
+      <div class="hero-city">Seattle → Pune, June 2026</div>
+      <div class="hero-contacts">
+        <a href="mailto:ashishkshirsagar10@gmail.com">ashishkshirsagar10@gmail.com</a>
+        <span class="hero-sep">·</span>
+        <a href="https://linkedin.com/in/ask149" target="_blank" rel="noopener noreferrer">linkedin.com/in/ask149</a>
+        <span class="hero-sep">·</span>
+        <a href="https://github.com/ask149" target="_blank" rel="noopener noreferrer">github.com/ask149</a>
+        <span class="hero-sep">·</span>
+        <a href="https://twitter.com/iodevz_ai" target="_blank" rel="noopener noreferrer">@iodevz_ai</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-meta">
+    <span><strong>{stats.activeProjects}</strong> active projects</span>
+  </div>
+</section>

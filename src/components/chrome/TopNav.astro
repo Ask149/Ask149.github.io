@@ -1,36 +1,107 @@
 ---
-import { PERSONAS, getPersonaByRoute } from "../../personas/registry";
-const active = getPersonaByRoute(Astro.url.pathname);
+// src/components/chrome/TopNav.astro
+// REVIEW-2026-05-18 fixes:
+//   #2  Plain-label + poetic-subtitle nav pattern
+//   #5  Resume promoted from footnote to top-right CTA
+//   #8  :focus-visible styling for keyboard users (WCAG 2.4.7)
+import { PERSONAS, type PersonaId } from "../../personas/registry";
+
+export interface Props {
+  activeId: PersonaId | "resume";
+}
+const { activeId } = Astro.props;
+const active = PERSONAS.find((p) => p.id === activeId);
+const sectionNumber = active?.sectionNumber ?? "—";
+
+// Plain-label override per review #2.
+// `label` from registry stays as the poetic subtitle; `plain` is the scan-label.
+const PLAIN: Record<PersonaId, string> = {
+  coder: "Work",
+  traveler: "Travel",
+  curate: "Reading",
+  made: "Projects",
+};
 ---
-<nav class="top-nav" aria-label="Persona navigation">
-  <a href="/" class="brand">ask149</a>
-  <ul class="tabs">
+<nav class="top-strip" data-component="top-nav">
+  <span class="brand">ASHISH K.</span>
+  <div class="nav">
     {PERSONAS.map((p) => (
-      <li>
-        <a
-          href={p.route}
-          aria-current={active?.id === p.id ? "page" : undefined}
-          aria-description={p.blurb}
-          data-persona={p.id}
-          class:list={["tab", { active: active?.id === p.id }]}
-        >
-          {active?.id === p.id && (
-            <span class="pill" transition:name="tab-pill" />
-          )}
-          <span class="label">{p.label}</span>
-        </a>
-      </li>
+      <a
+        href={p.route}
+        class={activeId === p.id ? "nav-link active" : "nav-link"}
+        data-astro-prefetch
+      >
+        <span class="nav-plain">{PLAIN[p.id]}</span>
+        <span class="nav-sep"> — </span>
+        <span class="nav-poetic">{p.label}</span>
+      </a>
     ))}
-  </ul>
+  </div>
+  <a
+    href="/resume"
+    class={activeId === "resume" ? "resume-link active" : "resume-link"}
+    data-astro-prefetch
+  >↓ Résumé</a>
+  <span class="ver">ver. XIV · §{sectionNumber}</span>
 </nav>
 
 <style>
-  .top-nav { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--rule); max-width: var(--max-w-feed); margin: 0 auto; }
-  .brand { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; text-decoration: none; color: var(--fg); }
-  .tabs { display: flex; gap: var(--space-2); list-style: none; padding: 0; margin: 0; }
-  .tab { position: relative; padding: var(--space-2) var(--space-4); text-decoration: none; color: var(--fg-muted); font-family: var(--font-body); border-radius: var(--radius-pill); transition: color var(--transition-fast); }
-  .tab:hover { color: var(--fg); }
-  .tab.active { color: var(--accent); }
-  .pill { position: absolute; inset: 0; background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: var(--radius-pill); z-index: -1; }
-  .label { position: relative; z-index: 1; }
+  .top-strip {
+    position: relative; z-index: 10;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 2.5rem;
+    border-bottom: 1px solid var(--rule);
+    backdrop-filter: blur(8px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+    background: color-mix(in srgb, var(--bg-from) 70%, transparent);
+  }
+  /* Fallback for browsers without color-mix support */
+  @supports not (background: color-mix(in srgb, red 50%, transparent)) {
+    .top-strip { background: var(--bg-from); }
+  }
+  .brand { font-family: 'Anton', sans-serif; font-size: 0.95rem; letter-spacing: 0.05em; color: var(--fg); }
+  .nav { display: flex; gap: 1.5rem; align-items: center; }
+  .nav-link { color: var(--muted); text-decoration: none; transition: color 200ms ease; display: inline-flex; align-items: baseline; gap: 0; }
+  .nav-plain { color: var(--fg); letter-spacing: 0.18em; }
+  .nav-sep { color: var(--muted); opacity: 0.6; padding: 0 0.25em; }
+  .nav-poetic { color: var(--muted); font-style: normal; }
+  .nav-link.active .nav-plain,
+  .nav-link.active .nav-poetic { color: var(--accent); }
+  .nav-link.active { border-bottom: 1px solid var(--accent); padding-bottom: 0.1rem; }
+  .nav-link:hover .nav-plain,
+  .nav-link:hover .nav-poetic { color: var(--accent); }
+
+  /* Promoted résumé CTA (review #5) — larger, terracotta, clear affordance */
+  .resume-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms ease;
+    padding-bottom: 0.15rem;
+  }
+  .resume-link:hover { border-bottom-color: var(--accent); }
+  .resume-link.active { border-bottom-color: var(--accent); }
+  .ver { color: var(--muted); }
+
+  /* :focus-visible for keyboard nav (review #8 — WCAG 2.4.7) */
+  .nav-link:focus-visible,
+  .resume-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .top-strip { overflow-x: auto; scrollbar-width: none; padding: 0.9rem 1rem; gap: 1rem; }
+    .top-strip::-webkit-scrollbar { display: none; }
+    .nav { gap: 1rem; flex-shrink: 0; }
+    .ver { display: none; }
+    .nav-sep, .nav-poetic { display: none; }
+    .resume-link { font-size: 0.7rem; }
+  }
 </style>

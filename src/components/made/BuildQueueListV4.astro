@@ -1,0 +1,43 @@
+---
+// src/components/made/BuildQueueListV4.astro
+// Phase E4 — pure Astro. Reads `builds` collection, filters to queued (and
+// on-bench if Phase C extends the enum), sorts by priority desc then addedDate asc.
+// Each row: priority badge "P<n>" in amber + serif title + italic blurb + status meta.
+import { getCollection, type CollectionEntry } from "astro:content";
+
+type BuildEntry = CollectionEntry<"builds">;
+
+const all = await getCollection("builds", (e: BuildEntry) => !e.data.draft);
+
+// Show queued + (defensively) on-bench builds. Sort priority desc, then earliest addedDate first.
+const visibleStatuses = new Set<string>(["queued", "on-bench", "building"]);
+const items = all
+  .filter((b: BuildEntry) => visibleStatuses.has(b.data.status as string))
+  .sort((a: BuildEntry, b: BuildEntry) => {
+    const dp = (b.data.priority ?? 5) - (a.data.priority ?? 5);
+    if (dp !== 0) return dp;
+    return a.data.addedDate.getTime() - b.data.addedDate.getTime();
+  });
+
+function statusLabel(status: string, addedDate: Date): string {
+  const month = addedDate.toLocaleString("en-US", { month: "short" }).toLowerCase();
+  const day = addedDate.getDate();
+  if (status === "queued") return `Queued · added ${month} ${day}`;
+  if (status === "building") return `Building · added ${month} ${day}`;
+  if (status === "on-bench") return `On bench · added ${month} ${day}`;
+  return `${status} · added ${month} ${day}`;
+}
+---
+<section class="queue">
+  <div class="queue-label">→ §4.2 · build queue · sorted by priority</div>
+  <div class="queue-list">
+    {items.map((b: BuildEntry) => (
+      <div class="q-row">
+        <span class="p">P{b.data.priority}</span>
+        <span class="t">{b.data.title}</span>
+        <span class="b">{b.data.blurb}</span>
+        <span class="s">{statusLabel(b.data.status as string, b.data.addedDate)}</span>
+      </div>
+    ))}
+  </div>
+</section>

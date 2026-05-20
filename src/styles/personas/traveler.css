@@ -1,16 +1,112 @@
 :root[data-persona="traveler"] {
-  --bg: linear-gradient(180deg, #E8DBC0 0%, #D9CFB8 100%);
-  --bg-texture: url("/textures/topographic-lines.svg");
-  --bg-texture-size: 240px;
-  --fg: #1A2638;
-  --fg-muted: #5A6878;
-  --fg-faint: #99A2B0;
-  --rule: #C7BFA8;
-  --accent: #3A5470;
-  --surface: #FFFFFFE0;
-  --polaroid-bg: #F8F4EA;
-  --polaroid-shadow: 0 4px 14px rgba(26, 38, 56, 0.18);
-  --font-display: "Newsreader", serif;
-  --font-body: "Newsreader", serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --bg-from: #f6e8c8;
+  --bg-mid:  #efdbb0;
+  --bg-to:   #e8c98a;
+  --fg: #2a2418;
+  --muted: #4a3422;
+  --accent: #c64a3c;
+  --pin: #c64a3c;
+  --rule: rgba(74, 60, 42, 0.2);
+  --surface: rgba(254, 250, 240, 0.92);
+}
+body[data-persona="traveler"] {
+  background: linear-gradient(180deg, var(--bg-from) 0%, var(--bg-mid) 60%, var(--bg-to) 100%);
+  color: var(--fg);
+  font-family: 'Cormorant Garamond', serif;
+  min-height: 100vh; overflow-x: hidden; position: relative;
+}
+body[data-persona="traveler"]::before {
+  content: ""; position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(74, 60, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 60, 42, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none; z-index: 1;
+}
+
+/* World map wrapper */
+body[data-persona="traveler"] .map-wrap { position: fixed; inset: 0; display: grid; place-items: center; z-index: 0; opacity: 0.55; pointer-events: none; }
+body[data-persona="traveler"] .map-wrap svg { width: 92%; max-width: 1280px; height: auto; }
+body[data-persona="traveler"] .continent { fill: rgba(184, 109, 58, 0.12); stroke: rgba(74, 60, 42, 0.55); stroke-width: 1; }
+body[data-persona="traveler"] .lat-line { stroke: rgba(74, 60, 42, 0.15); stroke-width: 0.5; fill: none; stroke-dasharray: 2 4; }
+
+/* Pins */
+body[data-persona="traveler"] .pin { position: fixed; width: 12px; height: 12px; z-index: 4; }
+body[data-persona="traveler"] .pin::before { content: ""; position: absolute; inset: 0; background: var(--pin); border-radius: 50%; box-shadow: 0 0 0 3px rgba(254, 250, 240, 0.95); z-index: 2; }
+body[data-persona="traveler"] .pin::after  { content: ""; position: absolute; inset: -8px; border: 1.5px solid var(--pin); border-radius: 50%; opacity: 0; animation: pulse 3s ease-in-out infinite; }
+body[data-persona="traveler"] .pin .pin-label { position: absolute; top: -22px; left: 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); background: rgba(254, 250, 240, 0.85); padding: 0.1rem 0.4rem; border: 1px solid rgba(74, 60, 42, 0.3); white-space: nowrap; }
+body[data-persona="traveler"] .pin.active::before { box-shadow: 0 0 0 6px rgba(74, 52, 34, 0.18); }
+@keyframes pulse { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
+
+/* Floating photos */
+body[data-persona="traveler"] .photo-float { position: fixed; background: #fffaf0; padding: 0.4rem; box-shadow: 0 8px 28px rgba(74, 52, 34, 0.25); z-index: 5; opacity: 0; animation: float-cycle 12s ease-in-out infinite; pointer-events: none; }
+body[data-persona="traveler"] .photo-float .img { display: block; aspect-ratio: var(--ratio, 4/3); width: 100%; object-fit: cover; }
+/* REVIEW-2026-05-18 #12: Caveat removed — captions now use Cormorant italic. */
+body[data-persona="traveler"] .photo-float .cap { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: #6b4226; text-align: center; padding: 0.25rem 0.2rem 0.05rem; line-height: 1.1; }
+@keyframes float-cycle {
+  0% { opacity: 0; transform: translateY(8px) rotate(var(--r, 0deg)) scale(0.95); }
+  8%, 35% { opacity: 1; transform: translateY(0) rotate(var(--r, 0deg)) scale(1); }
+  45% { opacity: 1; }
+  60%, 100% { opacity: 0; transform: translateY(-8px) rotate(var(--r, 0deg)) scale(0.97); }
+}
+body[data-persona="traveler"] .pf-1 { top: 12%; left: 8%;  width: 160px; --r: -3deg; animation-delay: 0s; }
+body[data-persona="traveler"] .pf-2 { top: 22%; right: 9%; width: 130px; --r:  4deg; animation-delay: 2.5s; }
+body[data-persona="traveler"] .pf-3 { top: 55%; left: 11%; width: 180px; --r: -2deg; animation-delay: 5s; }
+body[data-persona="traveler"] .pf-4 { top: 48%; right: 7%; width: 145px; --r:  3deg; animation-delay: 7.5s; }
+body[data-persona="traveler"] .pf-5 { top: 70%; left: 38%; width: 120px; --r: -1deg; animation-delay: 1.2s; }
+body[data-persona="traveler"] .pf-6 { top: 28%; left: 42%; width: 100px; --r:  5deg; animation-delay: 4s; }
+body[data-persona="traveler"] .pf-7 { top: 60%; right: 28%; width: 165px; --r: -4deg; animation-delay: 8.5s; }
+
+/* Hero overlay */
+body[data-persona="traveler"] .hero { position: relative; z-index: 10; padding: 5rem 2.5rem 2rem; max-width: 720px; }
+body[data-persona="traveler"] .hero-pre { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
+body[data-persona="traveler"] .hero h1 { font-family: 'Anton', sans-serif; font-size: 8.5rem; line-height: 0.84; letter-spacing: -0.04em; color: var(--fg); margin: 0.6rem 0 1.5rem; }
+body[data-persona="traveler"] .hero h1 span { background: linear-gradient(180deg, var(--fg) 30%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+body[data-persona="traveler"] .hero .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: var(--muted); max-width: 32ch; line-height: 1.45; }
+body[data-persona="traveler"] .hero-meta { display: flex; gap: 1.5rem; margin-top: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #5a4a3a; }
+body[data-persona="traveler"] .hero-meta strong { color: var(--accent); font-weight: 500; }
+
+/* Diary card */
+body[data-persona="traveler"] .diary-card { position: relative; z-index: 10; max-width: 560px; margin: 2rem 2.5rem; padding: 2rem; background: var(--surface); border: 1px solid rgba(74, 60, 42, 0.18); box-shadow: 0 12px 40px rgba(74, 52, 34, 0.15); backdrop-filter: blur(4px); }
+body[data-persona="traveler"] .diary-card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); }
+body[data-persona="traveler"] .diary-card h3 { font-family: 'Anton', sans-serif; font-size: 3rem; line-height: 0.9; margin: 0.4rem 0 0.3rem; letter-spacing: -0.02em; }
+body[data-persona="traveler"] .diary-card .dates { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: #6b4226; margin-bottom: 1rem; }
+body[data-persona="traveler"] .diary-card p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; line-height: 1.65; color: var(--fg); }
+body[data-persona="traveler"] .diary-card .row { display: flex; gap: 1rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(74, 60, 42, 0.15); align-items: center; }
+body[data-persona="traveler"] .toggle { display: inline-flex; border: 1px solid var(--fg); }
+body[data-persona="traveler"] .toggle span { padding: 0.25rem 0.65rem; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; }
+body[data-persona="traveler"] .toggle span.on { background: var(--fg); color: #fffaf0; }
+body[data-persona="traveler"] .diary-card .stats { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; color: #5a4a3a; }
+
+/* Timeline */
+body[data-persona="traveler"] .timeline { position: fixed; bottom: 0; left: 0; right: 0; padding: 4rem 2.5rem 1.5rem; background: linear-gradient(180deg, rgba(246, 232, 200, 0) 0%, rgba(239, 219, 176, 0.95) 40%); z-index: 15; }
+body[data-persona="traveler"] .timeline-head { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: #5a4a3a; margin-bottom: 0.8rem; }
+body[data-persona="traveler"] .timeline-track { position: relative; height: 90px; display: flex; align-items: center; gap: 2.5rem; overflow-x: auto; scrollbar-width: none; padding: 0 1rem; scroll-snap-type: x mandatory; }
+body[data-persona="traveler"] .timeline-track::-webkit-scrollbar { display: none; }
+body[data-persona="traveler"] .timeline-track::before { content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(74, 60, 42, 0.35); transform: translateY(-50%); }
+body[data-persona="traveler"] .trip { position: relative; flex-shrink: 0; min-width: 130px; text-align: center; cursor: pointer; padding-top: 1.8rem; scroll-snap-align: center; background: transparent; border: 0; }
+body[data-persona="traveler"] .trip::before { content: ""; position: absolute; top: 24px; left: 50%; width: 12px; height: 12px; transform: translateX(-50%); background: #c8916b; border: 2px solid #fffaf0; border-radius: 50%; box-shadow: 0 0 0 4px rgba(200, 145, 107, 0.2); }
+body[data-persona="traveler"] .trip.active::before { background: var(--fg); box-shadow: 0 0 0 6px rgba(74, 52, 34, 0.18), 0 0 0 14px rgba(198, 74, 60, 0.15); width: 14px; height: 14px; top: 23px; }
+body[data-persona="traveler"] .trip .name { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1rem; padding-top: 1rem; }
+body[data-persona="traveler"] .trip .yr { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; color: #5a4a3a; margin-top: 0.15rem; }
+body[data-persona="traveler"] .trip.active .name { color: var(--fg); }
+body[data-persona="traveler"] .trip.active .yr { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-persona="traveler"] .photo-float { animation: none; opacity: 1; }
+  body[data-persona="traveler"] .photo-float:not(.pf-3) { display: none; }
+  body[data-persona="traveler"] .pin::after { animation: none; opacity: 0; }
+  body[data-persona="traveler"] .timeline-track { scroll-behavior: auto; }
+}
+
+@media (max-width: 640px) {
+  body[data-persona="traveler"] .hero h1 { font-size: 4.5rem; }
+  body[data-persona="traveler"] .photo-float { display: none; }
+  body[data-persona="traveler"] .photo-float.pf-3 { display: block; position: relative; inset: auto; width: 80%; margin: 1rem auto; animation: none; opacity: 1; }
+  body[data-persona="traveler"] .timeline-track { gap: 1.5rem; }
+  body[data-persona="traveler"] .pin { width: 8px; height: 8px; }
+  body[data-persona="traveler"] .pin .pin-label { display: none; }
+  body[data-persona="traveler"] .map-wrap { opacity: 0.35; }
+  body[data-persona="traveler"] .diary-card { margin: 1.5rem 1rem; padding: 1.2rem; }
+  body[data-persona="traveler"] .diary-card h3 { font-size: 2rem; }
 }

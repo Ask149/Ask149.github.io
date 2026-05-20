@@ -1,0 +1,25 @@
+---
+// src/components/traveler/VoyagesHero.astro
+// Eyebrow + Anton "TRAVEL DIARIES." (line 2 with gradient span) + italic
+// Cormorant sub + 4-stat meta strip. Mirrors vi-hybrid-travel.html lines 136–146.
+export interface Props {
+  stats: {
+    places: number;
+    photos: number;
+    countries: number;
+    last: string;
+  };
+}
+const { stats } = Astro.props;
+---
+<section class="hero">
+  <div class="hero-pre">~ §2 · the voyages ~</div>
+  <h1>TRAVEL<br/><span>DIARIES.</span></h1>
+  <p class="sub">A map of the places I keep returning to in pieces. Photographs and paragraphs from {stats.places} stays, {stats.countries} countries, one slow loop.</p>
+  <div class="hero-meta">
+    <span><strong>{stats.places}</strong> places</span>
+    <span><strong>{stats.photos}</strong> photos</span>
+    <span><strong>{stats.countries}</strong> countries</span>
+    <span>last: <strong>{stats.last}</strong></span>
+  </div>
+</section>

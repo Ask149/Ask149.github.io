@@ -1,73 +1,58 @@
 ---
-import PersonaLayout from "../layouts/PersonaLayout.astro";
-import CoderHero from "../components/coder/CoderHero.astro";
-import { ProjectGrid } from "../components/coder/ProjectGrid";
-import LiveFeed from "../components/LiveFeed";
-import ManifestoTeaser from "../components/coder/ManifestoTeaser.astro";
-import CurrentlyBlurb from "../components/coder/CurrentlyBlurb.astro";
-import WritingList from "../components/coder/WritingList.astro";
-import CareerTimeline from "../components/coder/CareerTimeline.astro";
-import ConnectLinks from "../components/coder/ConnectLinks.astro";
+// src/pages/index.astro — Workshop (§1)
 import { getCollection } from "astro:content";
+import PersonaLayout from "../layouts/PersonaLayout.astro";
+// REVIEW-2026-05-18 #10: SchematicBackground removed — 30px grid is the single
+// background language. Component file retained but no longer imported anywhere.
+import AgentFeedStrip from "../components/coder/AgentFeedStrip.astro";
+import WorkshopHero from "../components/coder/WorkshopHero.astro";
+import ProjectGridV4 from "../components/coder/ProjectGridV4.tsx";
 
-const FEED_ENDPOINT = "https://ask149-feed.workers.dev/events.json";
-
-// Schema (src/content/config.ts): { title, description, status, tags?, order?, url?, repo? }
-// No `blurb`, `featured`, `cover`, `date`, or `draft` fields. Adapt accordingly.
-// `as any` casts on p.data keep this resilient to schema drift in later phases.
-const projectsRaw = await getCollection("projects");
-const projects = projectsRaw
+// Schema (src/content/config.ts) for `projects`:
+//   { title, description, status, tags?, order?, url?, repo? }
+// No `blurb`, `featured`, `cover`, `shippedDate`, or `draft`.
+// We graceful-default missing fields via `as any` casts, same pattern as v3.
+const projectEntries = await getCollection("projects", (e) => !(e.data as any).draft);
+const projects = projectEntries
   .sort((a, b) => {
-    const ad = a.data as any;
-    const bd = b.data as any;
-    const ao = ad.order ?? 999;
-    const bo = bd.order ?? 999;
+    const ao = (a.data as any).order ?? 999;
+    const bo = (b.data as any).order ?? 999;
     return ao - bo;
   })
-  .map((p) => {
-    const d = p.data as any;
+  .map((e, i) => {
+    const d = e.data as any;
     return {
-      slug: p.slug,
+      slug: e.slug,
       title: d.title,
-      blurb: d.blurb ?? d.description ?? "",
+      description: d.description,
+      status: d.status,
       tags: d.tags ?? [],
+      order: d.order ?? i + 1,
       url: d.url,
-      cover: d.cover
-        ? typeof d.cover === "string"
-          ? { src: d.cover, alt: d.coverAlt ?? "" }
-          : { src: d.cover.src, alt: d.coverAlt ?? d.cover.alt ?? "" }
-        : undefined,
-      featured: d.featured ?? false,
+      featured: d.featured ?? i === 0,
+      shipped: d.shipped,
     };
   });
 
-const allTags = Array.from(
-  new Set(projects.flatMap((p) => p.tags))
-).sort();
+const activeCount = projects.filter((p) => p.status === "active").length;
+
+const lastEditISO = projectEntries
+  .map((e) => (e.data as any)?.shippedDate?.toISOString?.() ?? null)
+  .filter(Boolean)
+  .sort()
+  .reverse()[0] ?? undefined;
 ---
 <PersonaLayout
   personaId="coder"
-  title="Ashish Kshirsagar — Senior SWE, vibe-coding with 4 agents"
-  description="Coder portfolio: projects, manifesto, live agent feed."
+  title="Ashish Kshirsagar — Software Engineer at Microsoft"
+  description="Software Engineer at Microsoft. Shipping updates on Windows. Agentic AI enthusiast. Workshop notes, projects, and writing."
+  lastEditISO={lastEditISO}
 >
-  <CoderHero />
-  <LiveFeed endpoint={FEED_ENDPOINT} client:load />
-  <div class="divider">▍ ▍ ▍</div>
-  <ManifestoTeaser />
-  <CurrentlyBlurb />
-  <ProjectGrid projects={projects} allTags={allTags} client:visible />
-  <WritingList />
-  <CareerTimeline />
-  <ConnectLinks />
-</PersonaLayout>
+  <AgentFeedStrip />
+  <WorkshopHero stats={{ activeProjects: activeCount || projects.length }} />
 
-<style>
-  .divider {
-    text-align: center;
-    color: var(--fg-faint);
-    font-family: var(--mono, monospace);
-    letter-spacing: 0.5em;
-    margin: 1.5rem 0;
-    user-select: none;
-  }
-</style>
+  <section class="projects">
+    <div class="projects-label">→ §1.2 · selected work · click chips to filter</div>
+    <ProjectGridV4 client:visible projects={projects} />
+  </section>
+</PersonaLayout>

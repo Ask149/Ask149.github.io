@@ -1,0 +1,27 @@
+---
+// src/components/traveler/WorldMap.astro
+// Pure SVG, fixed-position behind content. Stylized continents + dashed latitude guides.
+// Verbatim port from .superpowers/static/aesthetics/vi-hybrid-travel.html lines 85–106.
+---
+<div class="map-wrap" aria-hidden="true">
+  <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+    <!-- Latitude guide lines -->
+    <line class="lat-line" x1="0" y1="125" x2="1000" y2="125"/>
+    <line class="lat-line" x1="0" y1="250" x2="1000" y2="250"/>
+    <line class="lat-line" x1="0" y1="375" x2="1000" y2="375"/>
+    <!-- North America -->
+    <path class="continent" d="M 80 80 Q 130 60 200 75 Q 270 90 320 130 Q 350 175 320 220 Q 280 245 220 235 Q 160 225 120 200 Q 90 170 75 130 Z"/>
+    <!-- South America -->
+    <path class="continent" d="M 230 260 Q 270 270 285 320 Q 290 370 260 405 Q 230 420 215 390 Q 200 350 210 300 Z"/>
+    <!-- Europe -->
+    <path class="continent" d="M 470 95 Q 510 85 545 95 Q 565 115 555 140 Q 535 160 500 158 Q 475 150 465 125 Z"/>
+    <!-- Africa -->
+    <path class="continent" d="M 480 175 Q 520 175 545 205 Q 560 245 555 300 Q 540 345 510 360 Q 480 365 465 335 Q 450 295 455 240 Q 458 200 480 175 Z"/>
+    <!-- Asia -->
+    <path class="continent" d="M 560 95 Q 620 80 720 95 Q 800 110 850 145 Q 870 190 830 215 Q 770 225 710 215 Q 650 205 600 185 Q 555 155 555 125 Z"/>
+    <!-- Southeast Asia -->
+    <path class="continent" d="M 745 235 Q 780 240 800 265 Q 805 290 780 305 Q 750 305 735 280 Z"/>
+    <!-- Australia -->
+    <path class="continent" d="M 790 320 Q 840 310 880 325 Q 895 350 870 370 Q 830 380 790 365 Q 770 345 790 320 Z"/>
+  </svg>
+</div>

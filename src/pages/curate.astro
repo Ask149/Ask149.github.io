@@ -1,20 +1,37 @@
 ---
-import PersonaLayout from "../layouts/PersonaLayout.astro";
-import CurateHero from "../components/curate/CurateHero.astro";
-import NowReading from "../components/curate/NowReading.astro";
-import QuoteRotator from "../components/curate/QuoteRotator.astro";
-import FinishedGrid from "../components/curate/FinishedGrid.astro";
+// src/pages/curate.astro
 import { getCollection } from "astro:content";
+import PersonaLayout from "../layouts/PersonaLayout.astro";
+import OrnamentTL from "../components/curate/OrnamentTL.astro";
+import OrnamentBR from "../components/curate/OrnamentBR.astro";
+import CurioHero from "../components/curate/CurioHero.astro";
+import NowReadingV4 from "../components/curate/NowReadingV4.astro";
+import FinishedListV4 from "../components/curate/FinishedListV4.astro";
 
-const all = await getCollection("books", (e) => !e.data.draft);
-const reading = all.find((b) => b.data.status === "reading");
-const quotes = all
-  .filter((b) => !!b.data.quote)
-  .map((b) => ({ text: b.data.quote!.text, source: `${b.data.title}, ${b.data.author}` }));
+const bookEntries = await getCollection("books", (e) => !e.data.draft);
+
+const reading = bookEntries.find((b) => b.data.status === "reading");
+const finished = bookEntries
+  .filter((b) => b.data.status === "finished")
+  .sort((a, b) => (b.data.finishedDate?.getTime() ?? 0) - (a.data.finishedDate?.getTime() ?? 0))
+  .slice(0, 5);
+
+const booksThisYear = finished.filter(
+  (b) => b.data.finishedDate && b.data.finishedDate.getFullYear() === new Date().getFullYear()
+).length;
+const onShelf = bookEntries.filter((b) => b.data.status === "queued").length;
+const current = reading?.data.author?.split(" ").pop() ?? "—";
+const lastEditISO = finished[0]?.data?.finishedDate?.toISOString();
 ---
-<PersonaLayout personaId="curate" title="Curate — Ashish Kshirsagar" description="Books, quotes, taste.">
-  <CurateHero />
-  <NowReading book={reading} />
-  <QuoteRotator quotes={quotes} />
-  <FinishedGrid books={all} />
+<PersonaLayout
+  personaId="curate"
+  title="Ashish K. · curio"
+  description="Books, music, fragrances, the small obsessions."
+  lastEditISO={lastEditISO}
+>
+  <OrnamentTL />
+  <OrnamentBR />
+  <CurioHero stats={{ booksThisYear, onShelf, current }} />
+  {reading && <NowReadingV4 book={reading} />}
+  {finished.length > 0 && <FinishedListV4 books={finished} />}
 </PersonaLayout>

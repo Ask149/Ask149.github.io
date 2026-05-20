@@ -1,73 +1,70 @@
 ---
-// Phase A deviation: Astro 4.x exports `ViewTransitions`, not `ClientRouter`
-// (renamed in Astro 5). When upgrading to Astro 5+, switch back to `ClientRouter`.
+// src/layouts/PersonaLayout.astro
+//
+// NOTE: Astro 4.x exports `ViewTransitions`, renamed to `ClientRouter` in Astro 5.
+// We alias to keep call-site identical to the v5-native plan; Phase F will drop the alias.
 import { ViewTransitions as ClientRouter } from "astro:transitions";
-import { getPersonaById, type PersonaId } from "../personas/registry";
+import { type PersonaId } from "../personas/registry";
 import TopNav from "../components/chrome/TopNav.astro";
 import FooterStatus from "../components/chrome/FooterStatus.astro";
-import "../styles/tokens.css";
 import "../styles/global.css";
+import "../styles/personas/coder.css";
+import "../styles/personas/traveler.css";
+import "../styles/personas/curate.css";
+import "../styles/personas/made.css";
 
 export interface Props {
-  personaId: PersonaId;
+  personaId: PersonaId | "resume";
   title: string;
   description?: string;
+  ogImage?: string;
+  lastEditISO?: string;
 }
+const { personaId, title, description, ogImage, lastEditISO } = Astro.props;
 
-const { personaId, title, description } = Astro.props;
-const persona = getPersonaById(personaId);
+// /resume reuses Workshop's copper palette
+const tokensPersona: PersonaId = personaId === "resume" ? "coder" : personaId;
+
+// Canonical URL + social-card resolution (Astro.site is set in astro.config.mjs).
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageURL = new URL(ogImage ?? "/images/og-default.jpg", Astro.site).href;
 ---
 <!doctype html>
-<html lang="en" data-persona={persona.id}>
+<html lang="en" data-persona={tokensPersona}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
-    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalURL} />
+
+    {/* Open Graph */}
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImageURL} />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@iodevz_ai" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImageURL} />
+    {/* REVIEW-2026-05-18 #14: Google Fonts moved from CSS @import to <link>
+        in <head> (eliminates render-blocking CSS @import roundtrip).
+        #12: Caveat dropped. #14d: Cormorant Garamond trimmed to 400/600 + 400italic. */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href={`/styles/${persona.tokensHref}`} />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
     <ClientRouter />
   </head>
-  <body class={`persona-${persona.id}`}>
-    <TopNav />
-    <main {...persona.transitionMode === "fade" ? { "transition:animate": "fade" } : {}}>
-      <slot />
-    </main>
-    <FooterStatus />
+  <body data-persona={tokensPersona}>
+    <TopNav activeId={personaId} />
+    <slot />
+    <FooterStatus activeId={personaId} lastEditISO={lastEditISO} />
   </body>
 </html>
-
-<style is:global>
-  body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: var(--font-body);
-    margin: 0;
-    min-height: 100vh;
-    position: relative;
-  }
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image: var(--bg-texture, none);
-    background-size: var(--bg-texture-size, auto);
-    background-repeat: repeat;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.5;
-  }
-  body > * {
-    position: relative;
-    z-index: 1;
-  }
-  main {
-    max-width: var(--max-w-feed);
-    margin: 0 auto;
-    padding: var(--space-8) var(--space-6);
-  }
-</style>

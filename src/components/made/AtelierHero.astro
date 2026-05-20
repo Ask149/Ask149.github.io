@@ -1,0 +1,23 @@
+---
+// src/components/made/AtelierHero.astro
+// Phase E1 — hero for /made. Eyebrow + Anton headline (amber gradient on line 2)
+// + italic Cormorant sub + meta strip. Pure Astro, no client directives.
+export interface Props {
+  stats?: {
+    shipped: number;
+    queued: number;
+    onBench: number;
+  };
+}
+const { stats = { shipped: 0, queued: 3, onBench: 1 } } = Astro.props;
+---
+<section class="hero">
+  <div class="hero-pre">~ §4 · the workbench, late ~</div>
+  <h1>MADE<br/><span>BY HAND.</span></h1>
+  <p class="sub">Physical things — soldered, sawn, sketched. Mostly aspirational right now. The first finished build will replace the dashed placeholder below.</p>
+  <div class="hero-meta">
+    <span><strong>{stats.shipped}</strong> shipped</span>
+    <span><strong>{stats.queued}</strong> in the queue</span>
+    <span><strong>{stats.onBench}</strong> on the bench</span>
+  </div>
+</section>

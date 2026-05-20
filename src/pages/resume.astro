@@ -1,0 +1,241 @@
+---
+// src/pages/resume.astro
+//
+// HTML render of the canonical web resume + 3 PDF download buttons.
+// Source-of-truth: src/content/resume.ts (hand-authored TS).
+// PDFs live under public/resume/ — synced from ~/Projects/active/resume/pdfs/
+// via the user-run command documented in the Phase F plan.
+import PersonaLayout from "../layouts/PersonaLayout.astro";
+import { resume } from "../content/resume";
+
+// Three PDF variants. sizeKB values are placeholders — update if real file sizes
+// drift significantly after the PDF sync. SWE is the primary (filled copper).
+const pdfs = [
+  { id: "swe" as const,     label: "SWE.pdf",     href: "/resume/Ashish_Kshirsagar_SWE.pdf",     sizeKB: 142, primary: true  },
+  { id: "mle" as const,     label: "MLE.pdf",     href: "/resume/Ashish_Kshirsagar_MLE.pdf",     sizeKB: 138, primary: false },
+  { id: "systems" as const, label: "Systems.pdf", href: "/resume/Ashish_Kshirsagar_Systems.pdf", sizeKB: 145, primary: false },
+];
+---
+<PersonaLayout
+  personaId="resume"
+  title="Ashish K. · résumé"
+  description="One-page resume + three PDF variants (SWE primary, MLE, Systems)."
+  lastEditISO={new Date(resume.lastUpdated).toISOString()}
+>
+  <section class="hero">
+    <div class="hero-pre">~ the résumé ~</div>
+    <h1>ASHISH<br/><span>KSHIRSAGAR.</span></h1>
+    <p class="sub">{resume.tagline}</p>
+    <p class="last-updated">last updated · {resume.lastUpdated}</p>
+  </section>
+
+  <section class="resume-downloads">
+    <div class="rd-label">→ download · pick the variant that fits</div>
+    <div class="rd-grid">
+      {pdfs.map((p) => (
+        <a
+          href={p.href}
+          download={p.href.split("/").pop()}
+          class={`rd-btn${p.primary ? " primary" : ""}`}
+        >
+          <span class="arr">↓</span>
+          <span class="lbl">{p.label}</span>
+          <span class="sz">· {p.sizeKB} KB</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="resume-body">
+    <section class="rb-section">
+      <h2>Summary</h2>
+      <p>{resume.now}</p>
+    </section>
+
+    <section class="rb-section">
+      <h2>Experience</h2>
+      {resume.experience.map((e) => (
+        <div class="rb-entry">
+          <div class="rb-row">
+            <div>
+              <h3>
+                {e.title} · <span class="company">{e.url ? <a href={e.url}>{e.company}</a> : e.company}</span>
+              </h3>
+            </div>
+            <div class="meta">{e.dates} · {e.location}</div>
+          </div>
+          <ul>
+            {e.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <section class="rb-section">
+      <h2>Internships</h2>
+      {resume.internships.map((e) => (
+        <div class="rb-entry">
+          <div class="rb-row">
+            <div>
+              <h3>
+                {e.title} · <span class="company">{e.url ? <a href={e.url}>{e.company}</a> : e.company}</span>
+              </h3>
+            </div>
+            <div class="meta">{e.dates} · {e.location}</div>
+          </div>
+          <ul>
+            {e.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <section class="rb-section">
+      <h2>Education</h2>
+      {resume.education.map((e) => (
+        <div class="rb-entry">
+          <div class="rb-row">
+            <div>
+              <h3>
+                {e.degree} · <span class="company">{e.url ? <a href={e.url}>{e.school}</a> : e.school}</span>
+              </h3>
+            </div>
+            <div class="meta">{e.dates}{e.honors ? ` · ${e.honors}` : ""}</div>
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <section class="rb-section">
+      <h2>Skills</h2>
+      <p class="skills-line"><strong>Primary:</strong> {resume.skills.primary.join(" · ")}</p>
+      <p class="skills-line"><strong>Secondary:</strong> {resume.skills.secondary.join(" · ")}</p>
+    </section>
+
+    <section class="rb-section">
+      <h2>Selected Work</h2>
+      <ul class="sw-list">
+        {resume.selectedWork.map((s) => (
+          <li>
+            <strong>{s.url ? <a href={s.url}>{s.title}</a> : s.title}</strong> — <em>{s.blurb}</em>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="rb-section">
+      <h2>Contact</h2>
+      <p class="contact-line">
+        <a href={`mailto:${resume.contact.email}`}>{resume.contact.email}</a>
+        {resume.contact.phone && <> · <a href={`tel:${resume.contact.phone.replace(/\s+/g, "")}`}>{resume.contact.phone}</a></>}
+        · <a href={resume.contact.github}>github</a>
+        · <a href={resume.contact.linkedin}>linkedin</a>
+        {resume.contact.twitter && <> · <a href={resume.contact.twitter}>twitter</a></>}
+        · <span class="location">{resume.contact.location}</span>
+      </p>
+    </section>
+  </section>
+</PersonaLayout>
+
+<style>
+  /* Resume-specific layout — inherits Workshop (coder) palette via PersonaLayout's
+     personaId="resume" → tokensPersona="coder" mapping. */
+
+  .hero {
+    position: relative; z-index: 10;
+    max-width: 920px; margin: 2.5rem auto 1rem; padding: 0 2.5rem;
+    text-align: left;
+  }
+  .hero-pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Anton', sans-serif; font-weight: 400;
+    font-size: clamp(3.5rem, 10vw, 7rem); letter-spacing: -0.02em; line-height: 0.85;
+    color: var(--fg); margin: 0 0 1rem 0;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero .sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-style: italic; color: var(--fg);
+    max-width: 640px; margin: 0;
+  }
+  .hero .last-updated {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.8rem;
+  }
+
+  .resume-downloads {
+    position: relative; z-index: 10;
+    max-width: 920px; margin: 1rem auto 2rem; padding: 0 2.5rem;
+  }
+  .rd-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1rem;
+  }
+  .rd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+  .rd-btn {
+    display: flex; align-items: baseline; gap: 0.4rem;
+    padding: 0.8rem 1rem;
+    background: var(--surface); border: 1px solid var(--rule);
+    color: var(--fg); text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .rd-btn.primary { background: var(--accent); color: #fefdf8; border-color: var(--accent); }
+  .rd-btn:hover { background: var(--accent); color: #fefdf8; }
+  .rd-btn .arr { font-weight: 700; }
+  .rd-btn .sz { color: inherit; opacity: 0.7; font-size: 0.7rem; letter-spacing: 0.12em; }
+
+  .resume-body {
+    position: relative; z-index: 10;
+    max-width: 720px; margin: 2rem auto 4rem; padding: 0 2.5rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.55;
+    color: var(--fg);
+  }
+  .rb-section { margin-top: 2.5rem; }
+  .rb-section > h2 {
+    font-family: 'Anton', sans-serif; font-weight: 400;
+    font-size: 2.5rem; letter-spacing: -0.02em; line-height: 0.9;
+    color: var(--fg); margin: 0 0 0.8rem 0;
+  }
+  .rb-entry { margin-bottom: 1.4rem; }
+  .rb-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 1rem;
+  }
+  .rb-row h3 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.15rem;
+    color: var(--fg); margin: 0;
+  }
+  .rb-row h3 .company { font-style: italic; color: var(--muted); font-weight: 400; }
+  .rb-row h3 .company a { color: inherit; text-decoration: none; }
+  .rb-row h3 .company a:hover { color: var(--accent); }
+  .rb-row .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.12em; color: var(--muted);
+    white-space: nowrap;
+  }
+  .rb-entry ul { margin: 0.5rem 0 0 1.2rem; padding: 0; }
+  .rb-entry li { margin: 0.2rem 0; }
+  .sw-list { margin: 0; padding-left: 1.2rem; }
+  .sw-list li { margin: 0.4rem 0; }
+  .sw-list a { color: var(--accent); text-decoration: none; }
+  .sw-list a:hover { text-decoration: underline; }
+  .skills-line { margin-bottom: 0.4rem; }
+  .skills-line strong { font-weight: 600; }
+  .contact-line a { color: var(--accent); text-decoration: none; }
+  .contact-line a:hover { text-decoration: underline; }
+  .contact-line .location { color: var(--muted); font-style: italic; }
+
+  @media (max-width: 640px) {
+    .rd-grid { grid-template-columns: 1fr; }
+    .rb-row { flex-direction: column; }
+    .rb-row .meta { white-space: normal; }
+  }
+</style>

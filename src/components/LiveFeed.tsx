@@ -85,7 +85,13 @@ export default function LiveFeed({ endpoint, pollMs = 60000, initialLimit = 3, m
     <section className="livefeed">
       <header className="livefeed__head">
         <span className="livefeed__dot" data-pulse={thinking ? 'true' : 'false'}>●</span>
-        <span className="livefeed__label mono">LIVE · agents {events.length > 0 ? 'working' : 'idle'}</span>
+        {/* v4 polish r3 W7: LIVE label removed — AgentFeedStrip banner owns the
+            single "● LIVE" marker. We keep the dot here as a pulsing activity
+            indicator only. The "agents working" suffix is preserved for the
+            sidebar/full mode but rendered without the leading LIVE word. */}
+        {events.length > 0 && (
+          <span className="livefeed__label mono">agents working</span>
+        )}
         {muted && <span className="livefeed__muted mono">muted</span>}
         {mode !== 'full' && events.length > initialLimit && (
           <button className="livefeed__expand mono" onClick={() => setExpanded((v) => !v)}>
@@ -96,7 +102,7 @@ export default function LiveFeed({ endpoint, pollMs = 60000, initialLimit = 3, m
       <div className="livefeed__rows">
         {events.length === 0 && !error && (
           <div className="livefeed__empty mono">
-            agents idle — feed empty. see <a href="/feed">/feed</a> for history.
+            feed empty — see <a href="/feed">/feed</a> for history.
           </div>
         )}
         {error && events.length === 0 && (

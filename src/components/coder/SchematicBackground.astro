@@ -1,0 +1,23 @@
+---
+// src/components/coder/SchematicBackground.astro
+// Pure SVG, no props. Fixed-position decorative layer behind hero/content.
+---
+<div class="schematic-bg" aria-hidden="true">
+  <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="rgba(31, 36, 24, 0.35)" stroke-width="1" fill="none">
+      <rect x="100" y="100" width="160" height="100"/>
+      <rect x="120" y="120" width="40" height="40"/>
+      <circle cx="220" cy="150" r="20"/>
+      <line x1="260" y1="150" x2="340" y2="150" stroke-dasharray="4 4"/>
+      <rect x="340" y="120" width="120" height="60"/>
+      <text x="350" y="150" font-family="JetBrains Mono" font-size="10" fill="rgba(31, 36, 24, 0.5)">orchestrator</text>
+      <line x1="460" y1="150" x2="600" y2="150" stroke-dasharray="4 4"/>
+      <rect x="600" y="100" width="200" height="100"/>
+      <text x="620" y="135" font-family="JetBrains Mono" font-size="10" fill="rgba(31, 36, 24, 0.5)">subagent fleet</text>
+      <line x1="700" y1="200" x2="700" y2="280"/>
+      <rect x="600" y="280" width="200" height="80"/>
+      <text x="620" y="320" font-family="JetBrains Mono" font-size="10" fill="rgba(31, 36, 24, 0.5)">reviewer gates</text>
+    </g>
+    <text x="500" y="450" font-family="Cormorant Garamond" font-style="italic" font-size="22" fill="rgba(122, 74, 31, 0.45)" text-anchor="middle">fig.04 · the four-agent quadrant</text>
+  </svg>
+</div>

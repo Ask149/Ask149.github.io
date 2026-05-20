@@ -1,0 +1,35 @@
+---
+// src/components/curate/NowReadingV4.astro
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  book: CollectionEntry<"books">;
+  startedDate?: string;     // ISO, optional override
+  progressPct?: number;     // 0–100
+}
+const { book, progressPct = 64 } = Astro.props;
+const { title, author, quote } = book.data;
+const startedStr = book.data.startedDate
+  ? book.data.startedDate.toLocaleString("en-US", { month: "long", day: "numeric" }).toLowerCase()
+  : "may 1";
+---
+<section class="now-reading">
+  <div class="nr-label">→ §3.1 · now reading · quote rotates daily</div>
+  <div class="nr-card">
+    <div class="nr-cover">
+      <div class="title">{author}<br/>—<br/>{title}</div>
+    </div>
+    <div class="nr-info">
+      <h3>{title}</h3>
+      <div class="author">{author}</div>
+      {quote && (
+        <>
+          <div class="quote">"{quote.text}"</div>
+          <div class="quote-meta">
+            {quote.page ? `page ${quote.page} · ` : ""}started {startedStr} · {progressPct}% finished
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+---
+// src/components/curate/CurioHero.astro
+export interface Props {
+  stats?: {
+    booksThisYear: number;
+    onShelf: number;
+    current: string;
+  };
+}
+const { stats = { booksThisYear: 3, onShelf: 12, current: "Calvino" } } = Astro.props;
+---
+<section class="hero">
+  <div class="hero-pre">~ §3 · the cabinet of curiosities ~</div>
+  <h1><em>Curio</em><br/><span>& KEEPING.</span></h1>
+  <p class="sub">Books finished, music on loop, fragrances on the shelf, the small obsessions that make a life. Building this catalog, one entry at a time.</p>
+  <div class="hero-meta">
+    <span><strong>{stats.booksThisYear}</strong> books this year</span>
+    <span><strong>{stats.onShelf}</strong> on the shelf</span>
+    <span><strong>currently</strong> {stats.current}</span>
+  </div>
+</section>

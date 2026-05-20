@@ -16,9 +16,12 @@ export interface PersonaDef {
   id: PersonaId;
   sectionNumber: number;
   label: string;
+  longLabel: string;
   route: `/${string}`;
   blurb: string;
   tokensHref: `personas/${PersonaId}.css`;
+  accentHex: string;
+  pseudoPage: number;
   collection: CollectionKey | null;
   transitionMode: "morph" | "fade";
   heroLoader: () => Promise<{ default: ComponentType<unknown> }>;
@@ -28,46 +31,58 @@ export const PERSONAS: readonly PersonaDef[] = [
   {
     id: "coder",
     sectionNumber: 1,
-    label: "Coder",
+    label: "workshop",
+    longLabel: "the workshop",
     route: "/",
     blurb: "shipping with agents in parallel",
     tokensHref: "personas/coder.css",
+    accentHex: "#8b5a2a",
+    pseudoPage: 47,
     collection: "projects",
     transitionMode: "morph",
-    heroLoader: () => import("../components/coder/CoderHero.astro") as any,
+    heroLoader: () => import("../components/coder/WorkshopHero.astro") as any,
   },
   {
     id: "traveler",
     sectionNumber: 2,
-    label: "Traveler",
+    label: "voyages",
+    longLabel: "the voyages",
     route: "/traveler",
-    blurb: "places visited, places next",
+    blurb: "a map of the places I keep returning to in pieces",
     tokensHref: "personas/traveler.css",
+    accentHex: "#c64a3c",
+    pseudoPage: 82,
     collection: "places",
     transitionMode: "morph",
-    heroLoader: () => import("../components/traveler/TravelerHero.astro") as any,
+    heroLoader: () => import("../components/traveler/VoyagesHero.astro") as any,
   },
   {
     id: "curate",
     sectionNumber: 3,
-    label: "Curate",
+    label: "curio",
+    longLabel: "the cabinet of curiosities",
     route: "/curate",
-    blurb: "books, quotes, taste",
+    blurb: "books, quotes, the small obsessions",
     tokensHref: "personas/curate.css",
+    accentHex: "#7a2828",
+    pseudoPage: 23,
     collection: "books",
     transitionMode: "fade",
-    heroLoader: () => import("../components/curate/CurateHero.astro") as any,
+    heroLoader: () => import("../components/curate/CurioHero.astro") as any,
   },
   {
     id: "made",
-    sectionNumber: 6,
-    label: "Made",
+    sectionNumber: 4,
+    label: "atelier",
+    longLabel: "the workbench, late",
     route: "/made",
-    blurb: "side builds and sketchbook",
+    blurb: "physical things — soldered, sawn, sketched",
     tokensHref: "personas/made.css",
+    accentHex: "#d97e3f",
+    pseudoPage: 7,
     collection: "builds",
     transitionMode: "fade",
-    heroLoader: () => import("../components/made/MadeHero.astro") as any,
+    heroLoader: () => import("../components/made/AtelierHero.astro") as any,
   },
 ] as const;
 

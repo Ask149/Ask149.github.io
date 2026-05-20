@@ -1,0 +1,33 @@
+---
+// src/components/made/AtelierSchematicBg.astro
+// Phase E2 — fixed-position decorative SVG behind hero/content.
+// Three technical drawings: split keyboard exploded view (FIG.1),
+// pen rest profile (FIG.2), ESP32 enclosure / weather station (FIG.3).
+// Stroke color uses cream over the deep navy background. CSS in made.css
+// sets z-index 0, opacity 0.12, pointer-events: none.
+---
+<div class="schematic-bg" aria-hidden="true">
+  <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="rgba(240, 230, 208, 0.45)" stroke-width="1" fill="none">
+      <!-- FIG.1 · split keyboard · exploded view -->
+      <rect x="120" y="100" width="280" height="180"/>
+      <line x1="120" y1="190" x2="400" y2="190" stroke-dasharray="3 3"/>
+      <line x1="260" y1="100" x2="260" y2="280" stroke-dasharray="3 3"/>
+      <circle cx="180" cy="155" r="22"/>
+      <circle cx="180" cy="155" r="8"/>
+      <text x="120" y="320" font-family="JetBrains Mono" font-size="9" fill="rgba(240, 230, 208, 0.5)">FIG.1 · split keyboard · exploded view</text>
+      <!-- FIG.2 · pen rest profile -->
+      <circle cx="600" cy="180" r="60"/>
+      <line x1="540" y1="180" x2="540" y2="120"/>
+      <line x1="660" y1="180" x2="660" y2="120"/>
+      <line x1="540" y1="180" x2="660" y2="180" stroke-dasharray="2 2"/>
+      <text x="555" y="280" font-family="JetBrains Mono" font-size="9" fill="rgba(240, 230, 208, 0.5)">FIG.2 · pen rest profile</text>
+      <!-- FIG.3 · weather station / ESP32 enclosure -->
+      <rect x="800" y="120" width="120" height="80"/>
+      <line x1="800" y1="200" x2="820" y2="220"/>
+      <line x1="920" y1="200" x2="900" y2="220"/>
+      <rect x="820" y="220" width="80" height="40"/>
+      <text x="810" y="290" font-family="JetBrains Mono" font-size="9" fill="rgba(240, 230, 208, 0.5)">FIG.3 · weather station</text>
+    </g>
+  </svg>
+</div>

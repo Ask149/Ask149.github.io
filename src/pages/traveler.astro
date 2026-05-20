@@ -1,60 +1,144 @@
 ---
-import PersonaLayout from "../layouts/PersonaLayout.astro";
-import TravelerHero from "../components/traveler/TravelerHero.astro";
-import NextStopCard from "../components/traveler/NextStopCard.astro";
-import { TravelTimeline } from "../components/traveler/TravelTimeline";
+// src/pages/traveler.astro
+// Voyages (§2) — world map background, animated pins, 7 floating polaroids on
+// staggered 12s loops, diary card with A.K./AI toggle, bottom timeline carousel.
 import { getCollection } from "astro:content";
+import PersonaLayout from "../layouts/PersonaLayout.astro";
+import WorldMap from "../components/traveler/WorldMap.astro";
+import MapPin from "../components/traveler/MapPin.astro";
+import VoyagesHero from "../components/traveler/VoyagesHero.astro";
+import FloatingPhotos from "../components/traveler/FloatingPhotos.tsx";
+import DiaryCard from "../components/traveler/DiaryCard.tsx";
+import TimelineCarousel from "../components/traveler/TimelineCarousel.tsx";
+import photoManifest from "../data/photoManifest.json";
 
-const raw = await getCollection("places", (e) => !e.data.draft);
-const places = raw
-  .sort((a, b) => a.data.yearMonth.localeCompare(b.data.yearMonth))
-  .map((e) => ({
+const placeEntries = await getCollection("places", (e) => !e.data.draft);
+
+// Newest-first for "what is currently shown" / hero "last" stat.
+const sortedDesc = placeEntries
+  .slice()
+  .sort((a, b) => b.data.yearMonth.localeCompare(a.data.yearMonth));
+
+// Oldest-first for L→R timeline + stable §2.N section numbering.
+const sortedAsc = placeEntries
+  .slice()
+  .sort((a, b) => a.data.yearMonth.localeCompare(b.data.yearMonth));
+
+// Active = most recent non-draft place.
+const active = sortedDesc[0];
+
+const manifest = photoManifest as Record<string, { src: string; caption: string }[]>;
+const photoCountFor = (slug: string, folder?: string): number =>
+  manifest[folder ?? slug]?.length ?? 0;
+
+// Section labels (§2.1, §2.2, …) anchored to chronological order.
+const sectionBySlug = new Map<string, string>();
+sortedAsc.forEach((e, i) => {
+  sectionBySlug.set(e.slug, `§2.${i + 1}`);
+});
+
+// MapPin list: any place with mapCoords.
+const pins = sortedDesc
+  .filter((e) => e.data.mapCoords)
+  .map((e) => {
+    const homeLabel = e.data.reason === "family" || e.data.reason === "wedding" ? "home" : `${e.data.durationDays ?? "?"}d`;
+    return {
+      slug: e.slug,
+      label: `${e.data.title.toUpperCase()} · ${homeLabel}`,
+      leftPct: e.data.mapCoords!.leftPct,
+      topPct: e.data.mapCoords!.topPct,
+      active: e.slug === active.slug,
+    };
+  });
+
+// DiaryCard byslug snapshot.
+const byslug = Object.fromEntries(
+  sortedDesc.map((e) => [
+    e.slug,
+    {
+      slug: e.slug,
+      title: e.data.title,
+      yearMonth: e.data.yearMonth,
+      durationDays: e.data.durationDays,
+      paragraph: e.data.paragraph,
+      paragraphAuthor: e.data.paragraphAuthor,
+      photoCount: photoCountFor(e.slug, e.data.photoFolder),
+      airportCode: e.data.airportCode,
+      reason: e.data.reason,
+      sectionLabel: sectionBySlug.get(e.slug) ?? "§2",
+    },
+  ]),
+);
+
+// captionsBySlug for FloatingPhotos fallback when manifest is empty.
+const captionsBySlug: Record<string, string[]> = {};
+sortedDesc.forEach((e) => {
+  if (e.data.photoCaptions?.length) {
+    captionsBySlug[e.data.photoFolder ?? e.slug] = e.data.photoCaptions;
+  }
+});
+
+// TimelineCarousel trips, oldest→newest L→R.
+const trips = sortedAsc.map((e) => {
+  const [year] = e.data.yearMonth.split("-");
+  const label = e.data.timelineLabel ?? `${e.data.title} ${year}`;
+  const parts = e.data.timelineLabel?.split(" · ") ?? [];
+  const subLabel = parts.length >= 2 ? `${parts[0].split(" ").slice(-1)[0]} · ${parts.slice(1).join(" · ")}` : year;
+  return {
     slug: e.slug,
-    title: e.data.title,
-    country: e.data.country,
-    airportCode: e.data.airportCode,
-    yearMonth: e.data.yearMonth,
-    image: e.data.cover
-      ? { src: e.data.cover.src, alt: e.data.coverAlt }
-      : { src: "", alt: e.data.coverAlt ?? "" },
-  }));
+    name: e.data.title,
+    year,
+    label,
+    subLabel,
+  };
+});
+
+const totalPhotos = Object.values(manifest).reduce(
+  (acc, arr) => acc + (arr?.length ?? 0),
+  0,
+);
+const countries = new Set(sortedDesc.map((e) => e.data.countryCode)).size;
+const lastEditISO = active?.data?.yearMonth
+  ? new Date(active.data.yearMonth + "-15").toISOString()
+  : undefined;
 ---
 <PersonaLayout
   personaId="traveler"
-  title="Traveler — Ashish Kshirsagar"
-  description="Horizontal timeline of places visited and places next."
+  title="Ashish K. · voyages"
+  description="A map of the places I keep returning to in pieces."
+  lastEditISO={lastEditISO}
 >
-  <TravelerHero />
-  <TravelTimeline places={places} client:visible />
-  <NextStopCard name="Pune" date="June 2026" reason="wedding + relocation" />
+  <WorldMap />
+
+  {pins.map((p) => (
+    <MapPin label={p.label} leftPct={p.leftPct} topPct={p.topPct} active={p.active} />
+  ))}
+
+  <FloatingPhotos
+    client:visible
+    manifest={manifest}
+    initialSlug={active.data.photoFolder ?? active.slug}
+    captionsBySlug={captionsBySlug}
+  />
+
+  <VoyagesHero
+    stats={{
+      places: sortedDesc.length,
+      photos: totalPhotos,
+      countries,
+      last: active.data.title.toLowerCase(),
+    }}
+  />
+
+  <DiaryCard
+    client:visible
+    initial={byslug[active.slug]}
+    byslug={byslug}
+  />
+
+  <TimelineCarousel
+    client:visible
+    trips={trips}
+    initialActiveSlug={active.slug}
+  />
 </PersonaLayout>
-
-<noscript>
-  <style>
-    /*
-      No-JS fallback for the Embla carousel.
-      When JavaScript is disabled, Embla never hydrates, so the SSR'd
-      <div data-embla-no-js> stays as a plain block. This rule promotes
-      its inner CarouselContent flex row to a native horizontal scroller
-      with scroll-snap, so users still get a usable polaroid strip.
-
-      Targets the first descendant flex container (CarouselContent renders
-      as `display: flex`).
-    */
-    [data-embla-no-js] > div:has(> div) {
-      overflow-x: auto !important;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 1rem;
-    }
-    [data-embla-no-js] > div > div > div {
-      scroll-snap-align: start;
-      flex-shrink: 0;
-    }
-    /* Hide carousel arrow buttons (require JS to function) */
-    [data-embla-no-js] button[aria-label*="ous"],
-    [data-embla-no-js] button[aria-label*="ext"] {
-      display: none;
-    }
-  </style>
-</noscript>

@@ -1,0 +1,18 @@
+---
+// src/components/traveler/MapPin.astro
+// Pulsing-ring pin with JBMono label. leftPct/topPct are percentages of the
+// viewport (the SVG world map is stylized, not cartographic — so positions are
+// hand-tuned in place frontmatter against the SVG, not lat/lon coordinates).
+export interface Props {
+  label: string;          // e.g. "SEATTLE · 720d"
+  leftPct: number;        // 0–100
+  topPct: number;         // 0–100
+  active?: boolean;
+}
+const { label, leftPct, topPct, active = false } = Astro.props;
+const cls = active ? "pin active" : "pin";
+const style = `left: ${leftPct}%; top: ${topPct}%;`;
+---
+<div class={cls} style={style} data-pin-label={label}>
+  <span class="pin-label">{label}</span>
+</div>
