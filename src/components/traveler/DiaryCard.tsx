@@ -90,7 +90,9 @@ export default function DiaryCard({ initial, byslug }: Props) {
       <h3>{place.title.toUpperCase()}.</h3>
       <div className="dates">
         {dates}
-        {place.photoCount} photograph{place.photoCount === 1 ? "" : "s"}
+        {place.photoCount === 0
+          ? "photos landing summer '26"
+          : `${place.photoCount} photograph${place.photoCount === 1 ? "" : "s"}`}
       </div>
       <p>
         {place.paragraph ??
