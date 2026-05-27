@@ -75,7 +75,7 @@ body[data-persona="coder"] .workshop-h1__eyebrow {
   text-transform: uppercase;
   color: var(--muted);
   opacity: 0.85;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem;
 }
 body[data-persona="coder"] .workshop-h1__line {
   font-family: 'Anton', sans-serif;
@@ -84,6 +84,7 @@ body[data-persona="coder"] .workshop-h1__line {
   line-height: 1.1;
   letter-spacing: -0.01em;
   color: var(--fg);
+  margin: 0;
 }
 body[data-persona="coder"] .workshop-h1__line--stance {
   font-family: 'Cormorant Garamond', serif;
@@ -93,7 +94,7 @@ body[data-persona="coder"] .workshop-h1__line--stance {
   letter-spacing: 0;
   line-height: 1.4;
   color: var(--muted);
-  margin-top: 0.4rem;
+  margin: 0.4rem 0 0;
   max-width: 40ch;
 }
 
@@ -139,6 +140,29 @@ body[data-persona="coder"] .hero-contacts a:focus-visible {
   border-radius: 2px;
 }
 body[data-persona="coder"] .hero-sep { color: var(--muted); opacity: 0.6; }
+
+body[data-persona="coder"] .hero-receipts {
+  margin-top: 0.6rem;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+body[data-persona="coder"] .hero-receipts__label {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  opacity: 0.85;
+}
+body[data-persona="coder"] .hero-receipts__list {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  letter-spacing: 0;
+  font-size: 0.95rem;
+  color: var(--fg);
+  opacity: 0.85;
+}
 
 body[data-persona="coder"] .hero-meta {
   display: flex; gap: 1.5rem; margin-top: 2rem;

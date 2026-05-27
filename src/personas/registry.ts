@@ -36,7 +36,7 @@ export const PERSONAS: readonly PersonaDef[] = [
     route: "/",
     blurb: "shipping with agents in parallel",
     tokensHref: "personas/coder.css",
-    accentHex: "#8b5a2a",
+    accentHex: "#7a4a1f",
     pseudoPage: 47,
     collection: "projects",
     transitionMode: "morph",

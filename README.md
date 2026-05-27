@@ -99,6 +99,27 @@ worker/                                                # Cloudflare Worker (agen
 - Implementation plan: `docs/superpowers/plans/2026-05-17-portfolio-v3-multi-persona.md`
 - Cutover notes: `docs/superpowers/cutover-2026-05-17-portfolio-v3.md`
 
+## Rollback
+
+If a `master` push ships a broken build and the v4 Astro site needs to be reverted to the
+archived Jekyll site (tagged `v1-jekyll-archive`):
+
+```sh
+# 1. Flip GitHub Pages back to legacy Jekyll auto-build
+gh api -X PUT repos/Ask149/Ask149.github.io/pages -f build_type=legacy
+
+# 2. Restore the old Jekyll content on master (destructive — only if step 1 isn't enough)
+git fetch origin --tags
+git push origin v1-jekyll-archive:master --force
+```
+
+To restore the Astro deploy after a successful rollback:
+
+```sh
+gh api -X PUT repos/Ask149/Ask149.github.io/pages -f build_type=workflow
+git push origin <known-good-commit>:master --force
+```
+
 ## License
 
 MIT — see `LICENSE`.

@@ -19,3 +19,7 @@ worker/dist/
 # Editor
 .vscode/
 .idea/
+
+# Tooling
+.playwright-mcp/
+phase-*.png

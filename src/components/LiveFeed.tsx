@@ -102,12 +102,16 @@ export default function LiveFeed({ endpoint, pollMs = 60000, initialLimit = 3, m
       <div className="livefeed__rows">
         {events.length === 0 && !error && (
           <div className="livefeed__empty mono">
-            feed empty — see <a href="/feed">/feed</a> for history.
+            {mode === 'full'
+              ? 'no events yet. (the agent feed worker is not currently deployed.)'
+              : <>feed empty — see <a href="/feed">/feed</a> for history.</>}
           </div>
         )}
         {error && events.length === 0 && (
           <div className="livefeed__empty mono">
-            feed unavailable — try <a href="/feed">/feed</a>.
+            {mode === 'full'
+              ? 'feed unavailable. (the agent feed worker is not currently deployed.)'
+              : <>feed unavailable — try <a href="/feed">/feed</a>.</>}
           </div>
         )}
         {visible.map((e, i) => (
@@ -125,7 +129,7 @@ export default function LiveFeed({ endpoint, pollMs = 60000, initialLimit = 3, m
           </div>
         ))}
       </div>
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .livefeed {
           border: 1px solid var(--rule);
           background: var(--surface);
@@ -184,7 +188,7 @@ export default function LiveFeed({ endpoint, pollMs = 60000, initialLimit = 3, m
         @media (max-width: 600px) {
           .livefeed__row { grid-template-columns: 1fr; gap: 0.25rem; }
         }
-      `}</style>
+      ` }} />
     </section>
   )
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ashish Kshirsagar — feed moved</title>
+    <link>https://ask149.github.io/writing</link>
+    <atom:link href="https://ask149.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <description>The old Jekyll RSS feed has been retired. Visit /writing for current posts.</description>
+    <item>
+      <title>This feed has moved</title>
+      <link>https://ask149.github.io/writing</link>
+      <description>The ask149.github.io site has been redesigned. Subscribe via /writing or follow @iodevz_ai on Twitter.</description>
+      <pubDate>Tue, 26 May 2026 00:00:00 -0700</pubDate>
+      <guid isPermaLink="false">ask149-feed-retired-2026-05</guid>
+    </item>
+  </channel>
+</rss>

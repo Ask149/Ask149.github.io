@@ -1,8 +1,8 @@
-name: Deploy v2 (Astro → GitHub Pages)
+name: Deploy (Astro → GitHub Pages)
 
 on:
   push:
-    branches: ['v2']
+    branches: ['master']
   workflow_dispatch:
 
 permissions:
@@ -24,6 +24,8 @@ jobs:
           node-version: '20'
       - name: Install deps
         run: npm ci
+      - name: Typecheck
+        run: npm run check
       - name: Build Astro
         run: npm run build
       - uses: actions/upload-pages-artifact@v3
