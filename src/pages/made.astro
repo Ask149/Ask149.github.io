@@ -1,43 +1,80 @@
 ---
-// src/pages/made.astro — Phase E6
-// Pure Astro composition. Zero React JS shipped (only shared ClientRouter
-// from PersonaLayout). AnimatePresence cross-fade for shipped builds deferred
-// to v4.2 per spec §15 tombstone.
-import { getCollection, type CollectionEntry } from "astro:content";
+// src/pages/made.astro
+// WIP stub. The atelier persona is wired into the registry + tokens + hero so
+// it can be flipped back on cheaply when a real build ships, but until then
+// it's hidden from TopNav (registry: hideFromNav) and the page itself shows
+// an honest empty-state card instead of placeholder grids + a fake bench count.
 import PersonaLayout from "../layouts/PersonaLayout.astro";
 import AtelierSchematicBg from "../components/made/AtelierSchematicBg.astro";
-import AtelierHero from "../components/made/AtelierHero.astro";
-import PlaceholderGrid from "../components/made/PlaceholderGrid.astro";
-import BuildQueueListV4 from "../components/made/BuildQueueListV4.astro";
 
-type BuildEntry = CollectionEntry<"builds">;
-
-const all = await getCollection("builds", (e: BuildEntry) => !e.data.draft);
-
-const shipped = all.filter((b) => b.data.status === "shipped").length;
-const queued = all.filter((b) => b.data.status === "queued").length;
-// "on-bench" may not be in the enum yet (Phase C owns that schema edit).
-// Treat "building" as the current bench equivalent; fall back to a flat 1 if neither
-// is present, mirroring the mockup's "1 on the bench" placeholder count.
-const benchCount = all.filter((b) => {
-  const s = b.data.status as string;
-  return s === "on-bench" || s === "building";
-}).length;
-const onBench = benchCount > 0 ? benchCount : 1;
-
-const lastEditISO = all
-  .map((b) => b.data.shippedDate?.toISOString() ?? b.data.addedDate.toISOString())
-  .sort()
-  .reverse()[0];
+const lastEditISO = new Date().toISOString();
 ---
 <PersonaLayout
   personaId="made"
   title="Ashish K. · atelier"
-  description="Physical things — soldered, sawn, sketched. The workbench, late."
+  description="Physical things — soldered, sawn, sketched. Workbench is closed for now."
   lastEditISO={lastEditISO}
 >
   <AtelierSchematicBg />
-  <AtelierHero stats={{ shipped, queued, onBench }} />
-  <PlaceholderGrid />
-  <BuildQueueListV4 />
+  <main class="atelier-wip">
+    <article class="card">
+      <p class="kicker mono">§ 04 · atelier</p>
+      <h1>workbench closed</h1>
+      <p class="lede">
+        Nothing on the bench worth showing yet. This page will come back when
+        something physical actually ships — soldered, sawn, or sketched.
+      </p>
+      <p class="back">
+        <a href="/">← back to the workshop</a>
+      </p>
+    </article>
+  </main>
 </PersonaLayout>
+
+<style>
+  .atelier-wip {
+    min-height: 60vh;
+    display: grid;
+    place-items: center;
+    padding: 6rem 1.5rem;
+  }
+  .card {
+    max-width: 36rem;
+    text-align: center;
+  }
+  .kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+  }
+  h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    letter-spacing: 0.02em;
+    color: var(--fg);
+    margin: 0 0 1.25rem;
+  }
+  .lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.55;
+    color: var(--fg);
+    margin: 0 0 2.25rem;
+  }
+  .back {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .back a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 0.1rem;
+  }
+  .back a:hover { opacity: 0.8; }
+</style>

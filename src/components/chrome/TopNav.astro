@@ -25,7 +25,7 @@ const PLAIN: Record<PersonaId, string> = {
 <nav class="top-strip" data-component="top-nav">
   <span class="brand">ASHISH K.</span>
   <div class="nav">
-    {PERSONAS.map((p) => (
+    {PERSONAS.filter((p) => !p.hideFromNav).map((p) => (
       <a
         href={p.route}
         class={activeId === p.id ? "nav-link active" : "nav-link"}

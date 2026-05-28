@@ -25,6 +25,7 @@ export interface PersonaDef {
   collection: CollectionKey | null;
   transitionMode: "morph" | "fade";
   heroLoader: () => Promise<{ default: ComponentType<unknown> }>;
+  hideFromNav?: boolean;
 }
 
 export const PERSONAS: readonly PersonaDef[] = [
@@ -83,6 +84,7 @@ export const PERSONAS: readonly PersonaDef[] = [
     collection: "builds",
     transitionMode: "fade",
     heroLoader: () => import("../components/made/AtelierHero.astro") as any,
+    hideFromNav: true,
   },
 ] as const;
 
