@@ -4,6 +4,23 @@ This guide covers the end-to-end workflow for adding a new place entry to the Vo
 
 ## Quick path
 
+If you already have a folder of 5-10 photos, prefer the local uploader:
+
+```bash
+npm run trip:upload -- \
+  --slug 2026-12-tokyo \
+  --title "Tokyo" \
+  --country Japan \
+  --country-code JP \
+  --lat 35.6762 \
+  --lon 139.6503 \
+  --photos ~/Pictures/tokyo
+```
+
+See `docs/trip-upload-guide.md` for all options.
+
+Manual scaffold path:
+
 ```bash
 # 1. Scaffold the place file + photo folder
 npm run trip:new -- 2026-12-tokyo "Tokyo" 35.6762 139.6503
@@ -159,4 +176,3 @@ You'd then fill in:
 - (Optional) write a hand-typed `paragraph:` or leave blank for Gemini to fill
 
 Then `npm run photos && npm run paragraphs && npm run build`.
-

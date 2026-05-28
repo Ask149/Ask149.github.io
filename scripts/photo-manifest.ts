@@ -9,7 +9,8 @@
 //   4. Optimize images: resize >2000px wide → 2000px wide, strip non-date EXIF (sharp)
 //   5. Extract DateTimeOriginal from cover, suggest timelineLabel if missing (exifr)
 //   6. Merge captions.yaml (if present) into manifest entries
-//   7. Write src/data/photoManifest.json
+//   7. Preserve empty manifest placeholders for place entries with no photo folder yet
+//   8. Write src/data/photoManifest.json
 //
 // Idempotent: re-running just overwrites the JSON. Sharp step skips photos
 // already within size limits.
@@ -119,6 +120,19 @@ function loadCaptions(dir: string): Record<string, string> {
     console.warn(`  ⚠ ${path}: could not parse — ${(e as Error).message}`);
   }
   return {};
+}
+
+function loadPlacePhotoFolders(): string[] {
+  if (!existsSync(PLACES_DIR)) return [];
+  return readdirSync(PLACES_DIR)
+    .filter((f) => f.endsWith(".md"))
+    .sort()
+    .map((f) => {
+      const raw = readFileSync(join(PLACES_DIR, f), "utf8");
+      const parsed = matter(raw);
+      const data = parsed.data as { photoFolder?: string };
+      return data.photoFolder ?? f.replace(/\.md$/, "");
+    });
 }
 
 async function main(): Promise<void> {
@@ -236,6 +250,10 @@ async function main(): Promise<void> {
       console.error(`✗ photo-manifest: ${placeholderOffenders.length} place file(s) still contain scaffold placeholders.`);
       process.exit(1);
     }
+  }
+
+  for (const folder of loadPlacePhotoFolders()) {
+    manifest[folder] ??= [];
   }
 
   if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
