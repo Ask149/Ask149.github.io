@@ -14,7 +14,7 @@ import "../styles/personas/curate.css";
 import "../styles/personas/made.css";
 
 export interface Props {
-  personaId: PersonaId | "resume";
+  personaId: PersonaId | "resume" | "now";
   title: string;
   description?: string;
   ogImage?: string;
@@ -22,8 +22,8 @@ export interface Props {
 }
 const { personaId, title, description, ogImage, lastEditISO } = Astro.props;
 
-// /resume reuses Workshop's copper palette
-const tokensPersona: PersonaId = personaId === "resume" ? "coder" : personaId;
+// Utility pages reuse Workshop's copper palette without becoming active nav tabs.
+const tokensPersona: PersonaId = personaId === "resume" || personaId === "now" ? "coder" : personaId;
 
 // Canonical URL + social-card resolution (Astro.site is set in astro.config.mjs).
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;

@@ -148,6 +148,57 @@ body[data-persona="coder"] .hero-meta {
 }
 body[data-persona="coder"] .hero-meta strong { color: var(--accent); font-weight: 500; }
 
+/* Proof strip: quiet evidence layer between the hero stance and project tiles. */
+body[data-persona="coder"] .proof-strip {
+  position: relative;
+  z-index: 10;
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  padding: 0 clamp(1.25rem, 5vw, 2.5rem);
+}
+body[data-persona="coder"] .proof-strip__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+body[data-persona="coder"] .proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+body[data-persona="coder"] .proof-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 1.1rem;
+}
+body[data-persona="coder"] .proof-card__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.55rem;
+}
+body[data-persona="coder"] .proof-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  line-height: 1.15;
+  margin: 0 0 0.45rem;
+  color: var(--fg);
+}
+body[data-persona="coder"] .proof-card p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--muted);
+  margin: 0;
+}
+
 /* Projects (mockup lines 30–40) */
 body[data-persona="coder"] .projects { position: relative; z-index: 10; padding: 0 clamp(1.25rem, 5vw, 2.5rem); max-width: 1100px; margin: 0 auto; }
 body[data-persona="coder"] .projects-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
@@ -186,4 +237,5 @@ body[data-persona="coder"] .proj a:focus-visible {
   body[data-persona="coder"] .hero-handhold { gap: 0.75rem; }
   body[data-persona="coder"] .hero-portrait { width: 72px; height: 72px; }
   body[data-persona="coder"] .hero-contacts { font-size: 0.95rem; }
+  body[data-persona="coder"] .proof-grid { grid-template-columns: 1fr; }
 }

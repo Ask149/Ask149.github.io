@@ -3,7 +3,7 @@
 import { PERSONAS, type PersonaId } from "../../personas/registry";
 
 export interface Props {
-  activeId: PersonaId | "resume";
+  activeId: PersonaId | "resume" | "now";
   lastEditISO?: string;
 }
 const { activeId, lastEditISO } = Astro.props;

@@ -1,18 +1,24 @@
 ---
-import Base from '../layouts/Base.astro'
+import PersonaLayout from '../layouts/PersonaLayout.astro'
 const updated = '2026-05-27'
+const lastEditISO = new Date(`${updated}T00:00:00.000Z`).toISOString()
 ---
-<Base title="Now · Ashish Kshirsagar">
-  <main>
-    <p class="mono" style="font-size: var(--small);"><a href="/">← home</a></p>
-    <header style="margin-top: 2rem;">
+<PersonaLayout
+  personaId="now"
+  title="Now · Ashish Kshirsagar"
+  description="A short public now page: what Ashish is building, learning, and avoiding."
+  lastEditISO={lastEditISO}
+>
+  <main class="now-page">
+    <p class="mono back-link"><a href="/">← home</a></p>
+    <header class="now-header">
       <h1>now</h1>
-      <p class="mono muted" style="font-size: var(--small);">
+      <p class="mono muted">
         updated {updated} · <a href="https://nownownow.com/about" target="_blank" rel="noopener">what is a now page?</a>
       </p>
     </header>
 
-    <section style="margin-top: 2.5rem;">
+    <section>
       <h2>building</h2>
       <ul>
         <li><strong>Portfolio v2</strong> — rebuilding this site as an Astro multi-persona static build. The chrome, the routing, the receipts — all in the open.</li>
@@ -21,7 +27,7 @@ const updated = '2026-05-27'
       </ul>
     </section>
 
-    <section style="margin-top: 2.5rem;">
+    <section>
       <h2>learning</h2>
       <ul>
         <li>How Cloudflare KV's TTL semantics compose with index keys. Short answer: TTL on data keys + capped LRU on index keys = a clean rolling-window event store with no cron.</li>
@@ -30,22 +36,37 @@ const updated = '2026-05-27'
       </ul>
     </section>
 
-    <section style="margin-top: 2.5rem;">
+    <section>
       <h2>avoiding</h2>
       <ul>
         <li>Letting agents merge their own PRs without a diff review.</li>
         <li>Adding new tools before retiring the last one that didn't earn its place.</li>
       </ul>
     </section>
-
-    <hr />
-    <footer class="mono" style="font-size: var(--tiny); color: var(--fg-faint); text-align: center;">
-      <a href="/">home</a> · <a href="/writing">writing</a> · <a href="/projects">projects</a> · <a href="/feed">feed</a> · <a href="/uses">uses</a>
-    </footer>
   </main>
   <style>
-    main ul { padding-left: 1.5rem; }
-    main li { margin: 0.5rem 0; line-height: 1.6; }
-    main strong { color: var(--accent); }
+    .now-page {
+      position: relative;
+      z-index: 10;
+      max-width: 760px;
+      padding: clamp(2rem, 8vw, 5rem) clamp(1.25rem, 5vw, 2.5rem);
+    }
+    .back-link {
+      font-size: var(--small);
+      margin-bottom: 2rem;
+    }
+    .now-header { margin-bottom: 2.5rem; }
+    .now-header h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3rem, 10vw, 6rem);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      margin: 0 0 0.75rem;
+    }
+    .now-header p { font-size: var(--small); }
+    section { margin-top: 2.5rem; }
+    ul { padding-left: 1.5rem; }
+    li { margin: 0.5rem 0; line-height: 1.6; }
+    strong { color: var(--accent); }
   </style>
-</Base>
+</PersonaLayout>

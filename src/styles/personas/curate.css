@@ -27,7 +27,7 @@ body[data-persona="curate"] .ornament.br { bottom: 1rem; right: 1rem; width: 140
 
 body[data-persona="curate"] .hero { position: relative; z-index: 10; padding: 5rem 2.5rem 2rem; max-width: 920px; }
 body[data-persona="curate"] .hero-pre { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
-body[data-persona="curate"] .hero h1 { font-family: 'Anton', sans-serif; font-size: 8.5rem; line-height: 0.84; letter-spacing: -0.04em; color: var(--fg); margin: 0.6rem 0 1.5rem; }
+body[data-persona="curate"] .hero h1 { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 12vw, 8.5rem); line-height: 0.84; letter-spacing: -0.04em; color: var(--fg); margin: 0.6rem 0 1.5rem; }
 body[data-persona="curate"] .hero h1 em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 0.8em; vertical-align: baseline; }
 body[data-persona="curate"] .hero h1 span { background: linear-gradient(180deg, var(--fg) 30%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 body[data-persona="curate"] .hero .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: var(--muted); max-width: 35ch; line-height: 1.45; }
@@ -45,7 +45,10 @@ body[data-persona="curate"] .quote { margin-top: 1rem; padding-left: 1rem; borde
 body[data-persona="curate"] .quote-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--brass); margin-top: 0.6rem; }
 
 body[data-persona="curate"] .finished { position: relative; z-index: 10; max-width: 920px; margin: 3rem auto; padding: 0 2.5rem; }
-body[data-persona="curate"] .fin-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+body[data-persona="curate"] .fin-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+body[data-persona="curate"] .fin-label__out { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; color: var(--brass, var(--muted)); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; transition: color var(--t-fast, 120ms) var(--ease, ease); }
+body[data-persona="curate"] .fin-label__out:hover,
+body[data-persona="curate"] .fin-label__out:focus-visible { color: var(--accent); }
 body[data-persona="curate"] .fin-list { background: var(--surface); border: 1px solid var(--rule); padding: 0; }
 body[data-persona="curate"] .fin-row { display: grid; grid-template-columns: 30px 1fr auto; gap: 1rem; padding: 0.9rem 1.5rem; border-bottom: 1px dashed var(--rule); align-items: center; }
 body[data-persona="curate"] .fin-row:last-child { border-bottom: none; }
@@ -53,3 +56,12 @@ body[data-persona="curate"] .fin-row .n { font-family: 'JetBrains Mono', monospa
 body[data-persona="curate"] .fin-row .t { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; }
 body[data-persona="curate"] .fin-row .t em { font-style: italic; color: var(--muted); }
 body[data-persona="curate"] .fin-row .r { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--brass); }
+
+@media (max-width: 640px) {
+  body[data-persona="curate"] .hero { padding: 3rem 1.25rem 1.5rem; }
+  body[data-persona="curate"] .hero h1 { font-size: clamp(3.5rem, 17vw, 4.5rem); }
+  body[data-persona="curate"] .hero-meta { flex-direction: column; gap: 0.35rem; }
+  body[data-persona="curate"] .now-reading,
+  body[data-persona="curate"] .finished { padding: 0 1.25rem; }
+  body[data-persona="curate"] .nr-card { grid-template-columns: 1fr; }
+}

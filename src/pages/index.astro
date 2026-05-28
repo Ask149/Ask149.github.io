@@ -35,6 +35,23 @@ const projects = projectEntries
   });
 
 const activeCount = projects.filter((p) => p.status === "active").length;
+const proofCards = [
+  {
+    label: "Windows systems",
+    title: "Ships production software at Microsoft",
+    body: "Servicing and update work where reliability, reviews, and release discipline matter.",
+  },
+  {
+    label: "Agent systems",
+    title: "Builds with AI agents in the loop",
+    body: "OpenCode/Copilot workflows, MCP servers, review gates, and small automation loops.",
+  },
+  {
+    label: "IODevz",
+    title: "Active project workbench",
+    body: "A small founder collective for experiments that earn their way into public projects.",
+  },
+] as const;
 
 const lastEditISO = projectEntries
   .map((e) => (e.data as any)?.shippedDate?.toISOString?.() ?? null)
@@ -45,11 +62,24 @@ const lastEditISO = projectEntries
 <PersonaLayout
   personaId="coder"
   title="Ashish Kshirsagar — Software Engineer at Microsoft"
-  description="Software Engineer at Microsoft. Shipping updates on Windows. Agentic AI enthusiast. Workshop notes, projects, and writing."
+  description="Software Engineer at Microsoft. Ships Windows updates and builds agent-assisted developer systems."
   lastEditISO={lastEditISO}
 >
   <AgentFeedStrip />
   <WorkshopHero stats={{ activeProjects: activeCount || projects.length }} />
+
+  <section class="proof-strip" aria-labelledby="proof-strip-title">
+    <h2 class="proof-strip__label" id="proof-strip-title">→ §1.1 · selected receipts</h2>
+    <div class="proof-grid">
+      {proofCards.map((card) => (
+        <article class="proof-card">
+          <p class="proof-card__label">{card.label}</p>
+          <h2>{card.title}</h2>
+          <p>{card.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
 
   <section class="projects">
     <div class="projects-label">→ §1.2 · selected work</div>

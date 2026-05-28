@@ -60,7 +60,7 @@ body[data-persona="traveler"] .pf-7 { top: 60%; right: 28%; width: 165px; --r: -
 /* Hero overlay */
 body[data-persona="traveler"] .hero { position: relative; z-index: 10; padding: 5rem 2.5rem 2rem; max-width: 720px; }
 body[data-persona="traveler"] .hero-pre { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
-body[data-persona="traveler"] .hero h1 { font-family: 'Anton', sans-serif; font-size: 8.5rem; line-height: 0.84; letter-spacing: -0.04em; color: var(--fg); margin: 0.6rem 0 1.5rem; }
+body[data-persona="traveler"] .hero h1 { font-family: 'Anton', sans-serif; font-size: clamp(4.5rem, 12vw, 8.5rem); line-height: 0.84; letter-spacing: -0.04em; color: var(--fg); margin: 0.6rem 0 1.5rem; }
 body[data-persona="traveler"] .hero h1 span { background: linear-gradient(180deg, var(--fg) 30%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 body[data-persona="traveler"] .hero .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: var(--muted); max-width: 32ch; line-height: 1.45; }
 body[data-persona="traveler"] .hero-meta { display: flex; gap: 1.5rem; margin-top: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #5a4a3a; }
@@ -100,7 +100,8 @@ body[data-persona="traveler"] .trip.active .yr { color: var(--accent); }
 }
 
 @media (max-width: 640px) {
-  body[data-persona="traveler"] .hero h1 { font-size: 4.5rem; }
+  body[data-persona="traveler"] .hero { padding: 3rem 1.25rem 1.5rem; }
+  body[data-persona="traveler"] .hero h1 { font-size: clamp(3.75rem, 18vw, 4.5rem); }
   body[data-persona="traveler"] .photo-float { display: none; }
   body[data-persona="traveler"] .photo-float.pf-3 { display: block; position: relative; inset: auto; width: 80%; margin: 1rem auto; animation: none; opacity: 1; }
   body[data-persona="traveler"] .timeline-track { gap: 1.5rem; }
