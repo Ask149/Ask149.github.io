@@ -8,4 +8,6 @@
 
 export const social = {
   goodreads: "https://www.goodreads.com/user/show/114721123-ashish-k" as string | null,
+  twitter: "https://x.com/ashishsk149" as string | null,
+  twitterHandle: "@ashishsk149",
 } as const;

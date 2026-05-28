@@ -9,6 +9,7 @@
 //   v4 polish r3 W6: contact strip now has 4 links (email, LI, GitHub, Twitter).
 import { Image } from "astro:assets";
 import portrait from "../../assets/profile.jpeg";
+import { social } from "../../data/social";
 
 export interface Props {
   stats?: {
@@ -46,7 +47,7 @@ const { stats = { activeProjects: 5 } } = Astro.props;
         <span class="hero-sep">·</span>
         <a href="https://github.com/ask149" target="_blank" rel="noopener noreferrer">github.com/ask149</a>
         <span class="hero-sep">·</span>
-        <a href="https://twitter.com/iodevz_ai" target="_blank" rel="noopener noreferrer">@iodevz_ai</a>
+        <a href={social.twitter} target="_blank" rel="noopener noreferrer">{social.twitterHandle}</a>
       </div>
       <div class="hero-receipts">
         <span class="hero-receipts__label">Previously:</span>
