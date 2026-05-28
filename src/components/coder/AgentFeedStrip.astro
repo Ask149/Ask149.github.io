@@ -1,74 +1,61 @@
 ---
 // src/components/coder/AgentFeedStrip.astro
-// REVIEW-2026-05-18 #9: Gate "● LIVE" ticker behind has-events.
-//   Strip is hidden by default; client-side script reveals it only after
-//   LiveFeed paints at least one event row. This kills the "agents idle"
-//   empty-state honesty-fail without ripping out the feature entirely.
-import LiveFeed from "../LiveFeed.tsx";
+//
+// One curated line, expires_at-gated. No React, no worker, no polling.
+// Source of truth: src/data/feed-summary.ts
+import { FEED_SUMMARY } from "../../data/feed-summary";
 
-const FEED_ENDPOINT = "https://ask149-feed.workers.dev/events.json";
+const now = Date.now();
+const active =
+  FEED_SUMMARY && new Date(FEED_SUMMARY.expires_at).getTime() > now
+    ? FEED_SUMMARY
+    : null;
 ---
-<div class="feed-strip" data-component="agent-feed-strip" data-has-events="false" hidden>
-  <span class="live">● LIVE</span>
-  <div class="feed-strip__inner">
-    <LiveFeed endpoint={FEED_ENDPOINT} initialLimit={1} client:visible />
+{active && (
+  <div class="feed-strip" data-component="agent-feed-strip" data-expires-at={active.expires_at}>
+    <span class="live">● LIVE</span>
+    <span class="feed-strip__text">
+      {active.href
+        ? <a href={active.href}>{active.text}</a>
+        : <span>{active.text}</span>}
+      <span class="feed-strip__time mono" data-ts={active.ts}></span>
+    </span>
+    <span class="feed-strip__changelog"><a href="/changelog">/changelog →</a></span>
   </div>
-  <span class="feed-strip__changelog"><a href="/changelog">/changelog →</a></span>
-</div>
+)}
 
 <script>
-  // Reveal the strip only after at least one real event row has rendered.
-  // This conforms to review #9 path (a): conditional render when events.length === 0.
-  const strip = document.querySelector('[data-component="agent-feed-strip"]') as HTMLElement | null;
+  // Live-tick the relative time and vanish the strip when expires_at passes.
+  const strip = document.querySelector<HTMLElement>('[data-component="agent-feed-strip"]');
   if (strip) {
-    const reveal = () => {
-      const row = strip.querySelector('.livefeed__row');
-      if (row) {
-        strip.dataset.hasEvents = 'true';
-        strip.hidden = false;
-        return true;
-      }
-      return false;
+    const expiresAt = new Date(strip.dataset.expiresAt || '').getTime();
+    const tsEl = strip.querySelector<HTMLElement>('[data-ts]');
+    const ts = tsEl ? new Date(tsEl.dataset.ts || '').getTime() : 0;
+    const rel = (ms: number) => {
+      const s = Math.floor(ms / 1000);
+      if (s < 60) return `${s}s ago`;
+      if (s < 3600) return `${Math.floor(s / 60)}m ago`;
+      if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
+      return `${Math.floor(s / 86400)}d ago`;
     };
-    if (!reveal()) {
-      const obs = new MutationObserver(() => { if (reveal()) obs.disconnect(); });
-      obs.observe(strip, { childList: true, subtree: true });
-      // Safety: give up after 30s of poll cycles to free the observer.
-      setTimeout(() => obs.disconnect(), 30000);
-    }
+    const tick = () => {
+      if (Date.now() > expiresAt) { strip.remove(); return; }
+      if (tsEl) tsEl.textContent = ' · ' + rel(Date.now() - ts);
+    };
+    tick();
+    setInterval(tick, 60_000);
   }
 </script>
 
 <style>
-  /* Compact override: when LiveFeed renders inside the feed-strip, strip
-     its own border/background chrome — the strip is the container.    */
-  .feed-strip__inner { flex: 1; min-width: 0; }
-  .feed-strip__inner :global(.livefeed) {
-    margin: 0;
-    border: 0;
-    background: transparent;
-    font-size: 0.65rem;
+  .feed-strip__text {
+    flex: 1; min-width: 0;
+    text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
   }
-  .feed-strip__inner :global(.livefeed__head) {
-    padding: 0;
-    border-bottom: 0;
-  }
-  .feed-strip__inner :global(.livefeed__rows) {
-    display: none; /* Strip mode: only show the head/expand row */
-  }
-  .feed-strip__inner :global(.livefeed__label) {
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-  /* REVIEW #9: also hide the "agents idle" empty-state label inside LiveFeed
-     when it appears in strip mode. */
-  .feed-strip__inner :global(.livefeed__empty) {
-    display: none;
-  }
+  .feed-strip__text a { color: inherit; text-decoration: none; }
+  .feed-strip__text a:hover { color: var(--accent); }
+  .feed-strip__time { color: var(--fg-faint); font-size: var(--tiny); margin-left: 0.4rem; }
   .feed-strip__changelog { margin-left: auto; }
-  .feed-strip__changelog a {
-    color: inherit;
-    text-decoration: none;
-  }
+  .feed-strip__changelog a { color: inherit; text-decoration: none; }
   .feed-strip__changelog a:hover { color: var(--accent); }
 </style>

@@ -1,7 +1,12 @@
 ---
-import Base from '../layouts/Base.astro'
-import LiveFeed from '../components/LiveFeed.tsx'
-const FEED_ENDPOINT = 'https://ask149-feed.workers.dev/events.json'
+import Base from "../layouts/Base.astro";
+import { FEED_SUMMARY } from "../data/feed-summary";
+
+const now = Date.now();
+const active =
+  FEED_SUMMARY && new Date(FEED_SUMMARY.expires_at).getTime() > now
+    ? FEED_SUMMARY
+    : null;
 ---
 <Base title="Feed · Ashish Kshirsagar">
   <main style="max-width: var(--feed-width); padding-left: 2rem; padding-right: 2rem;">
@@ -9,14 +14,67 @@ const FEED_ENDPOINT = 'https://ask149-feed.workers.dev/events.json'
     <header style="margin-top: 2rem; margin-bottom: 2rem;">
       <h1>feed</h1>
       <p class="mono muted" style="font-size: var(--small); margin-top: 0.5rem;">
-        full firehose. every agent event, last 90 days. polls every 30s. raw JSON at
-        <a href="https://ask149-feed.workers.dev/events.json" target="_blank" rel="noopener" class="mono">/events.json</a>.
+        one line, curated. vanishes a few days after I update it.
       </p>
     </header>
-    <LiveFeed endpoint={FEED_ENDPOINT} pollMs={30000} initialLimit={200} mode="full" client:load />
-    <hr />
+
+    {active ? (
+      <div class="feed-entry" data-expires-at={active.expires_at}>
+        <span class="live mono">●</span>
+        <span class="feed-entry__text">
+          {active.href
+            ? <a href={active.href}>{active.text}</a>
+            : <span>{active.text}</span>}
+        </span>
+        <span class="feed-entry__time mono" data-ts={active.ts}></span>
+      </div>
+    ) : (
+      <p class="mono muted">nothing shipping right now.</p>
+    )}
+
+    <hr style="margin-top: 3rem;" />
     <footer class="mono" style="font-size: var(--tiny); color: var(--fg-faint); text-align: center;">
-      <a href="/">home</a> · <a href="/writing">writing</a> · <a href="/projects">projects</a> · <a href="/now">now</a> · <a href="/uses">uses</a>
+      <a href="/">home</a> · <a href="/writing">writing</a> · <a href="/made">projects</a> · <a href="/now">now</a> · <a href="/uses">uses</a>
     </footer>
   </main>
 </Base>
+
+<script>
+  const entry = document.querySelector<HTMLElement>('.feed-entry');
+  if (entry) {
+    const expiresAt = new Date(entry.dataset.expiresAt || '').getTime();
+    const tsEl = entry.querySelector<HTMLElement>('[data-ts]');
+    const ts = tsEl ? new Date(tsEl.dataset.ts || '').getTime() : 0;
+    const rel = (ms: number) => {
+      const s = Math.floor(ms / 1000);
+      if (s < 60) return `${s}s ago`;
+      if (s < 3600) return `${Math.floor(s / 60)}m ago`;
+      if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
+      return `${Math.floor(s / 86400)}d ago`;
+    };
+    const tick = () => {
+      if (Date.now() > expiresAt) {
+        entry.outerHTML = '<p class="mono muted">nothing shipping right now.</p>';
+        return;
+      }
+      if (tsEl) tsEl.textContent = ' · ' + rel(Date.now() - ts);
+    };
+    tick();
+    setInterval(tick, 60_000);
+  }
+</script>
+
+<style>
+  .feed-entry {
+    display: flex; align-items: baseline; gap: 0.75rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: var(--small);
+  }
+  .feed-entry .live { color: var(--success); }
+  .feed-entry__text { flex: 1; }
+  .feed-entry__text a { color: inherit; text-decoration: none; }
+  .feed-entry__text a:hover { color: var(--accent); }
+  .feed-entry__time { color: var(--fg-faint); font-size: var(--tiny); }
+</style>
