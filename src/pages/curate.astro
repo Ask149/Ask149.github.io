@@ -7,6 +7,7 @@ import OrnamentBR from "../components/curate/OrnamentBR.astro";
 import CurioHero from "../components/curate/CurioHero.astro";
 import NowReadingV4 from "../components/curate/NowReadingV4.astro";
 import FinishedListV4 from "../components/curate/FinishedListV4.astro";
+import { social } from "../data/social";
 
 const bookEntries = await getCollection("books", (e) => !e.data.draft);
 
@@ -33,5 +34,5 @@ const lastEditISO = finished[0]?.data?.finishedDate?.toISOString();
   <OrnamentBR />
   <CurioHero stats={{ booksThisYear, onShelf, current }} />
   {reading && <NowReadingV4 book={reading} />}
-  {finished.length > 0 && <FinishedListV4 books={finished} />}
+  {finished.length > 0 && <FinishedListV4 books={finished} goodreadsHref={social.goodreads} />}
 </PersonaLayout>

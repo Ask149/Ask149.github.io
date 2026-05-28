@@ -45,7 +45,10 @@ body[data-persona="curate"] .quote { margin-top: 1rem; padding-left: 1rem; borde
 body[data-persona="curate"] .quote-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--brass); margin-top: 0.6rem; }
 
 body[data-persona="curate"] .finished { position: relative; z-index: 10; max-width: 920px; margin: 3rem auto; padding: 0 2.5rem; }
-body[data-persona="curate"] .fin-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+body[data-persona="curate"] .fin-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+body[data-persona="curate"] .fin-label__out { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; color: var(--brass, var(--muted)); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; transition: color var(--t-fast, 120ms) var(--ease, ease); }
+body[data-persona="curate"] .fin-label__out:hover,
+body[data-persona="curate"] .fin-label__out:focus-visible { color: var(--accent); }
 body[data-persona="curate"] .fin-list { background: var(--surface); border: 1px solid var(--rule); padding: 0; }
 body[data-persona="curate"] .fin-row { display: grid; grid-template-columns: 30px 1fr auto; gap: 1rem; padding: 0.9rem 1.5rem; border-bottom: 1px dashed var(--rule); align-items: center; }
 body[data-persona="curate"] .fin-row:last-child { border-bottom: none; }

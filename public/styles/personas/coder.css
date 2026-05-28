@@ -176,6 +176,9 @@ body[data-persona="coder"] .hero-meta strong { color: var(--accent); font-weight
 body[data-persona="coder"] .projects { position: relative; z-index: 10; padding: 0 clamp(1.25rem, 5vw, 2.5rem); max-width: 1100px; margin: 0 auto; }
 body[data-persona="coder"] .projects-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
 body[data-persona="coder"] .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+/* Lone-card guard: when only one project is featured, cap its width so it doesn't
+   stretch awkwardly across the row and reads as a deliberate single tile. */
+body[data-persona="coder"] .proj-grid:has(> .proj:only-child) { grid-template-columns: minmax(260px, 360px); justify-content: start; }
 @media (max-width: 900px) {
   body[data-persona="coder"] .proj-grid { grid-template-columns: repeat(2, 1fr); }
 }

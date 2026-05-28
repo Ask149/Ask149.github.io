@@ -4,8 +4,9 @@ import type { CollectionEntry } from "astro:content";
 
 export interface Props {
   books: CollectionEntry<"books">[];
+  goodreadsHref?: string | null;
 }
-const { books } = Astro.props;
+const { books, goodreadsHref } = Astro.props;
 
 function ratingStars(rating?: number): string {
   if (!rating) return "—";
@@ -18,7 +19,14 @@ function monthYear(d?: Date): string {
 }
 ---
 <section class="finished">
-  <div class="fin-label">→ §3.2 · recently finished</div>
+  <div class="fin-label">
+    <span>→ §3.2 · recently finished</span>
+    {goodreadsHref && (
+      <a class="fin-label__out" href={goodreadsHref} target="_blank" rel="noopener noreferrer me">
+        ↗ full shelf on goodreads
+      </a>
+    )}
+  </div>
   <div class="fin-list">
     {books.map((b, i) => (
       <div class="fin-row">
