@@ -112,13 +112,6 @@ body[data-persona="coder"] .hero-portrait {
   flex-shrink: 0;
 }
 body[data-persona="coder"] .hero-handhold-text { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
-body[data-persona="coder"] .hero-city {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
 body[data-persona="coder"] .hero-contacts {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1rem;

@@ -7,5 +7,5 @@
 // link will be omitted from /curate at build time.
 
 export const social = {
-  goodreads: "https://www.goodreads.com/ask149" as string | null,
+  goodreads: "https://www.goodreads.com/user/show/114721123-ashish-k" as string | null,
 } as const;
