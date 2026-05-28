@@ -12,6 +12,7 @@
     "paragraphs": "tsx scripts/generate-paragraphs.ts",
     "photos": "tsx scripts/photo-manifest.ts",
     "trip:new": "tsx scripts/new-trip.ts",
+    "trip:upload": "tsx scripts/trip-upload.ts",
     "build:og": "tsx scripts/build-og-image.ts"
   },
   "dependencies": {

@@ -104,7 +104,7 @@ async function main(): Promise<void> {
   console.log("");
   console.log("Next steps:");
   console.log(`  1. Edit ${mdPath} — fill country / countryCode / reason / mapCoords`);
-  console.log(`  2. Drop 5–10 photos into ${photoDir}/`);
+  console.log(`  2. Drop 1–10 photos into ${photoDir}/`);
   console.log(`     Rename as: 01-cover.jpg, 02-something.jpg, ... up to 10-final.jpg`);
   console.log(`  3. (optional) Add captions.yaml in the same folder (filename → caption text)`);
   console.log(`  4. npm run photos       # validate + optimize + regenerate manifest`);

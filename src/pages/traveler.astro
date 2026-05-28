@@ -13,16 +13,18 @@ import TimelineCarousel from "../components/traveler/TimelineCarousel.tsx";
 import photoManifest from "../data/photoManifest.json";
 
 const placeEntries = await getCollection("places", (e) => !e.data.draft);
+const sortDate = (entry: (typeof placeEntries)[number]): string =>
+  entry.data.visitDate ?? `${entry.data.yearMonth}-15`;
 
 // Newest-first for "what is currently shown" / hero "last" stat.
 const sortedDesc = placeEntries
   .slice()
-  .sort((a, b) => b.data.yearMonth.localeCompare(a.data.yearMonth));
+  .sort((a, b) => sortDate(b).localeCompare(sortDate(a)));
 
 // Oldest-first for L→R timeline + stable §2.N section numbering.
 const sortedAsc = placeEntries
   .slice()
-  .sort((a, b) => a.data.yearMonth.localeCompare(b.data.yearMonth));
+  .sort((a, b) => sortDate(a).localeCompare(sortDate(b)));
 
 // Active = most recent non-draft place.
 const active = sortedDesc[0];
@@ -88,6 +90,7 @@ const trips = sortedAsc.map((e) => {
     slug: e.slug,
     name: e.data.title,
     year,
+    date: sortDate(e),
     label,
     subLabel,
   };

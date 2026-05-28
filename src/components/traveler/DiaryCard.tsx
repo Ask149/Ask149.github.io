@@ -73,7 +73,7 @@ export default function DiaryCard({ initial, byslug }: Props) {
   const rawAuthor = place.paragraphAuthor ?? "ak";
   // Normalize the cosmetic A.K./AI toggle: anything Gemini-/AI-shaped counts as "ai".
   const author: "ak" | "ai" =
-    rawAuthor === "ai" || rawAuthor === "gemini-2.0-flash" || rawAuthor === "ai-regenerate"
+    rawAuthor === "ai" || rawAuthor === "ai-regenerate" || rawAuthor.startsWith("gemini-")
       ? "ai"
       : "ak";
   const dates = formatDates(place.yearMonth, place.durationDays);

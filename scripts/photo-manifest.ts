@@ -4,12 +4,13 @@
 //
 // Pipeline (fail-fast on validation):
 //   1. Validate slug format (YYYY-MM-<kebab>) — legacy slugs grandfathered
-//   2. Validate photo count per folder (0 or 5–10)
+//   2. Validate photo count per folder (0 or 1–10)
 //   3. Validate cover photo (first sorted file starts with "01-")
 //   4. Optimize images: resize >2000px wide → 2000px wide, strip non-date EXIF (sharp)
 //   5. Extract DateTimeOriginal from cover, suggest timelineLabel if missing (exifr)
 //   6. Merge captions.yaml (if present) into manifest entries
-//   7. Write src/data/photoManifest.json
+//   7. Preserve empty manifest placeholders for place entries with no photo folder yet
+//   8. Write src/data/photoManifest.json
 //
 // Idempotent: re-running just overwrites the JSON. Sharp step skips photos
 // already within size limits.
@@ -121,6 +122,19 @@ function loadCaptions(dir: string): Record<string, string> {
   return {};
 }
 
+function loadPlacePhotoFolders(): string[] {
+  if (!existsSync(PLACES_DIR)) return [];
+  return readdirSync(PLACES_DIR)
+    .filter((f) => f.endsWith(".md"))
+    .sort()
+    .map((f) => {
+      const raw = readFileSync(join(PLACES_DIR, f), "utf8");
+      const parsed = matter(raw);
+      const data = parsed.data as { photoFolder?: string };
+      return data.photoFolder ?? f.replace(/\.md$/, "");
+    });
+}
+
 async function main(): Promise<void> {
   const manifest: Manifest = {};
   let hadError = false;
@@ -155,12 +169,12 @@ async function main(): Promise<void> {
 
       // (2) Count validation
       if (files.length === 0) {
-        console.warn(`  ⚠ ${slug}: 0 photos (placeholder slot — drop 5–10 photos to publish)`);
+        console.warn(`  ⚠ ${slug}: 0 photos (placeholder slot — drop 1–10 photos to publish)`);
         manifest[slug] = [];
         continue;
       }
-      if (files.length < 5 || files.length > 10) {
-        console.error(`✗ ${slug}: has ${files.length} photos, expected 0 or 5–10`);
+      if (files.length > 10) {
+        console.error(`✗ ${slug}: has ${files.length} photos, expected 0 or 1–10`);
         hadError = true;
         continue;
       }
@@ -236,6 +250,10 @@ async function main(): Promise<void> {
       console.error(`✗ photo-manifest: ${placeholderOffenders.length} place file(s) still contain scaffold placeholders.`);
       process.exit(1);
     }
+  }
+
+  for (const folder of loadPlacePhotoFolders()) {
+    manifest[folder] ??= [];
   }
 
   if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });

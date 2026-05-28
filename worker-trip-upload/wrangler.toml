@@ -1,0 +1,20 @@
+name = "ask149-trip-upload"
+main = "src/index.ts"
+compatibility_date = "2025-07-18"
+
+[vars]
+ENVIRONMENT = "production"
+GITHUB_OWNER = "Ask149"
+GITHUB_REPO = "Ask149.github.io"
+GITHUB_BRANCH = "master"
+PUBLISH_MODE = "pr"
+ALLOWED_GITHUB_LOGINS = "ask149"
+PUBLIC_SITE_URL = "https://ask149.github.io/traveler"
+
+# Secrets — set via `wrangler secret put <NAME>`:
+#   GITHUB_OAUTH_CLIENT_ID
+#   GITHUB_OAUTH_CLIENT_SECRET
+#   GITHUB_APP_ID
+#   GITHUB_APP_PRIVATE_KEY
+#   GITHUB_APP_INSTALLATION_ID
+#   SESSION_SECRET

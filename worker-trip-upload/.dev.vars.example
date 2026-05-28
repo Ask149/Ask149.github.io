@@ -1,0 +1,7 @@
+GITHUB_OAUTH_CLIENT_ID=github-oauth-client-id
+GITHUB_OAUTH_CLIENT_SECRET=github-oauth-client-secret
+GITHUB_APP_ID=github-app-id
+GITHUB_APP_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
+GITHUB_APP_INSTALLATION_ID=github-app-installation-id
+SESSION_SECRET=generate-a-random-32-byte-string
+ALLOWED_GITHUB_LOGINS=ask149

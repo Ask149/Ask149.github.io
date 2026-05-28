@@ -10,6 +10,7 @@ export interface Trip {
   slug: string;
   name: string;
   year: string;
+  date: string;
   label: string;
   subLabel: string;
 }
@@ -67,6 +68,13 @@ export default function TimelineCarousel({ trips, initialActiveSlug }: Props) {
     );
   }
 
+  const years = Array.from(new Set(trips.map((t) => t.year)));
+
+  function jumpToYear(year: string) {
+    const first = trips.find((t) => t.year === year);
+    if (first) selectTrip(first.slug);
+  }
+
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
     const idx = trips.findIndex((t) => t.slug === activeSlug);
@@ -83,7 +91,23 @@ export default function TimelineCarousel({ trips, initialActiveSlug }: Props) {
 
   return (
     <div className="timeline">
-      <div className="timeline-head">→ scroll or drag through the years</div>
+      <div className="timeline-head-row">
+        <div className="timeline-head">→ scroll or drag through the years</div>
+        {years.length > 1 && (
+          <label className="timeline-jump">
+            <span>jump</span>
+            <select
+              value={trips.find((t) => t.slug === activeSlug)?.year ?? years[0]}
+              onChange={(e) => jumpToYear(e.currentTarget.value)}
+              aria-label="Jump to year"
+            >
+              {years.map((year) => (
+                <option key={year} value={year}>{year}</option>
+              ))}
+            </select>
+          </label>
+        )}
+      </div>
       <div
         className="timeline-track"
         ref={trackRef}

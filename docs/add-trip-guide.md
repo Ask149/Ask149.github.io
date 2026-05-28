@@ -4,11 +4,28 @@ This guide covers the end-to-end workflow for adding a new place entry to the Vo
 
 ## Quick path
 
+If you already have a folder of 1-10 photos, prefer the local uploader:
+
+```bash
+npm run trip:upload -- \
+  --slug 2026-12-tokyo \
+  --title "Tokyo" \
+  --country Japan \
+  --country-code JP \
+  --lat 35.6762 \
+  --lon 139.6503 \
+  --photos ~/Pictures/tokyo
+```
+
+See `docs/trip-upload-guide.md` for all options.
+
+Manual scaffold path:
+
 ```bash
 # 1. Scaffold the place file + photo folder
 npm run trip:new -- 2026-12-tokyo "Tokyo" 35.6762 139.6503
 
-# 2. Drop 5–10 photos into public/photos/2026-12-tokyo/
+# 2. Drop 1–10 photos into public/photos/2026-12-tokyo/
 #    Rename as: 01-cover.jpg, 02-something.jpg, ... up to 10-final.jpg
 #    First file MUST start with "01-" (cover).
 
@@ -25,7 +42,7 @@ npm run paragraphs
 Every trip lives in two parallel locations, keyed by the same slug:
 
 - `src/content/places/<slug>.md` — frontmatter + body
-- `public/photos/<slug>/` — 5–10 photos + optional captions.yaml
+- `public/photos/<slug>/` — 1–10 photos + optional captions.yaml
 
 **Slug format:** `YYYY-MM-<location-kebab>` — e.g. `2026-12-tokyo`, `2027-03-lisbon`.
 The script enforces this regex; legacy slugs (the 4 pre-existing ones) are grandfathered.
@@ -34,7 +51,7 @@ The script enforces this regex; legacy slugs (the 4 pre-existing ones) are grand
 - `01-` prefix is mandatory on the cover photo (the script fails the build if missing).
 - Allowed extensions: `.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`.
 - Photos wider than 2000px are auto-resized on `npm run photos` (sharp).
-- 5–10 photos required per trip. Folders with 0 photos are treated as placeholders (warn, don't fail).
+- 1–10 photos required per trip. Folders with 0 photos are treated as placeholders (warn, don't fail).
 
 ## Captions and copy
 
@@ -108,7 +125,7 @@ If the cover photo (`01-*.jpg`) has a `DateTimeOriginal` EXIF tag and the place 
 `npm run photos` (which runs automatically before every `npm run build`) will fail the build if:
 
 - A folder under `public/photos/` doesn't match the slug regex (and isn't a grandfathered legacy slug).
-- A folder has 1–4 or 11+ photos.
+- A folder has 11+ photos.
 - The first sorted photo doesn't start with `01-`.
 
 These are intentional — they prevent broken or partial trips from shipping.
@@ -155,8 +172,7 @@ You'd then fill in:
 - `country: TODO` → `country: Japan`
 - `countryCode: XX` → `countryCode: JP`
 - `mapCoords.leftPct` / `mapCoords.topPct` → real percentages (open `src/components/traveler/WorldMap.astro`, hover the spot, derive)
-- Drop 5–10 photos into `public/photos/2026-12-tokyo/` named `01-cover.jpg`, `02-...`, etc.
+- Drop 1–10 photos into `public/photos/2026-12-tokyo/` named `01-cover.jpg`, `02-...`, etc.
 - (Optional) write a hand-typed `paragraph:` or leave blank for Gemini to fill
 
 Then `npm run photos && npm run paragraphs && npm run build`.
-

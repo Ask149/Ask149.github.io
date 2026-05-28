@@ -8,6 +8,9 @@ dist/
 worker/.dev.vars
 worker/node_modules/
 worker/dist/
+worker-trip-upload/.dev.vars
+worker-trip-upload/node_modules/
+worker-trip-upload/dist/
 
 # Local
 .DS_Store
@@ -15,6 +18,7 @@ worker/dist/
 .env
 .env.*
 !.env.example
+!.dev.vars.example
 
 # Editor
 .vscode/

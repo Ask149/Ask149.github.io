@@ -80,7 +80,10 @@ body[data-persona="traveler"] .diary-card .stats { margin-left: auto; font-famil
 
 /* Timeline */
 body[data-persona="traveler"] .timeline { position: fixed; bottom: 0; left: 0; right: 0; padding: 4rem 2.5rem 1.5rem; background: linear-gradient(180deg, rgba(246, 232, 200, 0) 0%, rgba(239, 219, 176, 0.95) 40%); z-index: 15; }
-body[data-persona="traveler"] .timeline-head { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: #5a4a3a; margin-bottom: 0.8rem; }
+body[data-persona="traveler"] .timeline-head-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.8rem; }
+body[data-persona="traveler"] .timeline-head { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: #5a4a3a; }
+body[data-persona="traveler"] .timeline-jump { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: #5a4a3a; }
+body[data-persona="traveler"] .timeline-jump select { font: inherit; letter-spacing: 0.12em; color: var(--fg); background: rgba(255,250,240,0.7); border: 1px solid rgba(74,60,42,0.3); padding: 0.25rem 0.4rem; }
 body[data-persona="traveler"] .timeline-track { position: relative; height: 90px; display: flex; align-items: center; gap: 2.5rem; overflow-x: auto; scrollbar-width: none; padding: 0 1rem; scroll-snap-type: x mandatory; }
 body[data-persona="traveler"] .timeline-track::-webkit-scrollbar { display: none; }
 body[data-persona="traveler"] .timeline-track::before { content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(74, 60, 42, 0.35); transform: translateY(-50%); }
@@ -104,6 +107,7 @@ body[data-persona="traveler"] .trip.active .yr { color: var(--accent); }
   body[data-persona="traveler"] .hero h1 { font-size: clamp(3.75rem, 18vw, 4.5rem); }
   body[data-persona="traveler"] .photo-float { display: none; }
   body[data-persona="traveler"] .photo-float.pf-3 { display: block; position: relative; inset: auto; width: 80%; margin: 1rem auto; animation: none; opacity: 1; }
+  body[data-persona="traveler"] .timeline-head-row { align-items: flex-start; flex-direction: column; }
   body[data-persona="traveler"] .timeline-track { gap: 1.5rem; }
   body[data-persona="traveler"] .pin { width: 8px; height: 8px; }
   body[data-persona="traveler"] .pin .pin-label { display: none; }
