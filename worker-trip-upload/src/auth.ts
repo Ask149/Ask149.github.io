@@ -105,19 +105,22 @@ export function githubAuthorizeUrl(req: Request, env: Env, state: string): strin
 
 export async function exchangeCodeForUser(req: Request, env: Env, code: string): Promise<GitHubUser> {
   const callback = new URL("/oauth/callback", req.url).href;
+  const body = new URLSearchParams({
+    client_id: env.GITHUB_OAUTH_CLIENT_ID,
+    code,
+    redirect_uri: callback,
+  });
+  const clientSecret = env.GITHUB_OAUTH_CLIENT_SECRET?.trim();
+  if (clientSecret) body.set("client_secret", clientSecret);
+
   const tokenResp = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
       "Accept": "application/json",
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
       "User-Agent": "ask149-trip-upload",
     },
-    body: JSON.stringify({
-      client_id: env.GITHUB_OAUTH_CLIENT_ID,
-      client_secret: env.GITHUB_OAUTH_CLIENT_SECRET,
-      code,
-      redirect_uri: callback,
-    }),
+    body,
   });
   const tokenJson = await tokenResp.json<{ access_token?: string; error?: string; error_description?: string }>();
   if (!tokenResp.ok || !tokenJson.access_token) {

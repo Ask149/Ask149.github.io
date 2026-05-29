@@ -19,6 +19,8 @@ worker-trip-upload/dist/
 .env.*
 !.env.example
 !.dev.vars.example
+*.private-key.pem
+*client-secret*.txt
 
 # Editor
 .vscode/
