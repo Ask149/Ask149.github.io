@@ -51,9 +51,10 @@ export default function ProjectGridV4({ projects }: Props) {
         <motion.div
           key={p.slug}
           className="proj"
+          data-tilt
           variants={{
-            hidden: { opacity: 0, y: 8 },
-            show: { opacity: 1, y: 0, transition: { duration: reduce ? 0 : 0.35, ease: "easeOut" } },
+            hidden: { opacity: 0 },
+            show: { opacity: 1, transition: { duration: reduce ? 0 : 0.35, ease: "easeOut" } },
           }}
         >
           <div className="proj-num">

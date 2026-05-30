@@ -4,7 +4,7 @@
 // NOTE: Astro 4.x exports `ViewTransitions`, renamed to `ClientRouter` in Astro 5.
 // We alias to keep call-site identical to the v5-native plan; Phase F will drop the alias.
 import { ViewTransitions as ClientRouter } from "astro:transitions";
-import { type PersonaId } from "../personas/registry";
+import { type PersonaId, getPersonaById } from "../personas/registry";
 import TopNav from "../components/chrome/TopNav.astro";
 import FooterStatus from "../components/chrome/FooterStatus.astro";
 import "../styles/global.css";
@@ -25,12 +25,16 @@ const { personaId, title, description, ogImage, lastEditISO } = Astro.props;
 // Utility pages reuse Workshop's copper palette without becoming active nav tabs.
 const tokensPersona: PersonaId = personaId === "resume" || personaId === "now" ? "coder" : personaId;
 
+// Wire the registry's (previously dormant) transitionMode into the document so
+// custom ::view-transition root animations can vary per destination persona.
+const transitionMode = getPersonaById(tokensPersona).transitionMode;
+
 // Canonical URL + social-card resolution (Astro.site is set in astro.config.mjs).
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageURL = new URL(ogImage ?? "/images/og-default.jpg", Astro.site).href;
 ---
 <!doctype html>
-<html lang="en" data-persona={tokensPersona}>
+<html lang="en" data-persona={tokensPersona} data-transition={transitionMode}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -66,5 +70,45 @@ const ogImageURL = new URL(ogImage ?? "/images/og-default.jpg", Astro.site).href
     <TopNav activeId={personaId} />
     <slot />
     <FooterStatus activeId={personaId} lastEditISO={lastEditISO} />
+    <script>
+      // Pointer-reactive card tilt. Framework-agnostic: binds to any [data-tilt]
+      // element on the page. Reduced-motion + touch safe; survives ViewTransitions.
+      function bindTilt() {
+        if (
+          matchMedia("(prefers-reduced-motion: reduce)").matches ||
+          matchMedia("(pointer: coarse)").matches
+        ) {
+          return;
+        }
+        const MAX = 5; // degrees
+        document.querySelectorAll<HTMLElement>("[data-tilt]").forEach((el) => {
+          if (el.dataset.tiltBound) return;
+          el.dataset.tiltBound = "1";
+          el.addEventListener("pointermove", (e) => {
+            const r = el.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width - 0.5;
+            const py = (e.clientY - r.top) / r.height - 0.5;
+            el.style.setProperty("--tilt-ry", (px * MAX).toFixed(2) + "deg");
+            el.style.setProperty("--tilt-rx", (-py * MAX).toFixed(2) + "deg");
+          });
+          el.addEventListener("pointerleave", () => {
+            el.style.setProperty("--tilt-rx", "0deg");
+            el.style.setProperty("--tilt-ry", "0deg");
+          });
+        });
+      }
+      function resetTilt() {
+        document.querySelectorAll<HTMLElement>("[data-tilt]").forEach((el) => {
+          el.style.setProperty("--tilt-rx", "0deg");
+          el.style.setProperty("--tilt-ry", "0deg");
+        });
+      }
+      if (!(window as any).__tiltInit) {
+        (window as any).__tiltInit = true;
+        document.addEventListener("astro:page-load", bindTilt);
+        // Reset before a navigation snapshot so a hovered card isn't captured tilted.
+        document.addEventListener("astro:before-swap", resetTilt);
+      }
+    </script>
   </body>
 </html>

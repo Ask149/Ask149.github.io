@@ -47,8 +47,30 @@ body[data-persona="coder"] .feed-strip .live { color: var(--accent); }
 /* REVIEW #7: clamp() the padding + font-size for 320–1280px viewports */
 body[data-persona="coder"] .hero {
   position: relative; z-index: 10;
+  overflow: clip;
   padding: clamp(2rem, 8vw, 5rem) clamp(1.25rem, 5vw, 2.5rem) 2rem;
   max-width: 920px;
+}
+/* Keep real hero content above the decorative aurora layer. */
+body[data-persona="coder"] .hero > :not(.hero-aurora) { position: relative; z-index: 1; }
+/* Restrained atmospheric accent — slow-drifting, low-opacity copper light.
+   Decorative only (aria-hidden); animation gated on reduced-motion. */
+body[data-persona="coder"] .hero-aurora {
+  position: absolute; inset: -20%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(38% 48% at 24% 30%, rgba(194, 102, 68, 0.16), transparent 70%),
+    radial-gradient(34% 44% at 76% 62%, rgba(122, 74, 31, 0.13), transparent 72%);
+  filter: blur(44px);
+  opacity: 0.6;
+}
+@media (prefers-reduced-motion: no-preference) {
+  body[data-persona="coder"] .hero-aurora {
+    animation: hero-aurora-drift 20s ease-in-out infinite alternate;
+  }
+}
+@keyframes hero-aurora-drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1.04); }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.12); }
 }
 body[data-persona="coder"] .hero-pre {
   font-family: 'JetBrains Mono', monospace;

@@ -72,7 +72,7 @@ const lastEditISO = projectEntries
     <h2 class="proof-strip__label" id="proof-strip-title">→ §1.1 · selected receipts</h2>
     <div class="proof-grid">
       {proofCards.map((card) => (
-        <article class="proof-card">
+        <article class="proof-card" data-tilt>
           <p class="proof-card__label">{card.label}</p>
           <h2>{card.title}</h2>
           <p>{card.body}</p>
