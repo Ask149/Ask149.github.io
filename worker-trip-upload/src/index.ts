@@ -9,7 +9,8 @@ import {
   readSession,
   verifyOAuthState,
 } from "./auth";
-import { publishUpload } from "./github";
+import { deletePhotos, deleteTrip, listTrips, publishUpload } from "./github";
+import type { DeleteResult, TripSummary } from "./github";
 import { LOCATIONS } from "./locations";
 import { parseUpload } from "./validation";
 import type { Env, PublishResult, Session } from "./types";
@@ -102,11 +103,11 @@ function formPage(session: Session, error?: string): Response {
   const content = `
     <div class="bar">
       <span>ASK149 · trip upload</span>
-      <form method="post" action="/logout"><button class="secondary" type="submit">Sign out ${escapeHtml(session.login)}</button></form>
+      <span><a href="/manage">manage / delete</a> &nbsp;·&nbsp; <form method="post" action="/logout" style="display:inline"><button class="secondary" type="submit" style="width:auto;display:inline">Sign out ${escapeHtml(session.login)}</button></form></span>
     </div>
     <section class="card ${error ? "error" : ""}">
       <h1>new field note</h1>
-      <p>${error ? escapeHtml(error) : "Upload up to 10 photos with a title, date, and location. The backend opens a GitHub PR; after merge, the entry appears on the Traveler timeline."}</p>
+      <p>${error ? escapeHtml(error) : "Upload up to 10 photos with a title, date, and location. The backend commits straight to master; the entry appears on the Traveler timeline after GitHub Pages redeploys."}</p>
       <form method="post" action="/upload" enctype="multipart/form-data" id="upload-form">
         <div class="grid">
           <label>Title
@@ -134,7 +135,7 @@ function formPage(session: Session, error?: string): Response {
         </div>
         <div id="preview" class="preview" aria-live="polite"></div>
         <div class="actions">
-          <button type="submit">Create upload PR</button>
+          <button type="submit">Publish to timeline</button>
           <span class="hint" id="count"></span>
         </div>
       </form>
@@ -181,9 +182,75 @@ function resultPage(result: PublishResult): Response {
       <h1>uploaded</h1>
       <p>Created <strong>${escapeHtml(result.slug)}</strong> on branch <code>${escapeHtml(result.branch)}</code>.</p>
       <p>${result.prUrl ? `<a href="${escapeHtml(result.prUrl)}">Open pull request</a>` : `<a href="${escapeHtml(result.commitUrl)}">Open commit</a>`}</p>
-      <p><a href="${escapeHtml(result.liveUrl)}">Traveler page</a> updates after the PR is merged and GitHub Pages deploys.</p>
+      <p><a href="${escapeHtml(result.liveUrl)}">Traveler page</a> updates ${result.prUrl ? "after the PR is merged and GitHub Pages deploys" : "after GitHub Pages redeploys (usually ~1 min)"}.</p>
     </section>`;
   return html(layout("Trip upload · uploaded", content), 201);
+}
+
+function managePage(session: Session, trips: TripSummary[], error?: string, notice?: string): Response {
+  const total = trips.length;
+  const tripCards = trips.map((trip) => {
+    const photoGrid = trip.photos.length
+      ? `<div class="preview">${trip.photos.map((photo) => `
+            <div class="thumb">
+              <img alt="" loading="lazy" src="${escapeHtml(photo.thumbUrl)}" />
+              <label><input type="checkbox" name="photo" value="${escapeHtml(photo.name)}" /> delete</label>
+              <div class="hint">${escapeHtml(photo.name)}</div>
+            </div>`).join("")}</div>`
+      : `<p class="hint">No photos yet — placeholder entry.</p>`;
+    const photoForm = trip.photos.length
+      ? `<form method="post" action="/delete" onsubmit="return confirm('Delete the selected photos from ${escapeHtml(trip.slug)}? This commits straight to master.');">
+           <input type="hidden" name="slug" value="${escapeHtml(trip.slug)}" />
+           ${photoGrid}
+           <div class="actions"><button type="submit" style="width:auto">Delete selected photos</button></div>
+         </form>`
+      : photoGrid;
+    return `
+      <section class="card" style="margin-bottom:20px">
+        <h2 style="margin:0 0 4px;font-family:Georgia,serif;font-size:22px">${escapeHtml(trip.title)}</h2>
+        <p class="hint" style="margin:0 0 12px">${escapeHtml(trip.slug)} · ${trip.photos.length} photo${trip.photos.length === 1 ? "" : "s"}</p>
+        ${photoForm}
+        <form method="post" action="/delete" onsubmit="return confirm('Delete the ENTIRE trip ${escapeHtml(trip.slug)} (entry + all photos)? This commits straight to master.');" style="margin-top:16px">
+          <input type="hidden" name="slug" value="${escapeHtml(trip.slug)}" />
+          <input type="hidden" name="all" value="1" />
+          <button class="secondary" type="submit" style="width:auto;border-color:#9b2c2c;color:#9b2c2c">Delete entire trip</button>
+        </form>
+      </section>`;
+  }).join("");
+
+  const banner = error
+    ? `<section class="card error"><p>${escapeHtml(error)}</p></section>`
+    : notice
+      ? `<section class="card success"><p>${escapeHtml(notice)}</p></section>`
+      : "";
+
+  const content = `
+    <div class="bar">
+      <span>ASK149 · manage entries</span>
+      <span><a href="/">new upload</a> &nbsp;·&nbsp; <form method="post" action="/logout" style="display:inline"><button class="secondary" type="submit" style="width:auto;display:inline">Sign out ${escapeHtml(session.login)}</button></form></span>
+    </div>
+    <section class="card">
+      <h1>manage field notes</h1>
+      <p>${total} trip${total === 1 ? "" : "s"}. Deletes commit straight to master; the Traveler timeline updates after GitHub Pages redeploys. The last remaining trip can't be deleted.</p>
+    </section>
+    ${banner}
+    ${tripCards || `<section class="card"><p class="hint">No trips found.</p></section>`}`;
+  return html(layout("Trip upload · manage", content), error ? 400 : 200);
+}
+
+function deleteResultPage(result: DeleteResult): Response {
+  const summary = result.kind === "trip"
+    ? `Removed trip <strong>${escapeHtml(result.slug)}</strong> (entry + all photos).`
+    : `Removed ${result.removed} photo${result.removed === 1 ? "" : "s"} from <strong>${escapeHtml(result.slug)}</strong>. ${result.remaining} photo${result.remaining === 1 ? "" : "s"} remaining.`;
+  const content = `
+    <div class="bar"><span>ASK149 · deleted</span><a href="/manage">back to manage</a></div>
+    <section class="card success">
+      <h1>deleted</h1>
+      <p>${summary}</p>
+      <p><a href="${escapeHtml(result.commitUrl)}">Open commit</a></p>
+      <p><a href="${escapeHtml(result.liveUrl)}">Traveler page</a> updates after GitHub Pages redeploys (usually ~1 min).</p>
+    </section>`;
+  return html(layout("Trip upload · deleted", content), 200);
 }
 
 function badRequest(message: string): Response {
@@ -231,6 +298,29 @@ export default {
         return session ? formPage(session) : loginPage();
       }
 
+      if (url.pathname === "/manage" && req.method === "GET") {
+        if (!session) return loginPage("Sign in to manage entries.");
+        const trips = await listTrips(env);
+        return managePage(session, trips);
+      }
+
+      if (url.pathname === "/delete" && req.method === "POST") {
+        if (!session) return loginPage("Sign in before deleting.");
+        if (!verifyOrigin(req)) return badRequest("Origin check failed.");
+        const form = await req.formData();
+        const slug = (form.get("slug") as string | null)?.trim() ?? "";
+        if (!slug) return badRequest("Missing trip slug.");
+        const all = (form.get("all") as string | null) === "1";
+        if (all) {
+          return deleteResultPage(await deleteTrip(env, slug));
+        }
+        const photos = form.getAll("photo").filter((v): v is string => typeof v === "string" && v.length > 0);
+        if (photos.length === 0) {
+          return managePage(session, await listTrips(env), "Select at least one photo to delete.");
+        }
+        return deleteResultPage(await deletePhotos(env, slug, photos));
+      }
+
       if (url.pathname === "/upload" && req.method === "POST") {
         if (!session) return loginPage("Sign in before uploading.");
         if (!verifyOrigin(req)) return badRequest("Origin check failed.");
@@ -241,10 +331,18 @@ export default {
 
       return badRequest("Route not found.");
     } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       if (session && url.pathname === "/upload") {
-        return formPage(session, error instanceof Error ? error.message : String(error));
+        return formPage(session, message);
       }
-      return badRequest(error instanceof Error ? error.message : String(error));
+      if (session && (url.pathname === "/delete" || url.pathname === "/manage")) {
+        try {
+          return managePage(session, await listTrips(env), message);
+        } catch {
+          return badRequest(message);
+        }
+      }
+      return badRequest(message);
     }
   },
 };

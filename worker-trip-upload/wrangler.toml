@@ -7,7 +7,7 @@ ENVIRONMENT = "production"
 GITHUB_OWNER = "Ask149"
 GITHUB_REPO = "Ask149.github.io"
 GITHUB_BRANCH = "master"
-PUBLISH_MODE = "pr"
+PUBLISH_MODE = "direct_master"
 ALLOWED_GITHUB_LOGINS = "ask149"
 PUBLIC_SITE_URL = "https://ask149.github.io/traveler"
 
