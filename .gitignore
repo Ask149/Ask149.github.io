@@ -29,3 +29,5 @@ worker-trip-upload/dist/
 # Tooling
 .playwright-mcp/
 phase-*.png
+
+.dev.vars*
