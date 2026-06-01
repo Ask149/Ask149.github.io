@@ -130,7 +130,7 @@ function formPage(session: Session, error?: string): Response {
           <label class="full">Photos
             <input name="photos" id="photos" type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple required />
             <input name="coverIndex" id="coverIndex" type="hidden" value="0" />
-            <span class="hint">1-10 photos. First selected photo is cover unless you mark another below.</span>
+            <span class="hint">1-10 photos. Large photos are auto-optimized in your browser before upload. First selected photo is cover unless you mark another below.</span>
           </label>
         </div>
         <div id="preview" class="preview" aria-live="polite"></div>
@@ -145,11 +145,15 @@ function formPage(session: Session, error?: string): Response {
       const preview = document.getElementById('preview');
       const coverIndex = document.getElementById('coverIndex');
       const count = document.getElementById('count');
+      const form = document.getElementById('upload-form');
+      const submitBtn = form.querySelector('button[type=submit]');
+
       input.addEventListener('change', () => {
         preview.innerHTML = '';
         const files = Array.from(input.files || []);
         count.textContent = files.length ? files.length + ' selected' : '';
         if (files.length > 10) count.textContent = 'Too many photos — max 10.';
+        if (coverIndex.value && Number(coverIndex.value) >= files.length) coverIndex.value = '0';
         files.slice(0, 10).forEach((file, index) => {
           const url = URL.createObjectURL(file);
           const item = document.createElement('div');
@@ -170,6 +174,57 @@ function formPage(session: Session, error?: string): Response {
           item.append(img, label, filename);
           preview.appendChild(item);
         });
+      });
+
+      // Downscale each photo to <=2000px JPEG in the browser before upload.
+      // The site only ever renders photos at <=2000px (the build resizes to that
+      // anyway), so this is lossless visually but turns ~8MB phone photos into
+      // ~0.5MB — keeping the upload well under the Worker's memory/time limits.
+      const MAX_DIM = 2000;
+      async function optimize(file) {
+        try {
+          const bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
+          const scale = Math.min(1, MAX_DIM / Math.max(bitmap.width, bitmap.height));
+          const w = Math.max(1, Math.round(bitmap.width * scale));
+          const h = Math.max(1, Math.round(bitmap.height * scale));
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(bitmap, 0, 0, w, h);
+          if (bitmap.close) bitmap.close();
+          const blob = await new Promise((res) => canvas.toBlob(res, 'image/jpeg', 0.82));
+          if (!blob) return file;
+          const base = (file.name.replace(/\.[^.]+$/, '') || 'photo');
+          return new File([blob], base + '.jpg', { type: 'image/jpeg' });
+        } catch (e) {
+          return file;
+        }
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const files = Array.from(input.files || []).slice(0, 10);
+        if (files.length < 1) { count.textContent = 'Add at least one photo.'; return; }
+        if ((input.files || []).length > 10) { count.textContent = 'Too many photos — max 10.'; return; }
+        const original = submitBtn.textContent;
+        submitBtn.disabled = true;
+        try {
+          const fd = new FormData(form);
+          fd.delete('photos');
+          for (let i = 0; i < files.length; i++) {
+            submitBtn.textContent = 'Optimizing ' + (i + 1) + '/' + files.length + '…';
+            const out = await optimize(files[i]);
+            fd.append('photos', out, out.name);
+          }
+          submitBtn.textContent = 'Uploading…';
+          const resp = await fetch('/upload', { method: 'POST', body: fd });
+          const text = await resp.text();
+          document.open(); document.write(text); document.close();
+        } catch (err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = original;
+          count.textContent = 'Upload failed: ' + ((err && err.message) ? err.message : err);
+        }
       });
     </script>`;
   return html(layout("Trip upload", content), error ? 400 : 200);
