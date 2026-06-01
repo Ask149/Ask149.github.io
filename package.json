@@ -7,15 +7,18 @@
     "dev": "astro dev",
     "prebuild": "tsx scripts/photo-manifest.ts",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "check": "astro check",
     "paragraphs": "tsx scripts/generate-paragraphs.ts",
     "photos": "tsx scripts/photo-manifest.ts",
     "trip:new": "tsx scripts/new-trip.ts",
     "trip:upload": "tsx scripts/trip-upload.ts",
-    "build:og": "tsx scripts/build-og-image.ts"
+    "build:og": "tsx scripts/build-og-image.ts",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "11",
     "@astrojs/mdx": "^3.0.0",
     "@astrojs/react": "^3.5.0",
     "@astrojs/tailwind": "^6.0.2",
@@ -45,6 +48,7 @@
     "js-yaml": "^4.1.0",
     "sharp": "^0.33.5",
     "tsx": "^4.22.2",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "wrangler": "^4.96.0"
   }
 }
